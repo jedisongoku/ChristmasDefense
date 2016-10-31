@@ -1,0 +1,151 @@
+fileFormatVersion: 2
+guid: 9ccaa7ffd1c076943bad0d677919cd7f
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Rig
+    100004: RigCape
+    100006: RigCapeBone001
+    100008: RigCapeBone001Bone001
+    100010: RigCapeBone001Bone001Bone001
+    100012: RigHead
+    100014: RigLArm1
+    100016: RigLArm2
+    100018: RigLArmCollarbone
+    100020: RigLArmFinger1
+    100022: RigLArmFinger2
+    100024: RigLArmPalm
+    100026: RigLArmThumb1
+    100028: RigLArmThumb2
+    100030: RigLLeg1
+    100032: RigLLeg2
+    100034: RigLLegAnkle
+    100036: RigLLegFoot1
+    100038: RigLLegPlatform
+    100040: RigLWeapon
+    100042: RigNeck
+    100044: RigPelvis
+    100046: RigRArm1
+    100048: RigRArm2
+    100050: RigRArmCollarbone
+    100052: RigRArmFinger1
+    100054: RigRArmFinger2
+    100056: RigRArmPalm
+    100058: RigRArmThumb1
+    100060: RigRArmThumb2
+    100062: RigRibcage
+    100064: RigRLeg1
+    100066: RigRLeg2
+    100068: RigRLegAnkle
+    100070: RigRLegFoot1
+    100072: RigRLegPlatform
+    100074: RigRWeapon
+    100076: RigSpine1
+    100078: RigSpine2
+    400000: //RootNode
+    400002: Rig
+    400004: RigCape
+    400006: RigCapeBone001
+    400008: RigCapeBone001Bone001
+    400010: RigCapeBone001Bone001Bone001
+    400012: RigHead
+    400014: RigLArm1
+    400016: RigLArm2
+    400018: RigLArmCollarbone
+    400020: RigLArmFinger1
+    400022: RigLArmFinger2
+    400024: RigLArmPalm
+    400026: RigLArmThumb1
+    400028: RigLArmThumb2
+    400030: RigLLeg1
+    400032: RigLLeg2
+    400034: RigLLegAnkle
+    400036: RigLLegFoot1
+    400038: RigLLegPlatform
+    400040: RigLWeapon
+    400042: RigNeck
+    400044: RigPelvis
+    400046: RigRArm1
+    400048: RigRArm2
+    400050: RigRArmCollarbone
+    400052: RigRArmFinger1
+    400054: RigRArmFinger2
+    400056: RigRArmPalm
+    400058: RigRArmThumb1
+    400060: RigRArmThumb2
+    400062: RigRibcage
+    400064: RigRLeg1
+    400066: RigRLeg2
+    400068: RigRLegAnkle
+    400070: RigRLegFoot1
+    400072: RigRLegPlatform
+    400074: RigRWeapon
+    400076: RigSpine1
+    400078: RigSpine2
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,164 @@
+fileFormatVersion: 2
+guid: d71e65542de3f3747b8fd975dace881c
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Frog Spartan
+    100004: Rig
+    100006: RigCape
+    100008: RigCapeBone001
+    100010: RigCapeBone001Bone001
+    100012: RigCapeBone001Bone001Bone001
+    100014: RigHead
+    100016: RigLArm1
+    100018: RigLArm2
+    100020: RigLArmCollarbone
+    100022: RigLArmFinger1
+    100024: RigLArmFinger2
+    100026: RigLArmPalm
+    100028: RigLArmThumb1
+    100030: RigLArmThumb2
+    100032: RigLLeg1
+    100034: RigLLeg2
+    100036: RigLLegAnkle
+    100038: RigLLegFoot1
+    100040: RigLLegPlatform
+    100042: RigLWeapon
+    100044: RigNeck
+    100046: RigPelvis
+    100048: RigRArm1
+    100050: RigRArm2
+    100052: RigRArmCollarbone
+    100054: RigRArmFinger1
+    100056: RigRArmFinger2
+    100058: RigRArmPalm
+    100060: RigRArmThumb1
+    100062: RigRArmThumb2
+    100064: RigRibcage
+    100066: RigRLeg1
+    100068: RigRLeg2
+    100070: RigRLegAnkle
+    100072: RigRLegFoot1
+    100074: RigRLegPlatform
+    100076: RigRWeapon
+    100078: RigSpine1
+    100080: RigSpine2
+    100082: shield
+    100084: spear
+    400000: //RootNode
+    400002: Frog Spartan
+    400004: Rig
+    400006: RigCape
+    400008: RigCapeBone001
+    400010: RigCapeBone001Bone001
+    400012: RigCapeBone001Bone001Bone001
+    400014: RigHead
+    400016: RigLArm1
+    400018: RigLArm2
+    400020: RigLArmCollarbone
+    400022: RigLArmFinger1
+    400024: RigLArmFinger2
+    400026: RigLArmPalm
+    400028: RigLArmThumb1
+    400030: RigLArmThumb2
+    400032: RigLLeg1
+    400034: RigLLeg2
+    400036: RigLLegAnkle
+    400038: RigLLegFoot1
+    400040: RigLLegPlatform
+    400042: RigLWeapon
+    400044: RigNeck
+    400046: RigPelvis
+    400048: RigRArm1
+    400050: RigRArm2
+    400052: RigRArmCollarbone
+    400054: RigRArmFinger1
+    400056: RigRArmFinger2
+    400058: RigRArmPalm
+    400060: RigRArmThumb1
+    400062: RigRArmThumb2
+    400064: RigRibcage
+    400066: RigRLeg1
+    400068: RigRLeg2
+    400070: RigRLegAnkle
+    400072: RigRLegFoot1
+    400074: RigRLegPlatform
+    400076: RigRWeapon
+    400078: RigSpine1
+    400080: RigSpine2
+    400082: shield
+    400084: spear
+    2300000: shield
+    2300002: spear
+    3300000: shield
+    3300002: spear
+    4300000: Frog Spartan
+    4300002: shield
+    4300004: spear
+    9500000: //RootNode
+    13700000: Frog Spartan
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
