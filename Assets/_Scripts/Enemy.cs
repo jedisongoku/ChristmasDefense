@@ -176,11 +176,13 @@ public class Enemy : MonoBehaviour {
 
     public void Success()
     {
+        healthBar.gameObject.SetActive(false);
+        enemyController.Stop();
         GameManager.gameManager.EnemyDead();
         GameHUDManager.gameHudManager.GameHudUpdate();
         slowDownParticle.Stop();
         dotParticle.Stop();
-        Invoke("SinkEnemy", 4);
+        Invoke("SinkEnemy", 0);
         DestroyAll -= DestroyOnRestart;
     }
 

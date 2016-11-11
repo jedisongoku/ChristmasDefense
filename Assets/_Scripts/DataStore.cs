@@ -11,7 +11,7 @@ public class DataStore : MonoBehaviour{
     public static void Save()
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo10.dat");
+        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo12.dat");
 
         PlayerData data = new PlayerData();
         data.life = Player.life;
@@ -27,10 +27,10 @@ public class DataStore : MonoBehaviour{
 
     public static void Load()
     {
-        if(File.Exists(Application.persistentDataPath + "/playerInfo10.dat"))
+        if(File.Exists(Application.persistentDataPath + "/playerInfo12.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo10.dat", FileMode.Open);
+            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo12.dat", FileMode.Open);
             PlayerData data = (PlayerData)bf.Deserialize(file);
             file.Close();
 

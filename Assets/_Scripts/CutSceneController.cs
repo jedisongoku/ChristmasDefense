@@ -14,4 +14,9 @@ public class CutSceneController : MonoBehaviour
         Camera.main.transform.position = GameManager.gameManager.cameraLocations[GameManager.gameManager.level - 1].position;
         gameObject.SetActive(false);
     }
+
+    public void ShowLevelHUD()
+    {
+        GameHUDManager.gameHudManager.GoToLevelMenu();
+    }
 }

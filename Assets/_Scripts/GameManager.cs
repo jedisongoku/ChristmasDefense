@@ -151,6 +151,11 @@ public class GameManager : MonoBehaviour {
     IEnumerator RunGame()
     {
         //Debug.Log("RUNGAME");
+
+        if(Input.GetKeyDown("space"))
+        {
+            currentWave++;
+        }
         if (levelTimer >= levelStartTimer && !isLevelStarted)
         {
             
@@ -387,5 +392,7 @@ public class GameManager : MonoBehaviour {
     {
         Instantiate(Resources.Load("SpecialHero"), specialHeroSpawnLocation.position, Quaternion.identity);
     }
+
+    
 
 }

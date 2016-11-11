@@ -259,7 +259,8 @@ public class GameHUDManager : MonoBehaviour
 
     public void GoToLevelMenu()
     {
-        mainMenu.gameObject.SetActive(false);
+        
+        
         levelMenu.gameObject.SetActive(true);
         levelPanel.gameObject.SetActive(true);
         SetAllImages();
@@ -278,6 +279,7 @@ public class GameHUDManager : MonoBehaviour
     {
         loadingBar.gameObject.SetActive(true);
         levelMenu.gameObject.SetActive(false);
+        PlayLoadLevelIntro();
         
         
         switch (level)
@@ -316,6 +318,7 @@ public class GameHUDManager : MonoBehaviour
 
         
         levels[level - 1].gameObject.SetActive(true);
+        
 
 
         //gameHUD.gameObject.SetActive(true);
@@ -441,6 +444,7 @@ public class GameHUDManager : MonoBehaviour
                 break;
 
         }
+        Player.completedLevels[GameManager.gameManager.level] = GameManager.gameManager.levelCompletedStars;
         levelCompletePanel.gameObject.SetActive(true);
         levelCompletePanel.GetComponent<Animator>().SetTrigger("LevelComplete");
 
@@ -595,5 +599,18 @@ public class GameHUDManager : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void PlayMenuIntro()
+    {
+        GameManager.gameManager.menuCamera.enabled = false;
+        mainMenu.gameObject.SetActive(false);
+        GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
+        GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("MenuLevel");
+    }
+
+    void PlayLoadLevelIntro()
+    {
+        GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("LoadLevel");
     }
 }
