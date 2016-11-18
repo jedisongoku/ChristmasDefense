@@ -15,18 +15,21 @@ public class GameManager : MonoBehaviour {
     public Camera menuCamera;
     public Camera introCamera;
 
-    [Header("Level")]
-    public List<List<Transform>> enemyDestination = new List<List<Transform>>();
+    [Header("Gameplay")]
+    public Dictionary<int, List<List<Transform>>> enemyDestination = new Dictionary<int, List<List<Transform>>>();
 
     public List<List<int>> enemyListForCurrentLevel = new List<List<int>>();
     public List<int> enemyListForCurrentWave = new List<int>();
 
     public int levelInitialResource;
     public int levelInitialLife;
+    public int levelInitialSpecialHero;
     public int levelCompletedStars;
+    
     public string[] enemies;
     public GameObject selectedSpawnPoint;
     public GameObject tutorialHero;
+    //public Dictionary<int, List<Transform>> spawnPoints = new Dictionary<int, List<Transform>>();
     public Transform[] spawnPoints;
     public Transform[] cameraLocations;
     public Transform specialHeroSpawnLocation;
@@ -98,6 +101,7 @@ public class GameManager : MonoBehaviour {
     public void OnRestartLevel()
     {
         Player.life = levelInitialLife;
+        Player.specialHero = levelInitialSpecialHero;
         DataStore.Save();
         StopAllCoroutines();
 
@@ -108,6 +112,7 @@ public class GameManager : MonoBehaviour {
         if(!isLevelEnded)
         {
             Player.life = levelInitialLife;
+            Player.specialHero = levelInitialSpecialHero;
         }  
         StopAllCoroutines();
     }
@@ -132,9 +137,11 @@ public class GameManager : MonoBehaviour {
         Player.score = 0;
         Player.resource = levelInitialResource;
         levelInitialLife = Player.life;
+        levelInitialSpecialHero = Player.specialHero;
+        
 
         //Camera.main.transform.position = cameraLocations[level - 1].position;
-        specialHeroSpawnLocation = enemyDestination[enemyDestination.Count - 2][0];
+        //specialHeroSpawnLocation = enemyDestination[0][enemyDestination[0].Count - 1][0];
 
         if (isTutorial)
         {
@@ -146,6 +153,8 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(RunGame());
 
         GameHUDManager.gameHudManager.GameHudUpdate();
+        GameHUDManager.gameHudManager.SetSpecialHeroIndicator();
+        GameHUDManager.gameHudManager.ActivateHeroes();
     }
 
     IEnumerator RunGame()
@@ -156,6 +165,7 @@ public class GameManager : MonoBehaviour {
         {
             currentWave++;
         }
+
         if (levelTimer >= levelStartTimer && !isLevelStarted)
         {
             
@@ -252,8 +262,9 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator SpawnEnemy()
     {
-        
-        Instantiate(Resources.Load(enemies[enemyListForCurrentWave[enemiesSpawned]]), spawnPoints[level-1].position, spawnPoints[level - 1].rotation);
+        int path = Mathf.CeilToInt(Random.Range(0, spawnPoints.Length));
+        GameObject enemy = Instantiate(Resources.Load(enemies[enemyListForCurrentWave[enemiesSpawned]]), spawnPoints[path].position, spawnPoints[path].rotation) as GameObject;
+        enemy.GetComponent<Enemy>().enemyPath = path;
         enemiesSpawned++;
 
         yield return new WaitForSeconds(Random.Range(spawnTimerMin, spawnTimerMax));
@@ -304,10 +315,6 @@ public class GameManager : MonoBehaviour {
         }
         //Debug.Log("Shuffled");
 
-        foreach(var enemy in enemyListForCurrentWave)
-        {
-            Debug.Log(enemy);
-        }
         isWaveStarted = false;
         
     }
@@ -363,11 +370,19 @@ public class GameManager : MonoBehaviour {
         
     }
         
-    public void LifeLost()
+    public void LifeLost(int lost)
     {
         if(!isLevelEnded)
         {
-            Player.life--;
+            if(Player.life - lost >= 0)
+            {
+                Player.life -= lost;
+            }
+            else
+            {
+                Player.life = 0;
+            }
+            
             GameHUDManager.gameHudManager.GameHudUpdate();
             if (Player.life == 0)
             {
@@ -390,7 +405,10 @@ public class GameManager : MonoBehaviour {
 
     public void SpawnSpecialHero()
     {
-        Instantiate(Resources.Load("SpecialHero"), specialHeroSpawnLocation.position, Quaternion.identity);
+        Player.specialHero--;
+        GameHUDManager.gameHudManager.SetSpecialHeroIndicator();
+        Instantiate(Resources.Load("BullWarrior"), specialHeroSpawnLocation.position, specialHeroSpawnLocation.rotation);
+        
     }
 
     

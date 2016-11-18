@@ -3,8 +3,10 @@ using System.Collections;
 
 public class MonsterHornet : Enemy {
 
+    public SkinnedMeshRenderer enemyMesh;
     public Material mainMaterial;
     public Material dodgeMaterial;
+
     public float dodgeLength;
 
     private float dodgeTimer;

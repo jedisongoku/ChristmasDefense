@@ -5,20 +5,26 @@ public class ChristmasTree : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Enemy"))
+        if (other != null && other.CompareTag("Enemy"))
         {
             Debug.Log("Life Lost");
-            GameManager.gameManager.LifeLost();
-            
+            if (GameManager.gameManager.level == 3 && GameManager.gameManager.GetCurrentWave() == 15)
+            {
+                GameManager.gameManager.LifeLost(5);
+            }
+            else
+            {
+                GameManager.gameManager.LifeLost(1);
+            }
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if(other != null && other.CompareTag("Enemy"))
+        if (other != null && other.CompareTag("Enemy"))
         {
             other.GetComponent<Enemy>().Success();
         }
-        
+
     }
 }

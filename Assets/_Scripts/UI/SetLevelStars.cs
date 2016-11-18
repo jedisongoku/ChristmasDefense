@@ -32,8 +32,8 @@ public class SetLevelStars : MonoBehaviour {
             case 3:
                 levelImage.sprite = star3;
                 break;
-            case 5:
-                if (Player.completedLevels[level-1] != 0 && Player.completedLevels[level-1] != 5)
+            case -1:
+                if (Player.completedLevels[level-1] != 0 && Player.completedLevels[level-1] != -1)
                 {
                     levelImage.sprite = star0;
                 }

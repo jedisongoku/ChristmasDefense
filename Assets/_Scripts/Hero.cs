@@ -18,9 +18,13 @@ public class Hero : MonoBehaviour {
     public SkinnedMeshRenderer tigerProjectileSkin;
     public MeshRenderer projectileSkin;
     public Material upgradeSkinMaterial;
+    public AudioClip baseProjectileSound;
+    public AudioClip upgradedProjectileSound;
+
 
     private List<GameObject> enemiesInRange = new List<GameObject>();
     private Animator playerAnimation;
+    private AudioSource playerAudio;
     private float attackTimer = 0f;
     private bool isFirstShot = true;
     
@@ -29,6 +33,7 @@ public class Hero : MonoBehaviour {
     {
         GetComponent<SphereCollider>().radius = heroAttackRadius;
         playerAnimation = GetComponent<Animator>();
+        playerAudio = GetComponent<AudioSource>();
         radius.parent = GameManager.gameManager.selectedSpawnPoint.transform;
 
         //transform.rotation = Quaternion.identity;
@@ -162,7 +167,8 @@ public class Hero : MonoBehaviour {
                     else
                     {
                         Collider[] enemies = Physics.OverlapSphere(gameObject.transform.position, heroAttackRadius, LayerMask.GetMask("Enemy"));
-                        foreach(var enemy in enemies)
+                        
+                        foreach (var enemy in enemies)
                         {
                             if(enemy.GetComponent<Enemy>() != null)
                             {
@@ -170,17 +176,22 @@ public class Hero : MonoBehaviour {
                                 {
                                     Instantiate(Resources.Load("Wizard_UpgradedProjectile"), enemy.transform.position + (enemy.transform.forward * 1), transform.rotation);
                                     enemy.GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
+
                                 }
                             }
                             
                         }
-                        //enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
                     }
                     break;
+
             }
-        
             
         }
+    }
+
+    public void PlayAttackSound()
+    {
+        playerAudio.Play();
     }
 
     public void Upgrade()
@@ -188,6 +199,7 @@ public class Hero : MonoBehaviour {
         Player.resource -= upgradeCost;
         isUpgraded = true;
         skin.material = upgradeSkinMaterial;
+        playerAudio.clip = upgradedProjectileSound;
         GameHUDManager.gameHudManager.GameHudUpdate();
 
         switch(heroID)

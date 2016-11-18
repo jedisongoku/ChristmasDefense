@@ -130,6 +130,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.08035714
+        functionName: PlayAttackSound
+        data: 
+        objectReferenceParameter: {fileID: 169292, guid: 308f2b312106bee42a445b428899aae7,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.502605
         functionName: AttackParticle
         data: 

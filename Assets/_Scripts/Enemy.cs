@@ -14,17 +14,21 @@ public class Enemy : MonoBehaviour {
     public int enemyCoin;
     public bool isDead;
     public bool isFirstHit;
+    public bool isFirstHeal;
     public bool canTakeDamage;
     public int sinkSpeed;
+    public int enemyPath;
     public Transform healthBar;
     public Image healthImage;
-    public SkinnedMeshRenderer enemyMesh;
+
     public ParticleSystem slowDownParticle;
     public ParticleSystem dotParticle;
+
     
     private NavMeshAgent enemyController;
     private Animator enemyAnimation;
     private MonsterHornet monsterHornet;
+    private MushroomMonster mushroomMonster;
     //private Collider enemyCollider;
     private int currentDestination = 0;
     private int randomDestinationIndex;
@@ -34,29 +38,37 @@ public class Enemy : MonoBehaviour {
     private float debufTimer;
     private float debufTime = 3;
 
-    void Awake()
+    void OnEnable()
     {
-        enemyController = GetComponent<NavMeshAgent>();
-        enemyAnimation = GetComponent<Animator>();
 
-        
+        enemyController = GetComponent<NavMeshAgent>();
+        if (enemyId != 7)
+        {
+            enemyAnimation = GetComponent<Animator>();
+        }
+
+
+
 
         DestroyAll += DestroyOnRestart;
 
         //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        if (enemyId == 4)
+        {
 
-        if (enemyId == 5)
+        }
+        else if (enemyId == 5)
         {
             monsterHornet = GetComponent<MonsterHornet>();
         }
-        
-        
-        //enemyCollider = GetComponent<Collider>();
-        
-    }
+        else if (enemyId == 7)
+        {
+            mushroomMonster = GetComponent<MushroomMonster>();
+            Debug.Log("MUSHROOM");
+        }
 
-    void OnEnable()
-    {
+
+        //enemyCollider = GetComponent<Collider>();
 
         enemyHealth = (int)(enemyHealth * GameManager.gameManager.healthMultiplier);
         //Debug.Log(name + " health " + enemyHealth);
@@ -65,18 +77,26 @@ public class Enemy : MonoBehaviour {
         currentDestination = 0;
         isDead = false;
         isFirstHit = true;
+        isFirstHeal = true;
         canTakeDamage = true;
         healthBar.gameObject.SetActive(true);
         slowDownParticle.Stop();
         dotParticle.Stop();
+
+        if(GameManager.gameManager.level == 3 && GameManager.gameManager.GetCurrentWave() == 15)
+        {
+            enemyHealth = 1166;
+            enemyHealthMax = enemyHealth;
+            gameObject.transform.localScale = new Vector3(2, 2, 2);
+        }
         
     }
 
     void Start()
     {
         enemyController.speed *= enemySpeed;
-        randomDestinationIndex = Mathf.CeilToInt(Random.Range(0, GameManager.gameManager.enemyDestination[currentDestination].Count));
-        enemyController.SetDestination(GameManager.gameManager.enemyDestination[currentDestination][randomDestinationIndex].position);
+        randomDestinationIndex = Mathf.CeilToInt(Random.Range(0, GameManager.gameManager.enemyDestination[enemyPath][currentDestination].Count));
+        enemyController.SetDestination(GameManager.gameManager.enemyDestination[enemyPath][currentDestination][randomDestinationIndex].position);
         healthImage.fillAmount = (float)enemyHealth / (float)enemyHealthMax;
         
     }
@@ -85,13 +105,13 @@ public class Enemy : MonoBehaviour {
     {
         debufTimer += Time.deltaTime;
 
-        if (currentDestination < GameManager.gameManager.enemyDestination.Count - 1 && !isDead && !GameManager.gameManager.IsLevelEnded())
+        if (currentDestination < GameManager.gameManager.enemyDestination[enemyPath].Count - 1 && !isDead && !GameManager.gameManager.IsLevelEnded())
         {
-            if (Vector3.Distance(transform.position, GameManager.gameManager.enemyDestination[currentDestination][randomDestinationIndex].position) <= 0.5f)
+            if (Vector3.Distance(transform.position, GameManager.gameManager.enemyDestination[enemyPath][currentDestination][randomDestinationIndex].position) <= 0.5f)
             {
                 currentDestination++;
-                randomDestinationIndex = Mathf.CeilToInt(Random.Range(0, GameManager.gameManager.enemyDestination[currentDestination].Count));
-                enemyController.SetDestination(GameManager.gameManager.enemyDestination[currentDestination][randomDestinationIndex].position);
+                randomDestinationIndex = Mathf.CeilToInt(Random.Range(0, GameManager.gameManager.enemyDestination[enemyPath][currentDestination].Count));
+                enemyController.SetDestination(GameManager.gameManager.enemyDestination[enemyPath][currentDestination][randomDestinationIndex].position);
             }
         }
     }
@@ -114,9 +134,24 @@ public class Enemy : MonoBehaviour {
                 canTakeDamage = false;
                 monsterHornet.DodgeHits();
             }
+            else if(enemyId == 7 && (float)enemyHealth / (float)enemyHealthMax < 0.5f && isFirstHeal)
+            {
+                isFirstHeal = false;
+                mushroomMonster.Heal();
+
+            }
             else if(canTakeDamage)
             {
-                enemyAnimation.SetTrigger("Take Damage");
+                if(enemyId != 7)
+                {
+                    enemyAnimation.SetTrigger("Take Damage");
+                }
+                else
+                {
+                    StartCoroutine(mushroomMonster.TakeDamageAnimation());
+                    //mushroomMonster.TakeDamageAnimation();
+                }
+                
                 //Debug.Log("TAKING DAMAGE");
                 enemyHealth -= damage;
 
@@ -155,17 +190,25 @@ public class Enemy : MonoBehaviour {
         if(!isDead)
         {
             isDead = true;
+            enemyController.Stop();
+            StopAllCoroutines();
+            slowDownParticle.Stop();
+            dotParticle.Stop();
             GameManager.gameManager.EnemyDead();
             healthBar.gameObject.SetActive(false);
             Player.resource += enemyCoin;
             Player.score += enemyCoin * 53;
-            GameHUDManager.gameHudManager.GameHudUpdate();
-            slowDownParticle.Stop();
-            dotParticle.Stop();
-            enemyController.Stop();
+            GameHUDManager.gameHudManager.GameHudUpdate(); 
             enemyController.enabled = false;
-            //enemyCollider.enabled = false;
-            enemyAnimation.SetTrigger("Die");
+            if(enemyId != 7)
+            {
+                enemyAnimation.SetTrigger("Die");
+            }
+            else
+            {
+                StartCoroutine(mushroomMonster.DieAnimation());
+            }
+            
             Invoke("SinkEnemy", 3);
             DestroyAll -= DestroyOnRestart;
             //Destroy(this, 2);
@@ -176,6 +219,7 @@ public class Enemy : MonoBehaviour {
 
     public void Success()
     {
+        StopAllCoroutines();
         healthBar.gameObject.SetActive(false);
         enemyController.Stop();
         GameManager.gameManager.EnemyDead();
@@ -184,6 +228,10 @@ public class Enemy : MonoBehaviour {
         dotParticle.Stop();
         Invoke("SinkEnemy", 0);
         DestroyAll -= DestroyOnRestart;
+
+
+
+        
     }
 
     public void SinkEnemy()
@@ -262,5 +310,8 @@ public class Enemy : MonoBehaviour {
         Destroy(gameObject);
     }
 
-
+    public int GetMaxHealth()
+    {
+        return enemyHealthMax;
+    }
 }

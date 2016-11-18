@@ -30,13 +30,13 @@ public class TouchController : MonoBehaviour {
     void FixedUpdate()
     {
 
-        if(Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
 
             if (Physics.Raycast(ray, out hit, 1000))
             {
-                Debug.Log(hit.transform.name);
+                //Debug.Log(hit.transform.name);
                 if (hit.transform.CompareTag("SpawnLocation"))
                 {
                     hit.transform.GetComponent<HeroSpawnManager>().OnTouched();

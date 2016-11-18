@@ -18,13 +18,14 @@ public class GameHUDManager : MonoBehaviour
     public Transform levelPanel;
     public Transform shopPanel;
     public Transform loadingBar;
-    public Transform sackOpenPanel;
-    public Text sackOpenCounterText;
-    public Text sackRewardText;
+    public Transform MiniGamePanel;
+    public Text MiniGameCounterText;
     public Text boostPointTextMenu;
     public Text lifeTextMenu;
-    public Transform sackIndicator;
-    public Text sackText;
+    public Transform snowFlakeIndicator;
+    public Text snowFlakeText;
+    public Transform specialHeroIndicatorMenu;
+    public Text specialHeroIndicatorTextMenu;
 
     [Header("GameHUD")]
     public Transform heroesPanel;
@@ -32,19 +33,23 @@ public class GameHUDManager : MonoBehaviour
     public Transform pausePanel;
     public Transform buttonsPanel;
     public Transform heroInfoPanel;
+    public Transform specialHeroIndicator;
     public Text resourceText;
     public Text lifeText;
     public Text waveText;
     public Text boostPointText;
     public Text scoreText;
+    public Text specialHeroIndicatorText;
     public Button tigerSpawnButton;
     public Button frogSpawnButton;
     public Button lizardSpawnButton;
+    public Button specialHeroSpawnButton;
     public Image levelCompleteImage;
     public Image heroInfoPanelImage;
     public Button nextButton;
     public Button UpgradeButton;
-    
+    public int heroInfoId;
+
 
     //public Vector3 heroesPanelOffSet = new Vector3(-175, 75, 0);
 
@@ -56,9 +61,18 @@ public class GameHUDManager : MonoBehaviour
     public Transform upgradeHeroTooltip;
 
     [Header("In-Game Shop")]
-    public Button purchaseSackWithBoostPoint;
-    public Button purchaseSackWithDollar;
-    public Button purhcaseAddFree;
+    public Transform miniGameItemPanel;
+    public Transform heroesItemPanel;
+    public Transform adsItemPanel;
+    public Button miniGameTabButton;
+    public Button heroesTabButton;
+    public Button adsTabButton;
+    public Button purchaseSnowFlake_500BP;
+    public Button purchaseSnowFlake_99C;
+    public Button purchaseSnowFlake_299C;
+    public Button purchaseWarrior_99C;
+    public Button purchaseWarrior_499C;
+    public Button purhcaseAddFree_99C;
 
 
     [Header("Level")]
@@ -87,11 +101,12 @@ public class GameHUDManager : MonoBehaviour
     public Sprite wizardInfoPanelUpgradedImage;
 
 
-
     void Start()
     {
         gameHudManager = this;
         menuHUD.gameObject.SetActive(true);
+
+        SetSpecialHeroIndicator();
         //GameManager.OnUIAction += SetText;
         //GameManager.OnUIAction += SetHeroAvailability;
     }
@@ -100,22 +115,35 @@ public class GameHUDManager : MonoBehaviour
     {
         SetText();
         SetHeroAvailability();
+        if (heroInfoPanel.gameObject.activeInHierarchy)
+        {
+            setUpgradeAvailability();
+        }
     }
 
     public void MenuHudUpdate()
     {
         boostPointTextMenu.text = Player.boostPoints.ToString();
-        if(Player.sacks > 0)
+        if (Player.snowFlakes > 0)
         {
-            sackIndicator.gameObject.SetActive(true);
+            snowFlakeIndicator.gameObject.SetActive(true);
         }
         else
         {
-            sackIndicator.gameObject.SetActive(false);
+            snowFlakeIndicator.gameObject.SetActive(false);
+        }
+        if (Player.specialHero > 0)
+        {
+            specialHeroIndicatorMenu.gameObject.SetActive(true);
+        }
+        else
+        {
+            specialHeroIndicatorMenu.gameObject.SetActive(false);
         }
         lifeTextMenu.text = Player.life.ToString();
-        sackText.text = Player.sacks.ToString();
-        sackOpenCounterText.text = Player.sacks.ToString();
+        snowFlakeText.text = Player.snowFlakes.ToString();
+        specialHeroIndicatorTextMenu.text = Player.specialHero.ToString();
+        MiniGameCounterText.text = Player.snowFlakes.ToString();
     }
 
     void SetText()
@@ -123,12 +151,12 @@ public class GameHUDManager : MonoBehaviour
         waveText.text = "Wave " + GameManager.gameManager.GetCurrentWave() + " of " + GameManager.gameManager.enemyListForCurrentLevel.Count;
         resourceText.text = Player.resource.ToString();
         lifeText.text = Player.life.ToString();
-        
+
     }
 
     void SetHeroAvailability()
     {
-        if(Player.resource >= GameManager.gameManager.tigerCost)
+        if (Player.resource >= GameManager.gameManager.tigerCost)
         {
             tigerSpawnButton.interactable = true;
         }
@@ -158,11 +186,12 @@ public class GameHUDManager : MonoBehaviour
 
     public void ShowHeroInfo(int id)
     {
-        if(GameManager.gameManager.tutorialPhase_3)
+        heroInfoId = id;
+        if (GameManager.gameManager.tutorialPhase_3)
         {
             upgradeHeroTooltip.gameObject.SetActive(true);
         }
-        
+
         if (GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().isUpgraded)
         {
             UpgradeButton.gameObject.SetActive(false);
@@ -170,7 +199,7 @@ public class GameHUDManager : MonoBehaviour
             {
                 case 1:
                     heroInfoPanelImage.sprite = archerInfoPanelUpgradedImage;
-                    
+
                     break;
                 case 2:
                     heroInfoPanelImage.sprite = spartanInfoPanelUpgradedImage;
@@ -182,37 +211,42 @@ public class GameHUDManager : MonoBehaviour
         }
         else
         {
-            UpgradeButton.gameObject.SetActive(true);
-            UpgradeButton.interactable = false;
-            switch (id)
-            {
-                case 1:
-                    heroInfoPanelImage.sprite = archerInfoPanelImage;
-                    if(Player.resource >= GameManager.gameManager.tigerUpgradeCost)
-                    {
-                        UpgradeButton.interactable = true;
-                    }
-                    break;
-                case 2:
-                    heroInfoPanelImage.sprite = spartanInfoPanelImage;
-                    if (Player.resource >= GameManager.gameManager.frogUpgradeCost)
-                    {
-                        UpgradeButton.interactable = true;
-                    }
-                    break;
-                case 3:
-                    heroInfoPanelImage.sprite = wizardInfoPanelImage;
-                    if (Player.resource >= GameManager.gameManager.lizardUpgradeCost)
-                    {
-                        UpgradeButton.interactable = true;
-                    }
-                    break;
-            }
+            setUpgradeAvailability();
         }
 
         heroesPanel.gameObject.SetActive(false);
         heroInfoPanel.gameObject.SetActive(true);
 
+    }
+
+    void setUpgradeAvailability()
+    {
+        UpgradeButton.gameObject.SetActive(true);
+        UpgradeButton.interactable = false;
+        switch (heroInfoId)
+        {
+            case 1:
+                heroInfoPanelImage.sprite = archerInfoPanelImage;
+                if (Player.resource >= GameManager.gameManager.tigerUpgradeCost)
+                {
+                    UpgradeButton.interactable = true;
+                }
+                break;
+            case 2:
+                heroInfoPanelImage.sprite = spartanInfoPanelImage;
+                if (Player.resource >= GameManager.gameManager.frogUpgradeCost)
+                {
+                    UpgradeButton.interactable = true;
+                }
+                break;
+            case 3:
+                heroInfoPanelImage.sprite = wizardInfoPanelImage;
+                if (Player.resource >= GameManager.gameManager.lizardUpgradeCost)
+                {
+                    UpgradeButton.interactable = true;
+                }
+                break;
+        }
     }
 
     public void HideHeroInfo()
@@ -222,7 +256,7 @@ public class GameHUDManager : MonoBehaviour
             //GameManager.gameManager.tutorialHero.GetComponent<Hero>().ShowTutorialTooltip();
         }
         Invoke("HideHeroInfoDelayed", 0.1f);
-        
+
     }
 
     void HideHeroInfoDelayed()
@@ -235,7 +269,7 @@ public class GameHUDManager : MonoBehaviour
         HideHeroInfo();
         heroesPanel.gameObject.SetActive(true);
         //GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().particleOnClick.gameObject.SetActive(true);
-        GameHudUpdate();   
+        GameHudUpdate();
     }
 
     public void HideHeroes()
@@ -259,15 +293,15 @@ public class GameHUDManager : MonoBehaviour
 
     public void GoToLevelMenu()
     {
-        
-        
+
+
         levelMenu.gameObject.SetActive(true);
         levelPanel.gameObject.SetActive(true);
         SetAllImages();
         MenuHudUpdate();
         //ShowAd(null);
 
-        
+
     }
 
     public void ShowAd(string zone)
@@ -280,8 +314,7 @@ public class GameHUDManager : MonoBehaviour
         loadingBar.gameObject.SetActive(true);
         levelMenu.gameObject.SetActive(false);
         PlayLoadLevelIntro();
-        
-        
+
         switch (level)
         {
             case 1:
@@ -293,10 +326,16 @@ public class GameHUDManager : MonoBehaviour
                 GameManager.gameManager.GetComponent<Level2>().enabled = true;
                 break;
             case 3:
+                GameManager.gameManager.level = level;
+                GameManager.gameManager.GetComponent<Level3>().enabled = true;
                 break;
             case 4:
+                GameManager.gameManager.level = level;
+                GameManager.gameManager.GetComponent<Level4>().enabled = true;
                 break;
             case 5:
+                GameManager.gameManager.level = level;
+                GameManager.gameManager.GetComponent<Level5>().enabled = true;
                 break;
             case 6:
                 break;
@@ -312,17 +351,23 @@ public class GameHUDManager : MonoBehaviour
                 break;
             case 12:
                 break;
-                
+
 
         }
 
-        
-        levels[level - 1].gameObject.SetActive(true);
-        
 
+        levels[level - 1].gameObject.SetActive(true);
 
         //gameHUD.gameObject.SetActive(true);
         //GameManager.gameManager.StartLevel();
+
+    }
+
+    IEnumerator DelayedStartLevel(int level)
+    {
+
+        yield return new WaitForSeconds(0.1f);
+
 
     }
 
@@ -341,6 +386,7 @@ public class GameHUDManager : MonoBehaviour
         buttonsPanel.gameObject.SetActive(true);
 
         HeroSpawnManager.DestroyAssignedHeroes();
+        SpecialHero.DestorySpecialHeroes();
         Enemy.DestroyAllEnemies();
         levelCompletePanel.gameObject.SetActive(false);
         GameManager.gameManager.OnRestartLevel();
@@ -385,7 +431,7 @@ public class GameHUDManager : MonoBehaviour
 
     public void PauseGame()
     {
-        if(!GameManager.gameManager.isGamePaused)
+        if (!GameManager.gameManager.isGamePaused)
         {
             Time.timeScale = 0;
             GameManager.gameManager.isGamePaused = true;
@@ -397,7 +443,7 @@ public class GameHUDManager : MonoBehaviour
             GameManager.gameManager.isGamePaused = false;
             playPauseButton.image.sprite = pauseButtonImage;
         }
-            
+
     }
 
     public void PauseMenu()
@@ -444,15 +490,19 @@ public class GameHUDManager : MonoBehaviour
                 break;
 
         }
-        Player.completedLevels[GameManager.gameManager.level] = GameManager.gameManager.levelCompletedStars;
+
         levelCompletePanel.gameObject.SetActive(true);
         levelCompletePanel.GetComponent<Animator>().SetTrigger("LevelComplete");
 
         if (GameManager.gameManager.levelCompletedStars != 0)
         {
-            if(Player.levelScores[GameManager.gameManager.level] < Player.score)
+            if (Player.levelScores[GameManager.gameManager.level] < Player.score)
             {
                 Player.levelScores[GameManager.gameManager.level] = Player.score;
+            }
+            if (Player.completedLevels[GameManager.gameManager.level] < GameManager.gameManager.levelCompletedStars)
+            {
+                Player.completedLevels[GameManager.gameManager.level] = GameManager.gameManager.levelCompletedStars;
             }
             DataStore.Save();
             boostPointText.text = Player.resource.ToString();
@@ -464,16 +514,18 @@ public class GameHUDManager : MonoBehaviour
             boostPointText.enabled = false;
             scoreText.enabled = false;
             Player.life = GameManager.gameManager.levelInitialLife;
+            Player.specialHero = GameManager.gameManager.levelInitialSpecialHero;
         }
-        
-        
+
+
     }
 
     public void ShowShop()
     {
         levelPanel.gameObject.SetActive(false);
-        sackOpenPanel.gameObject.SetActive(false);
+        MiniGamePanel.gameObject.SetActive(false);
         shopPanel.gameObject.SetActive(true);
+        ItemShopTabClicked(0);
     }
 
     public void HideShop()
@@ -492,74 +544,36 @@ public class GameHUDManager : MonoBehaviour
         MouseController.isMouseOnUI = false;
     }
 
-    public void PurchaseSackWithBoostPoints()
+    public void PurchaseSnowFlakesWithBoostPoints()
     {
-        if(Player.boostPoints >= 500)
+        if (Player.boostPoints >= 500)
         {
             Player.boostPoints -= 500;
-            Player.sacks++;
+            Player.snowFlakes++;
             DataStore.Save();
             MenuHudUpdate();
         }
     }
 
-    public void ShowSackOpenPanel()
+    public void ShowMiniGamePanel()
     {
-        sackOpenPanel.gameObject.SetActive(true);
+        MiniGamePanel.gameObject.SetActive(true);
         levelPanel.gameObject.SetActive(false);
         shopPanel.gameObject.SetActive(false);
-        sackOpenCounterText.text = Player.sacks.ToString();
+        MiniGameCounterText.text = Player.snowFlakes.ToString();
+        //MiniGameManager.miniGameManager.SetTheBoard();
     }
 
-    public void HideSackOpenPanel()
+    public void HideMiniGamePanel()
     {
-        sackOpenPanel.gameObject.SetActive(false);
+        MiniGamePanel.gameObject.SetActive(false);
         levelPanel.gameObject.SetActive(true);
     }
 
-    public void OpenSack()
-    {
-        if(Player.sacks > 0)
-        {
-            Player.sacks--;
-            int roll = Random.Range(1, 1000);
-            if(roll < 250)
-            {
-                //Boost 100
-                sackRewardText.text = "Boost 100";
-                Player.boostPoints += 100;
-            }
-            else if(roll < 400)
-            {
-                //Boost 250
-                sackRewardText.text = "Boost 250";
-                Player.boostPoints += 250;
-            }
-            else if(roll < 450)
-            {
-                //Boost 500
-                sackRewardText.text = "Boost 500";
-                Player.boostPoints += 500;
-            }
-            else if (roll < 750)
-            {
-                //Life
-                sackRewardText.text = "Gift Box";
-                Player.life++;
-            }
-            else if (roll <= 1000)
-            {
-                //Hero
-                sackRewardText.text = "HERO";
-            }
-        }
-        MenuHudUpdate();
-        DataStore.Save();
-    }
 
     public void TutorialPhaseComplete(int phase)
     {
-        switch(phase)
+        switch (phase)
         {
             case 1:
                 if (GameManager.gameManager.tutorialPhase_1)
@@ -587,7 +601,7 @@ public class GameHUDManager : MonoBehaviour
                     GameManager.gameManager.tutorialPhase_3 = true;
 
                 }
-                
+
                 break;
             case 3:
                 if (GameManager.gameManager.tutorialPhase_3 && !GameManager.gameManager.tutorialPhase_2)
@@ -603,14 +617,84 @@ public class GameHUDManager : MonoBehaviour
 
     public void PlayMenuIntro()
     {
+        Debug.Log(Player.specialHero);
         GameManager.gameManager.menuCamera.enabled = false;
         mainMenu.gameObject.SetActive(false);
         GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
         GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("MenuLevel");
+
+        foreach (var level in levels)
+        {
+            level.gameObject.SetActive(false);
+        }
     }
 
     void PlayLoadLevelIntro()
     {
         GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("LoadLevel");
     }
+
+    public void SetSpecialHeroIndicator()
+    {
+        if (Player.specialHero == 0)
+        {
+            specialHeroIndicator.gameObject.SetActive(false);
+            specialHeroSpawnButton.interactable = false;
+        }
+        else
+        {
+            specialHeroIndicatorText.text = Player.specialHero.ToString();
+            specialHeroIndicator.gameObject.SetActive(true);
+            specialHeroSpawnButton.interactable = true;
+
+        }
+    }
+
+    public void ItemShopTabClicked(int id)
+    {
+        switch (id)
+        {
+            case 0:
+                miniGameTabButton.interactable = false;
+                heroesTabButton.interactable = true;
+                adsTabButton.interactable = true;
+                miniGameItemPanel.gameObject.SetActive(true);
+                heroesItemPanel.gameObject.SetActive(false);
+                adsItemPanel.gameObject.SetActive(false);
+                break;
+            case 1:
+                miniGameTabButton.interactable = true;
+                heroesTabButton.interactable = false;
+                adsTabButton.interactable = true;
+                heroesItemPanel.gameObject.SetActive(true);
+                miniGameItemPanel.gameObject.SetActive(false);
+                adsItemPanel.gameObject.SetActive(false);
+                break;
+            case 2:
+                miniGameTabButton.interactable = true;
+                heroesTabButton.interactable = true;
+                adsTabButton.interactable = false;
+                adsItemPanel.gameObject.SetActive(true);
+                miniGameItemPanel.gameObject.SetActive(false);
+                heroesItemPanel.gameObject.SetActive(false);
+                break;
+        }
+
+
+    }
+
+    public void ActivateHeroes()
+    {
+
+        if (Player.completedLevels[1] > 0)
+        {
+            frogSpawnButton.gameObject.SetActive(true);
+        }
+        if(Player.completedLevels[2] > 0)
+        {
+            lizardSpawnButton.gameObject.SetActive(true);
+        }
+    }
+
+
 }

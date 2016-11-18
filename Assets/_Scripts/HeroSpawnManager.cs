@@ -55,7 +55,7 @@ public class HeroSpawnManager : MonoBehaviour
             {
                 //GameHUDManager.gameHudManager.HideHeroes();
 
-                Debug.Log("Show player updates here");
+                //Debug.Log("Show player updates here");
                 GameHUDManager.gameHudManager.ShowHeroInfo(assignedHero.GetComponent<Hero>().heroID);
                 radius.gameObject.SetActive(true);
                 if (GameManager.gameManager.tutorialPhase_3)
@@ -76,7 +76,8 @@ public class HeroSpawnManager : MonoBehaviour
 
         if (!MouseController.isMouseOnUI)
         {
-            Invoke("SetSpawnPoint", 0f);
+            GameManager.gameManager.selectedSpawnPoint = gameObject;
+            //Invoke("SetSpawnPoint", 0);
 
             if (HeroSpawn != null)
             {
@@ -174,7 +175,11 @@ public class HeroSpawnManager : MonoBehaviour
 
     public static void DestroyAssignedHeroes()
     {
-        DestroyHeroes();
+        if(DestroyHeroes != null)
+        {
+            DestroyHeroes();
+        }
+        
     }
 
     public void DestroyHero()

@@ -1,0 +1,142 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+public class Level4 : MonoBehaviour {
+
+    [Header("Level")]
+    public Transform[] spawnPoints;
+    public Transform specialHeroSpawnPoint;
+    public float spawnTimerMin;
+    public float spawnTimerMax;
+
+    [Header("Waves")]
+    public List<int> wave_1 = new List<int>();
+    public List<int> wave_2 = new List<int>();
+    public List<int> wave_3 = new List<int>();
+    public List<int> wave_4 = new List<int>();
+    public List<int> wave_5 = new List<int>();
+    public List<int> wave_6 = new List<int>();
+    public List<int> wave_7 = new List<int>();
+    public List<int> wave_8 = new List<int>();
+    public List<int> wave_9 = new List<int>();
+    public List<int> wave_10 = new List<int>();
+    public List<int> wave_11 = new List<int>();
+    public List<int> wave_12 = new List<int>();
+    public List<int> wave_13 = new List<int>();
+    public List<int> wave_14 = new List<int>();
+    public List<int> wave_15 = new List<int>();
+
+    [Header("Destinations Path 1")]
+    public List<Transform> destination_1_1 = new List<Transform>();
+    public List<Transform> destination_1_2 = new List<Transform>();
+    public List<Transform> destination_1_3 = new List<Transform>();
+
+
+    [Header("Destinations Path 2")]
+    public List<Transform> destination_2_1 = new List<Transform>();
+    public List<Transform> destination_2_2 = new List<Transform>();
+    public List<Transform> destination_2_3 = new List<Transform>();
+
+
+    [Header("Destinations Path 3")]
+    public List<Transform> destination_3_1 = new List<Transform>();
+    public List<Transform> destination_3_2 = new List<Transform>();
+    public List<Transform> destination_3_3 = new List<Transform>();
+    public List<Transform> destination_3_4 = new List<Transform>();
+
+    [Header("Destinations All Paths")]
+    public List<Transform> destination_All_1 = new List<Transform>();
+    public List<Transform> destination_All_2 = new List<Transform>();
+    public List<Transform> destination_All_3 = new List<Transform>();
+    public List<Transform> destination_All_4 = new List<Transform>();
+    public List<Transform> destination_All_5 = new List<Transform>();
+    public List<Transform> destination_All_6 = new List<Transform>();
+    public List<Transform> destination_All_7 = new List<Transform>();
+    public List<Transform> destination_All_8 = new List<Transform>();
+    public List<Transform> destination_All_9 = new List<Transform>();
+    public List<Transform> destination_All_10 = new List<Transform>();
+    public List<Transform> destination_All_11 = new List<Transform>();
+
+
+
+    private List<List<Transform>> path_1 = new List<List<Transform>>();
+    private List<List<Transform>> path_2 = new List<List<Transform>>();
+    private List<List<Transform>> path_3 = new List<List<Transform>>();
+
+    void OnEnable()
+    {
+
+        GameManager.gameManager.enemyListForCurrentLevel.Clear();
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_1);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_2);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_3);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_4);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_5);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_6);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_7);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_8);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_9);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_10);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_11);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_12);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_13);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_14);
+        GameManager.gameManager.enemyListForCurrentLevel.Add(wave_15);
+
+        GameManager.gameManager.enemyDestination.Clear();
+        path_1.Add(destination_1_1);
+        path_1.Add(destination_1_2);
+        path_1.Add(destination_1_3);
+        path_1.Add(destination_All_1);
+        path_1.Add(destination_All_2);
+        path_1.Add(destination_All_3);
+        path_1.Add(destination_All_4);
+        path_1.Add(destination_All_5);
+        path_1.Add(destination_All_6);
+        path_1.Add(destination_All_7);
+        path_1.Add(destination_All_8);
+        path_1.Add(destination_All_9);
+        path_1.Add(destination_All_10);
+        path_1.Add(destination_All_11);
+        GameManager.gameManager.enemyDestination.Add(0, path_1);
+
+        path_2.Add(destination_2_1);
+        path_2.Add(destination_2_2);
+        path_2.Add(destination_2_3);
+        path_2.Add(destination_All_1);
+        path_2.Add(destination_All_2);
+        path_2.Add(destination_All_3);
+        path_2.Add(destination_All_4);
+        path_2.Add(destination_All_5);
+        path_2.Add(destination_All_6);
+        path_2.Add(destination_All_7);
+        path_2.Add(destination_All_8);
+        path_2.Add(destination_All_9);
+        path_2.Add(destination_All_10);
+        path_2.Add(destination_All_11);
+        GameManager.gameManager.enemyDestination.Add(1, path_2);
+
+        path_3.Add(destination_3_1);
+        path_3.Add(destination_3_2);
+        path_3.Add(destination_3_3);
+        path_3.Add(destination_3_4);
+        path_3.Add(destination_All_1);
+        path_3.Add(destination_All_2);
+        path_3.Add(destination_All_3);
+        path_3.Add(destination_All_4);
+        path_3.Add(destination_All_5);
+        path_3.Add(destination_All_6);
+        path_3.Add(destination_All_7);
+        path_3.Add(destination_All_8);
+        path_3.Add(destination_All_9);
+        path_3.Add(destination_All_10);
+        path_3.Add(destination_All_11);
+        GameManager.gameManager.enemyDestination.Add(2, path_3);
+
+        GameManager.gameManager.spawnPoints = spawnPoints;
+        GameManager.gameManager.specialHeroSpawnLocation = specialHeroSpawnPoint;
+        GameManager.gameManager.spawnTimerMin = spawnTimerMin;
+        GameManager.gameManager.spawnTimerMax = spawnTimerMax;
+    }
+}
