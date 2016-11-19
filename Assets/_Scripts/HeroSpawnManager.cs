@@ -20,7 +20,7 @@ public class HeroSpawnManager : MonoBehaviour
         HeroSpawn += HideObjects;
         DestroyHeroes += DestroyHero;
     }
-    
+    /*
     void OnMouseDown()
     {
         if (!MouseController.isMouseOnUI)
@@ -69,7 +69,7 @@ public class HeroSpawnManager : MonoBehaviour
             }
         }      
     }
-    
+    */
     public void OnTouched()
     {
         GameHUDManager.gameHudManager.TutorialPhaseComplete(1);
