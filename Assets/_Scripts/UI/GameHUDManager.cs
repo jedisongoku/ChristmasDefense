@@ -77,6 +77,7 @@ public class GameHUDManager : MonoBehaviour
 
     [Header("Level")]
     public List<Transform> levels;
+    public List<GameObject> levelPrefabs;
 
     [Header("UI")]
     public Button playPauseButton;
@@ -311,31 +312,38 @@ public class GameHUDManager : MonoBehaviour
 
     public void SelectLevel(int level)
     {
+        
         loadingBar.gameObject.SetActive(true);
         levelMenu.gameObject.SetActive(false);
-        PlayLoadLevelIntro();
+        
 
         switch (level)
         {
             case 1:
                 GameManager.gameManager.level = level;
-                GameManager.gameManager.GetComponent<Level1>().enabled = true;
+                GameManager.gameManager.activeLevel = Instantiate(levelPrefabs[level - 1], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+                GameManager.gameManager.activeLevel.GetComponent<Level1>().enabled = true;
+
                 break;
             case 2:
                 GameManager.gameManager.level = level;
-                GameManager.gameManager.GetComponent<Level2>().enabled = true;
+                GameManager.gameManager.activeLevel = Instantiate(levelPrefabs[level - 1], new Vector3(-500, 0, 0), Quaternion.identity) as GameObject;
+                GameManager.gameManager.activeLevel.GetComponent<Level2>().enabled = true;
                 break;
             case 3:
                 GameManager.gameManager.level = level;
-                GameManager.gameManager.GetComponent<Level3>().enabled = true;
+                GameManager.gameManager.activeLevel = Instantiate(levelPrefabs[level - 1], new Vector3(-1000, 0, 0), Quaternion.identity) as GameObject;
+                GameManager.gameManager.activeLevel.GetComponent<Level3>().enabled = true;
                 break;
             case 4:
                 GameManager.gameManager.level = level;
-                GameManager.gameManager.GetComponent<Level4>().enabled = true;
+                GameManager.gameManager.activeLevel = Instantiate(levelPrefabs[level - 1], new Vector3(-1500, 0, 0), Quaternion.identity) as GameObject;
+                GameManager.gameManager.activeLevel.GetComponent<Level4>().enabled = true;
                 break;
             case 5:
                 GameManager.gameManager.level = level;
-                GameManager.gameManager.GetComponent<Level5>().enabled = true;
+                GameManager.gameManager.activeLevel = Instantiate(levelPrefabs[level - 1], new Vector3(0, 0, 500), Quaternion.identity) as GameObject;
+                GameManager.gameManager.activeLevel.GetComponent<Level5>().enabled = true;
                 break;
             case 6:
                 break;
@@ -355,8 +363,9 @@ public class GameHUDManager : MonoBehaviour
 
         }
 
+        PlayLoadLevelIntro();
 
-        levels[level - 1].gameObject.SetActive(true);
+        //levels[level - 1].gameObject.SetActive(true);
 
         //gameHUD.gameObject.SetActive(true);
         //GameManager.gameManager.StartLevel();
@@ -374,10 +383,13 @@ public class GameHUDManager : MonoBehaviour
     public void NextLevel()
     {
         HeroSpawnManager.DestroyAssignedHeroes();
+        SpecialHero.DestorySpecialHeroes();
         levelCompletePanel.gameObject.SetActive(false);
-        levels[GameManager.gameManager.level - 1].gameObject.SetActive(false);
+        Destroy(GameManager.gameManager.activeLevel);
+        
         menuHUD.gameObject.SetActive(true);
         SelectLevel(GameManager.gameManager.level + 1);
+        
     }
 
     public void RestartLevel()
@@ -406,17 +418,19 @@ public class GameHUDManager : MonoBehaviour
         GameManager.gameManager.menuCamera.enabled = true;
         //GameManager.gameManager.background.gameObject.SetActive(true);
         HeroSpawnManager.DestroyAssignedHeroes();
+        SpecialHero.DestorySpecialHeroes();
         Enemy.DestroyAllEnemies();
         levelCompletePanel.gameObject.SetActive(false);
         pausePanel.gameObject.SetActive(false);
         buttonsPanel.gameObject.SetActive(true);
         GameManager.gameManager.OnGoHome();
-        levels[GameManager.gameManager.level - 1].gameObject.SetActive(false);
+        //levels[GameManager.gameManager.level - 1].gameObject.SetActive(false);
         gameHUD.gameObject.SetActive(false);
         menuHUD.gameObject.SetActive(true);
         mainMenu.gameObject.SetActive(true);
         levelMenu.gameObject.SetActive(false);
         Time.timeScale = 1;
+        Destroy(GameManager.gameManager.activeLevel);
 
     }
 
@@ -617,16 +631,15 @@ public class GameHUDManager : MonoBehaviour
 
     public void PlayMenuIntro()
     {
-        Debug.Log(Player.specialHero);
         GameManager.gameManager.menuCamera.enabled = false;
         mainMenu.gameObject.SetActive(false);
         GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
         GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("MenuLevel");
-
+        /*
         foreach (var level in levels)
         {
             level.gameObject.SetActive(false);
-        }
+        }*/
     }
 
     void PlayLoadLevelIntro()

@@ -3,13 +3,14 @@ using System.Collections;
 
 public class TouchController : MonoBehaviour {
 
+    public static TouchController touchController;
     public static bool isMouseOnUI = false;
 
     public float speed = 0.1f;
     public float smoothing;
     public float zoomSpeed = 0.5f;
-    public Transform[] CameraMoveLimitTop;
-    public Transform[] CameraMoveLimitBottom;
+    public Transform CameraMoveLimitTop;
+    public Transform CameraMoveLimitBottom;
 
     private float y_pos;
 
@@ -23,6 +24,7 @@ public class TouchController : MonoBehaviour {
 
     void Start()
     {
+        touchController = this;
         StartCoroutine(CameraSwipe());
     }
 
@@ -71,45 +73,48 @@ public class TouchController : MonoBehaviour {
         }
 
         //Swipe Camera Move
-        if (transform.position.x > CameraMoveLimitTop[GameManager.gameManager.level - 1].position.x)
+        if(CameraMoveLimitTop != null)
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(CameraMoveLimitTop[GameManager.gameManager.level - 1].position.x - 0.1f, y_pos, transform.position.z), Time.deltaTime * smoothing);
-            moveRight = false;
-        }
-        else
-        {
-            moveRight = true;
-        }
+            if (transform.position.x > CameraMoveLimitTop.position.x)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(CameraMoveLimitTop.position.x - 0.1f, y_pos, transform.position.z), Time.deltaTime * smoothing);
+                moveRight = false;
+            }
+            else
+            {
+                moveRight = true;
+            }
 
-        if (transform.position.z > CameraMoveLimitTop[GameManager.gameManager.level - 1].position.z)
-        {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x , y_pos, CameraMoveLimitTop[GameManager.gameManager.level - 1].position.z - 0.1f), Time.deltaTime * smoothing);
-            moveTop = false;
-        }
-        else
-        {
-            moveTop = true;
-        }
-        if (transform.position.x < CameraMoveLimitBottom[GameManager.gameManager.level - 1].position.x)
-        {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(CameraMoveLimitBottom[GameManager.gameManager.level - 1].position.x + 0.1f, y_pos, transform.position.z), Time.deltaTime * smoothing);
-            moveLeft = false;
-        }
-        else
-        {
-            moveLeft = true;
-        }
+            if (transform.position.z > CameraMoveLimitTop.position.z)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, y_pos, CameraMoveLimitTop.position.z - 0.1f), Time.deltaTime * smoothing);
+                moveTop = false;
+            }
+            else
+            {
+                moveTop = true;
+            }
+            if (transform.position.x < CameraMoveLimitBottom.position.x)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(CameraMoveLimitBottom.position.x + 0.1f, y_pos, transform.position.z), Time.deltaTime * smoothing);
+                moveLeft = false;
+            }
+            else
+            {
+                moveLeft = true;
+            }
 
-        if (transform.position.z < CameraMoveLimitBottom[GameManager.gameManager.level - 1].position.z)
-        {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, y_pos, CameraMoveLimitBottom[GameManager.gameManager.level - 1].position.z + 0.1f), Time.deltaTime * smoothing);
-            moveBottom = false;
+            if (transform.position.z < CameraMoveLimitBottom.position.z)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, y_pos, CameraMoveLimitBottom.position.z + 0.1f), Time.deltaTime * smoothing);
+                moveBottom = false;
+            }
+            else
+            {
+                moveBottom = true;
+            }
         }
-        else
-        {
-            moveBottom = true;
-        }
-
+        
 
 
     }
@@ -120,25 +125,25 @@ public class TouchController : MonoBehaviour {
         {
             Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
 
-            if (transform.position.x < CameraMoveLimitTop[GameManager.gameManager.level - 1].position.x && moveRight && touchDeltaPosition.x < 0)
+            if (transform.position.x < CameraMoveLimitTop.position.x && moveRight && touchDeltaPosition.x < 0)
             {
                 y_pos = transform.position.y;
                 transform.Translate(-touchDeltaPosition.x * speed, 0, 0);
                 transform.position = new Vector3(transform.position.x, y_pos, transform.position.z);
             }
-            if (transform.position.z < CameraMoveLimitTop[GameManager.gameManager.level - 1].position.z && moveTop && touchDeltaPosition.y < 0)
+            if (transform.position.z < CameraMoveLimitTop.position.z && moveTop && touchDeltaPosition.y < 0)
             {
                 y_pos = transform.position.y;
                 transform.Translate(0, -touchDeltaPosition.y * speed, 0);
                 transform.position = new Vector3(transform.position.x, y_pos, transform.position.z);
             }
-            if (transform.position.x > CameraMoveLimitBottom[GameManager.gameManager.level - 1].position.x && moveLeft && touchDeltaPosition.x > 0)
+            if (transform.position.x > CameraMoveLimitBottom.position.x && moveLeft && touchDeltaPosition.x > 0)
             {
                 y_pos = transform.position.y;
                 transform.Translate(-touchDeltaPosition.x * speed, 0, 0);
                 transform.position = new Vector3(transform.position.x, y_pos, transform.position.z);
             }
-            if (transform.position.z > CameraMoveLimitBottom[GameManager.gameManager.level - 1].position.z && moveBottom && touchDeltaPosition.y > 0)
+            if (transform.position.z > CameraMoveLimitBottom.position.z && moveBottom && touchDeltaPosition.y > 0)
             {
                 y_pos = transform.position.y;
                 transform.Translate(0, -touchDeltaPosition.y * speed, 0);

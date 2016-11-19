@@ -20,6 +20,11 @@ public class HeroSpawnManager : MonoBehaviour
         HeroSpawn += HideObjects;
         DestroyHeroes += DestroyHero;
     }
+
+    void OnDestroy()
+    {
+        HeroSpawn -= HideObjects;
+    }
     /*
     void OnMouseDown()
     {

@@ -8,6 +8,8 @@ public class SpecialHero : MonoBehaviour
     public delegate void HeroDestroyAction();
     public static event HeroDestroyAction HeroDestroy;
 
+    public GameObject projectile;
+    public GameObject mineExplosion;
     public Transform projectileReleaseTransform;
     public Transform spawnParticle;
     private List<GameObject> enemiesInRange = new List<GameObject>();
@@ -64,7 +66,7 @@ public class SpecialHero : MonoBehaviour
         }
         else if(Vector3.Distance(transform.position, GameManager.gameManager.spawnPoints[path].position) <= 0.5f)
         {
-            Instantiate(Resources.Load("Mine_Explosion"), transform.position - (transform.forward * 1), transform.rotation);
+            Instantiate(mineExplosion, transform.position - (transform.forward * 1), transform.rotation);
             Destroy(gameObject);
             HeroDestroy -= DestroyHero;
         }
@@ -109,7 +111,7 @@ public class SpecialHero : MonoBehaviour
                 enemy.GetComponent<Enemy>().Dead();
                 
             }
-            Instantiate(Resources.Load("Warrior_Projectile"), projectileReleaseTransform.position, transform.rotation);
+            Instantiate(projectile, projectileReleaseTransform.position, transform.rotation);
             enemiesInRange.Clear();
         }
 

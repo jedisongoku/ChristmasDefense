@@ -12,6 +12,7 @@ public class Hero : MonoBehaviour {
     public bool isUpgraded = false;
 
     public GameObject projectile;
+    public GameObject projectileUpgraded;
     public Transform projectileReleaseTransform;
     public Transform radius;
     public SkinnedMeshRenderer skin;
@@ -129,6 +130,47 @@ public class Hero : MonoBehaviour {
     {
         if (enemiesInRange.Count > 0)
         {
+            if(heroID != 3)
+            {
+                if (!isUpgraded)
+                {
+                    Instantiate(projectile, projectileReleaseTransform.position, transform.rotation);
+                    enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
+                }
+                else
+                {
+                    Instantiate(projectileUpgraded, projectileReleaseTransform.position, transform.rotation);
+                    enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, true, gameObject);
+                }
+            }
+            else
+            {
+                if (!isUpgraded)
+                {
+                    Instantiate(projectile, projectileReleaseTransform.position, transform.rotation);
+                    enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
+                }
+                else
+                {
+                    Collider[] enemies = Physics.OverlapSphere(gameObject.transform.position, heroAttackRadius, LayerMask.GetMask("Enemy"));
+
+                    foreach (var enemy in enemies)
+                    {
+                        if (enemy.GetComponent<Enemy>() != null)
+                        {
+                            if (!enemy.GetComponent<Enemy>().isDead)
+                            {
+                                Instantiate(projectileUpgraded, enemy.transform.position + (enemy.transform.forward * 1), transform.rotation);
+                                enemy.GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
+
+                            }
+                        }
+
+                    }
+                }
+            }
+            
+            /*
             switch (heroID)
             {
                 case 1:
@@ -185,7 +227,7 @@ public class Hero : MonoBehaviour {
                     break;
 
             }
-            
+            */
         }
     }
 

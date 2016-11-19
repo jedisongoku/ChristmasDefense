@@ -7,6 +7,9 @@ public class Level2 : MonoBehaviour {
     [Header("Level")]
     public Transform[] spawnPoints;
     public Transform specialHeroSpawnPoint;
+    public Transform cameraLocation;
+    public Transform CameraMoveLimitTop;
+    public Transform CameraMoveLimitBottom;
     public float spawnTimerMin;
     public float spawnTimerMax;
 
@@ -35,6 +38,9 @@ public class Level2 : MonoBehaviour {
 
     void OnEnable()
     {
+        GameManager.gameManager.cameraLocation = cameraLocation;
+        TouchController.touchController.CameraMoveLimitTop = CameraMoveLimitTop;
+        TouchController.touchController.CameraMoveLimitBottom = CameraMoveLimitBottom;
 
         GameManager.gameManager.enemyListForCurrentLevel.Clear();
         GameManager.gameManager.enemyListForCurrentLevel.Add(wave_1);
@@ -47,6 +53,8 @@ public class Level2 : MonoBehaviour {
         GameManager.gameManager.enemyListForCurrentLevel.Add(wave_8);
         GameManager.gameManager.enemyListForCurrentLevel.Add(wave_9);
         GameManager.gameManager.enemyListForCurrentLevel.Add(wave_10);
+
+        Debug.Log(GameManager.gameManager.enemyListForCurrentLevel.Count);
 
         GameManager.gameManager.enemyDestination.Clear();
         path_1.Add(destination_1);
@@ -62,6 +70,8 @@ public class Level2 : MonoBehaviour {
         GameManager.gameManager.specialHeroSpawnLocation = specialHeroSpawnPoint;
         GameManager.gameManager.spawnTimerMin = spawnTimerMin;
         GameManager.gameManager.spawnTimerMax = spawnTimerMax;
+
+        
 
     }
 }

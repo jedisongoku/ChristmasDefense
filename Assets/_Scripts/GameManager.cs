@@ -21,17 +21,19 @@ public class GameManager : MonoBehaviour {
     public List<List<int>> enemyListForCurrentLevel = new List<List<int>>();
     public List<int> enemyListForCurrentWave = new List<int>();
 
+    public GameObject activeLevel;
     public int levelInitialResource;
     public int levelInitialLife;
     public int levelInitialSpecialHero;
     public int levelCompletedStars;
-    
-    public string[] enemies;
+
+    public List<GameObject> heroes;
+    public List<GameObject> enemies;
     public GameObject selectedSpawnPoint;
     public GameObject tutorialHero;
     //public Dictionary<int, List<Transform>> spawnPoints = new Dictionary<int, List<Transform>>();
     public Transform[] spawnPoints;
-    public Transform[] cameraLocations;
+    public Transform cameraLocation;
     public Transform specialHeroSpawnLocation;
 
     public int level;
@@ -233,21 +235,21 @@ public class GameManager : MonoBehaviour {
         if (hero == 1 && Player.resource >= tigerCost)
         {
             Player.resource -= tigerCost;
-            selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero = Instantiate(Resources.Load("TigerArcher"), selectedSpawnPoint.transform.position + spawnOffset, Quaternion.identity) as GameObject;
+            selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero = Instantiate(heroes[0], selectedSpawnPoint.transform.position + spawnOffset, Quaternion.identity) as GameObject;
             selectedSpawnPoint.GetComponent<HeroSpawnManager>().radius = selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().radius;
             GameHUDManager.gameHudManager.GameHudUpdate();
         }
         else if (hero == 2 && Player.resource >= frogCost)
         {
             Player.resource -= frogCost;
-            selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero = Instantiate(Resources.Load("FrogSpartan"), selectedSpawnPoint.transform.position + spawnOffset, Quaternion.identity) as GameObject;
+            selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero = Instantiate(heroes[1], selectedSpawnPoint.transform.position + spawnOffset, Quaternion.identity) as GameObject;
             selectedSpawnPoint.GetComponent<HeroSpawnManager>().radius = selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().radius;
             GameHUDManager.gameHudManager.GameHudUpdate();
         }
         else if (hero == 3 && Player.resource >= lizardCost)
         {
             Player.resource -= lizardCost;
-            selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero = Instantiate(Resources.Load("LizardWizard"), selectedSpawnPoint.transform.position + spawnOffset, Quaternion.identity) as GameObject;
+            selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero = Instantiate(heroes[2], selectedSpawnPoint.transform.position + spawnOffset, Quaternion.identity) as GameObject;
             selectedSpawnPoint.GetComponent<HeroSpawnManager>().radius = selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().radius;
             GameHUDManager.gameHudManager.GameHudUpdate();
         }
@@ -263,7 +265,7 @@ public class GameManager : MonoBehaviour {
     IEnumerator SpawnEnemy()
     {
         int path = Mathf.CeilToInt(Random.Range(0, spawnPoints.Length));
-        GameObject enemy = Instantiate(Resources.Load(enemies[enemyListForCurrentWave[enemiesSpawned]]), spawnPoints[path].position, spawnPoints[path].rotation) as GameObject;
+        GameObject enemy = Instantiate(enemies[enemyListForCurrentWave[enemiesSpawned]], spawnPoints[path].position, spawnPoints[path].rotation) as GameObject;
         enemy.GetComponent<Enemy>().enemyPath = path;
         enemiesSpawned++;
 
@@ -407,7 +409,7 @@ public class GameManager : MonoBehaviour {
     {
         Player.specialHero--;
         GameHUDManager.gameHudManager.SetSpecialHeroIndicator();
-        Instantiate(Resources.Load("BullWarrior"), specialHeroSpawnLocation.position, specialHeroSpawnLocation.rotation);
+        Instantiate(heroes[3], specialHeroSpawnLocation.position, specialHeroSpawnLocation.rotation);
         
     }
 

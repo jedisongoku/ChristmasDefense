@@ -11,7 +11,7 @@ public class CutSceneController : MonoBehaviour
 
         GameManager.gameManager.StartLevel();
         Camera.main.fieldOfView = 60;
-        Camera.main.transform.position = GameManager.gameManager.cameraLocations[GameManager.gameManager.level - 1].position;
+        Camera.main.transform.position = GameManager.gameManager.cameraLocation.position;
         gameObject.SetActive(false);
     }
 

@@ -30,7 +30,7 @@ public class Loading : MonoBehaviour
         else
         {
             GameManager.gameManager.menuCamera.enabled = false;
-            Camera.main.transform.position = GameManager.gameManager.cameraLocations[GameManager.gameManager.level - 1].position;
+            //Camera.main.transform.position = GameManager.gameManager.cameraLocations[GameManager.gameManager.level - 1].position;
             GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
             GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("Intro" + GameManager.gameManager.level);
             gameObject.SetActive(false);

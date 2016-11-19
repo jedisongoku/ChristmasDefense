@@ -7,6 +7,9 @@ public class Level3 : MonoBehaviour {
     [Header("Level")]
     public Transform[] spawnPoints;
     public Transform specialHeroSpawnPoint;
+    public Transform cameraLocation;
+    public Transform CameraMoveLimitTop;
+    public Transform CameraMoveLimitBottom;
     public float spawnTimerMin;
     public float spawnTimerMax;
 
@@ -43,6 +46,9 @@ public class Level3 : MonoBehaviour {
 
     void OnEnable()
     {
+        GameManager.gameManager.cameraLocation = cameraLocation;
+        TouchController.touchController.CameraMoveLimitTop = CameraMoveLimitTop;
+        TouchController.touchController.CameraMoveLimitBottom = CameraMoveLimitBottom;
 
         GameManager.gameManager.enemyListForCurrentLevel.Clear();
         GameManager.gameManager.enemyListForCurrentLevel.Add(wave_1);
