@@ -9,6 +9,7 @@ public class GameHUDManager : MonoBehaviour
     public static event SelectLevelAction SetAllImages;
 
     public static GameHUDManager gameHudManager;
+	public Text fps;
 
     [Header("MenuHUD")]
     public Transform menuHUD;
@@ -108,6 +109,7 @@ public class GameHUDManager : MonoBehaviour
         menuHUD.gameObject.SetActive(true);
 
         SetSpecialHeroIndicator();
+		StartCoroutine (Fps ());
         //GameManager.OnUIAction += SetText;
         //GameManager.OnUIAction += SetHeroAvailability;
     }
@@ -709,5 +711,13 @@ public class GameHUDManager : MonoBehaviour
         }
     }
 
+	IEnumerator Fps()
+	{
+		fps.text = "fps: " + 1.0f / Time.deltaTime;
+
+		yield return new WaitForSeconds (.5f);
+
+		StartCoroutine (Fps ());
+	}
 
 }
