@@ -549,6 +549,7 @@ public class GameHUDManager : MonoBehaviour
 
         levelCompletePanel.gameObject.SetActive(true);
         levelCompletePanel.GetComponent<Animator>().SetTrigger("LevelComplete");
+        Player.score += (Player.resource * 55) + (100 * GameManager.gameManager.levelCompletedStars);
 
         if (GameManager.gameManager.levelCompletedStars != 0)
         {
@@ -562,7 +563,7 @@ public class GameHUDManager : MonoBehaviour
             }
             DataStore.Save();
             boostPointText.text = Player.resource.ToString();
-            scoreText.text = Player.score.ToString();
+            scoreText.text = string.Format("{0:#,#}", Player.score);
             boostPointText.enabled = true;
         }
         else

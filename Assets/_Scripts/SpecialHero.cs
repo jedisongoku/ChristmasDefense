@@ -35,6 +35,7 @@ public class SpecialHero : MonoBehaviour
         path = Mathf.CeilToInt(Random.Range(0, GameManager.gameManager.enemyDestination.Count));
         currentDestination = GameManager.gameManager.enemyDestination[path].Count - 2;
         HeroDestroy += DestroyHero;
+        Invoke("StartHeroDelayed", 0.5f);
         //Debug.Log(currentDestination);
         //heroAnimation.Play("run");
     }
@@ -43,7 +44,7 @@ public class SpecialHero : MonoBehaviour
     {
         isStarted = true;
         controller.SetDestination(GameManager.gameManager.enemyDestination[path][currentDestination][0].position);
-        Invoke("StartHeroDelayed", 1);
+        
         //spawnParticle.gameObject.SetActive(false);
     }
 
@@ -52,7 +53,7 @@ public class SpecialHero : MonoBehaviour
         if (!isStarted)
         {
             isStarted = true;
-            StartHero();
+            controller.SetDestination(GameManager.gameManager.enemyDestination[path][currentDestination][0].position);
         }
     }
 

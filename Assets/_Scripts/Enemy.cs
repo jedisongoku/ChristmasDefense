@@ -197,7 +197,7 @@ public class Enemy : MonoBehaviour {
             GameManager.gameManager.EnemyDead();
             healthBar.gameObject.SetActive(false);
             Player.resource += enemyCoin;
-            Player.score += enemyCoin * 53;
+            Player.score += enemyCoin * 101;
             GameHUDManager.gameHudManager.GameHudUpdate(); 
             enemyController.enabled = false;
             if(enemyId != 7)
