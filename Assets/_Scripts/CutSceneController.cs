@@ -19,4 +19,14 @@ public class CutSceneController : MonoBehaviour
     {
         GameHUDManager.gameHudManager.GoToLevelMenu();
     }
+
+    public void ShowLoadingHUD()
+    {
+        GameHUDManager.gameHudManager.ShowLoadingHUD();
+    }
+
+    public void HideLoadingHUD()
+    {
+        GameHUDManager.gameHudManager.HideLoadingHUD();
+    }
 }

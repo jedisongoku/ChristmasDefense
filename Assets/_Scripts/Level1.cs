@@ -36,6 +36,7 @@ public class Level1 : MonoBehaviour
 
     void OnEnable()
     {
+        Debug.Log("OnEnable");
         GameManager.gameManager.cameraLocation = cameraLocation;
         TouchController.touchController.CameraMoveLimitTop = CameraMoveLimitTop;
         TouchController.touchController.CameraMoveLimitBottom = CameraMoveLimitBottom;
