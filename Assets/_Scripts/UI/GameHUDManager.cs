@@ -230,7 +230,7 @@ public class GameHUDManager : MonoBehaviour
     {
         //UpgradeButton.gameObject.SetActive(true);
         //UpgradeButton.interactable = false;
-        if(GameManager.gameManager.GetComponent<HeroSpawnManager>().assignedHero != null)
+        if(heroInfoId != null)
         {
             switch (heroInfoId)
             {
@@ -245,6 +245,10 @@ public class GameHUDManager : MonoBehaviour
                             UpgradeButton.interactable = true;
 
                         }
+						else
+						{
+							UpgradeButton.interactable = false;
+						}
                     }
                     else
                     {
@@ -263,6 +267,10 @@ public class GameHUDManager : MonoBehaviour
                             UpgradeButton.interactable = true;
                             UpgradeButton.gameObject.SetActive(true);
                         }
+						else
+						{
+							UpgradeButton.interactable = false;
+						}
                     }
                     else
                     {
@@ -280,6 +288,10 @@ public class GameHUDManager : MonoBehaviour
                             UpgradeButton.interactable = true;
                             UpgradeButton.gameObject.SetActive(true);
                         }
+						else
+						{
+							UpgradeButton.interactable = false;
+						}
                     }
                     else
                     {
