@@ -34,6 +34,8 @@ public class UnityAds : MonoBehaviour {
         {
             case ShowResult.Finished:
                 Debug.Log("Reward Player");
+                Player.snowFlakes++;
+                Debug.Log("Snowflake added, make a panel for it :)");
                 break;
             case ShowResult.Skipped:
                 Debug.Log("Ad skipped");

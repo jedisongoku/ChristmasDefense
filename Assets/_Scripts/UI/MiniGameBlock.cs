@@ -47,6 +47,8 @@ public class MiniGameBlock : MonoBehaviour {
     {
         if(Player.snowFlakes > 0)
         {
+            Player.snowFlakes--;
+            GameHUDManager.gameHudManager.MenuHudUpdate();
             GetComponent<Animator>().SetTrigger("Open");
             GetComponent<Button>().interactable = false;
             Invoke("DelayOpenBlock", Random.Range(3, 5));

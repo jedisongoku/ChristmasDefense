@@ -20,6 +20,8 @@ public class DataStore : MonoBehaviour{
         data.levelScores = Player.levelScores;
         data.snowFlakes = Player.snowFlakes;
         data.specialHero = Player.specialHero;
+        data.tutorial = Player.tutorial;
+        data.adFree = Player.adFree;
 
         bf.Serialize(file, data);
         file.Close();
@@ -41,6 +43,8 @@ public class DataStore : MonoBehaviour{
             Player.levelScores = data.levelScores;
             Player.snowFlakes = data.snowFlakes;
             Player.specialHero = data.specialHero;
+            Player.tutorial = data.tutorial;
+            Player.adFree = data.adFree;
 
         }
         else
@@ -67,4 +71,6 @@ class PlayerData
     public int specialHero;
     public Dictionary<int, int> completedLevels;
     public Dictionary<int, int> levelScores;
+    public bool tutorial = false;
+    public bool adFree = false;
 }

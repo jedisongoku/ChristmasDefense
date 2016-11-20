@@ -67,7 +67,7 @@ public class MiniGameManager : MonoBehaviour {
                 Player.specialHero++;
                 break;
         }
-        Player.snowFlakes--;
+        
         snowFlakeCountText.text = Player.snowFlakes.ToString();
         GameHUDManager.gameHudManager.MenuHudUpdate();
         DataStore.Save();

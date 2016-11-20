@@ -58,9 +58,13 @@ public class Purchaser : MonoBehaviour, IStoreListener
 
         // Add a product to sell / restore by way of its identifier, associating the general identifier
         // with its store-specific identifiers.
-        builder.AddProduct(kProductIDConsumable, ProductType.Consumable);
+        builder.AddProduct(purchaseSnowflake_5, ProductType.Consumable);
+        builder.AddProduct(purchaseSnowflake_25, ProductType.Consumable);
+        builder.AddProduct(purchaseWarrior_3, ProductType.Consumable);
+        builder.AddProduct(purchaseWarrior_20, ProductType.Consumable);
+        builder.AddProduct(purchaseAdFree, ProductType.NonConsumable);
+
         // Continue adding the non-consumable product.
-        builder.AddProduct(kProductIDNonConsumable, ProductType.NonConsumable);
         // And finish adding the subscription product. Notice this uses store-specific IDs, illustrating
         // if the Product ID was configured differently between Apple and Google stores. Also note that
         // one uses the general kProductIDSubscription handle inside the game - the store-specific IDs 
@@ -91,11 +95,11 @@ public class Purchaser : MonoBehaviour, IStoreListener
     }
 
 
-    public void BuyNonConsumable()
+    public void BuyNonConsumable(string id)
     {
         // Buy the non-consumable product using its general identifier. Expect a response either 
         // through ProcessPurchase or OnPurchaseFailed asynchronously.
-        BuyProductID(kProductIDNonConsumable);
+        BuyProductID(id);
     }
 
 
@@ -237,6 +241,8 @@ public class Purchaser : MonoBehaviour, IStoreListener
         {
             Debug.Log(string.Format("ProcessPurchase: FAIL. Unrecognized product: '{0}'", args.purchasedProduct.definition.id));
         }
+
+        GameHUDManager.gameHudManager.MenuHudUpdate();
 
         // Return a flag indicating whether this product has completely been received, or if the application needs 
         // to be reminded of this purchase at next app launch. Use PurchaseProcessingResult.Pending when still 
