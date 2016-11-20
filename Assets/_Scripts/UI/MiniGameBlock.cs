@@ -11,15 +11,20 @@ public class MiniGameBlock : MonoBehaviour {
     public Image blockImage;
     public Sprite snowFlakeSprite;
 
+    private bool openBlock = false;
+
     void Start()
     {
         SetBlocks += SetTheBlocks;
+        blockImage.sprite = snowFlakeSprite;
+        //Player.boostPoints += 5000;
     }
 
     void SetTheBlocks()
     {
         blockImage.sprite = snowFlakeSprite;
-        if(Player.snowFlakes > 0)
+
+        if (Player.snowFlakes > 0)
         {
             GetComponent<Button>().interactable = true;
         }
@@ -44,12 +49,25 @@ public class MiniGameBlock : MonoBehaviour {
         {
             GetComponent<Animator>().SetTrigger("Open");
             GetComponent<Button>().interactable = false;
+            Invoke("DelayOpenBlock", Random.Range(3, 5));
         }  
     }
 
     public void OpenBlock()
     {
-        MiniGameManager.miniGameManager.OpenBlock(id);
+        if(openBlock)
+        {
+            openBlock = false;
+            MiniGameManager.miniGameManager.OpenBlock(id);
+        }
+        
         //GetComponent<Animator>().SetBool("Open", false);
+    }
+
+    void DelayOpenBlock()
+    {
+        //GetComponent<Animator>().SetBool("Open", false);
+        GetComponent<Animator>().SetTrigger("End");
+        openBlock = true;
     }
 }

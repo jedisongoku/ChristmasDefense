@@ -19,6 +19,7 @@ public class SpecialHero : MonoBehaviour
     private Animator heroAnimation;
     private int path = 0;
     private bool isAttacking = false;
+    private bool isStarted = false;
 
     
     void Awake()
@@ -40,8 +41,19 @@ public class SpecialHero : MonoBehaviour
 
     public void StartHero()
     {
+        isStarted = true;
         controller.SetDestination(GameManager.gameManager.enemyDestination[path][currentDestination][0].position);
+        Invoke("StartHeroDelayed", 1);
         //spawnParticle.gameObject.SetActive(false);
+    }
+
+    void StartHeroDelayed()
+    {
+        if (!isStarted)
+        {
+            isStarted = true;
+            StartHero();
+        }
     }
 
     void Update()
