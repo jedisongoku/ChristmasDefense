@@ -6,8 +6,9 @@ public class TouchController : MonoBehaviour {
     public static TouchController touchController;
     public static bool isMouseOnUI = false;
 
-    public float speed = 0.1f;
-    public float smoothing;
+    public float swipeSpeed = 0.1f;
+    public float smoothing = 1;
+    public float swipeDelay = 0;
     public float zoomSpeed = 0.5f;
     public Transform CameraMoveLimitTop;
     public Transform CameraMoveLimitBottom;
@@ -114,46 +115,48 @@ public class TouchController : MonoBehaviour {
                 moveBottom = true;
             }
         }
-        
-
 
     }
 
     IEnumerator CameraSwipe()
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
 
             if (transform.position.x < CameraMoveLimitTop.position.x && moveRight && touchDeltaPosition.x < 0)
             {
                 y_pos = transform.position.y;
-                transform.Translate(-touchDeltaPosition.x * speed, 0, 0);
+                transform.Translate(-touchDeltaPosition.x * swipeSpeed, 0, 0);
                 transform.position = new Vector3(transform.position.x, y_pos, transform.position.z);
+                //transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, y_pos, transform.position.z), Time.deltaTime * smoothing);
             }
             if (transform.position.z < CameraMoveLimitTop.position.z && moveTop && touchDeltaPosition.y < 0)
             {
                 y_pos = transform.position.y;
-                transform.Translate(0, -touchDeltaPosition.y * speed, 0);
+                transform.Translate(0, -touchDeltaPosition.y * swipeSpeed, 0);
                 transform.position = new Vector3(transform.position.x, y_pos, transform.position.z);
+                //transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, y_pos, transform.position.z), Time.deltaTime * smoothing);
             }
             if (transform.position.x > CameraMoveLimitBottom.position.x && moveLeft && touchDeltaPosition.x > 0)
             {
                 y_pos = transform.position.y;
-                transform.Translate(-touchDeltaPosition.x * speed, 0, 0);
+                transform.Translate(-touchDeltaPosition.x * swipeSpeed, 0, 0);
                 transform.position = new Vector3(transform.position.x, y_pos, transform.position.z);
+                //transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, y_pos, transform.position.z), Time.deltaTime * smoothing);
             }
             if (transform.position.z > CameraMoveLimitBottom.position.z && moveBottom && touchDeltaPosition.y > 0)
             {
                 y_pos = transform.position.y;
-                transform.Translate(0, -touchDeltaPosition.y * speed, 0);
+                transform.Translate(0, -touchDeltaPosition.y * swipeSpeed, 0);
                 transform.position = new Vector3(transform.position.x, y_pos, transform.position.z);
+                
             }
 
 
         }
 
-        yield return new WaitForSeconds(0.08f);
+        yield return new WaitForSeconds(0);
 
         StartCoroutine(CameraSwipe());
 
