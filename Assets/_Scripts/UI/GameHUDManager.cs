@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SocialPlatforms;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -108,6 +109,8 @@ public class GameHUDManager : MonoBehaviour
     {
         gameHudManager = this;
         menuHUD.gameObject.SetActive(true);
+
+        Social.localUser.Authenticate(success => { if (success) { Debug.Log("==iOS GC authenticate OK"); } else { Debug.Log("==iOS GC authenticate Failed"); } });
 
         SetSpecialHeroIndicator();
 		StartCoroutine (Fps ());
@@ -523,7 +526,27 @@ public class GameHUDManager : MonoBehaviour
             Player.specialHero = GameManager.gameManager.levelInitialSpecialHero;
         }
 
+        ReportScore();
 
+
+    }
+
+    void ReportScore()
+    {
+        if (Social.localUser.authenticated)
+        {
+            int totalScore = 0;
+            foreach (var score in Player.levelScores)
+            {
+                totalScore += score.Value;
+            }
+            Social.ReportScore(totalScore, "christmasdefenseleaderboard", success =>
+            { if (success) { Debug.Log("==iOS GC report score ok: " + totalScore + "\n"); } else { Debug.Log("==iOS GC report score Failed: " + "christmasdefenseleaderboard" + "\n"); } });
+        }
+        else
+        {
+            Debug.Log("==iOS GC can't report score, not authenticated\n");
+        }
     }
 
     public void ShowShop()
@@ -719,5 +742,10 @@ public class GameHUDManager : MonoBehaviour
 
 		StartCoroutine (Fps ());
 	}
+
+    public void ShowLeaderboard()
+    {
+        Social.ShowLeaderboardUI();
+    }
 
 }
