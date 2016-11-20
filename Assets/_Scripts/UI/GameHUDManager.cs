@@ -228,32 +228,67 @@ public class GameHUDManager : MonoBehaviour
 
     void setUpgradeAvailability()
     {
-        UpgradeButton.gameObject.SetActive(true);
-        UpgradeButton.interactable = false;
-        switch (heroInfoId)
+        //UpgradeButton.gameObject.SetActive(true);
+        //UpgradeButton.interactable = false;
+        if(GameManager.gameManager.GetComponent<HeroSpawnManager>().assignedHero != null)
         {
-            case 1:
-                heroInfoPanelImage.sprite = archerInfoPanelImage;
-                if (Player.resource >= GameManager.gameManager.tigerUpgradeCost)
-                {
-                    UpgradeButton.interactable = true;
-                }
-                break;
-            case 2:
-                heroInfoPanelImage.sprite = spartanInfoPanelImage;
-                if (Player.resource >= GameManager.gameManager.frogUpgradeCost)
-                {
-                    UpgradeButton.interactable = true;
-                }
-                break;
-            case 3:
-                heroInfoPanelImage.sprite = wizardInfoPanelImage;
-                if (Player.resource >= GameManager.gameManager.lizardUpgradeCost)
-                {
-                    UpgradeButton.interactable = true;
-                }
-                break;
+            switch (heroInfoId)
+            {
+                case 1:
+                    heroInfoPanelImage.sprite = archerInfoPanelImage;
+                    if (!GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().isUpgraded)
+                    {
+                        heroInfoPanelImage.sprite = archerInfoPanelImage;
+                        UpgradeButton.gameObject.SetActive(true);
+                        if (Player.resource >= GameManager.gameManager.tigerUpgradeCost)
+                        {
+                            UpgradeButton.interactable = true;
+
+                        }
+                    }
+                    else
+                    {
+                        heroInfoPanelImage.sprite = archerInfoPanelUpgradedImage;
+                    }
+
+                    break;
+                case 2:
+                    //heroInfoPanelImage.sprite = spartanInfoPanelImage;
+                    if (!GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().isUpgraded)
+                    {
+                        heroInfoPanelImage.sprite = spartanInfoPanelImage;
+                        UpgradeButton.gameObject.SetActive(true);
+                        if (Player.resource >= GameManager.gameManager.frogUpgradeCost)
+                        {
+                            UpgradeButton.interactable = true;
+                            UpgradeButton.gameObject.SetActive(true);
+                        }
+                    }
+                    else
+                    {
+                        heroInfoPanelImage.sprite = spartanInfoPanelUpgradedImage;
+                    }
+                    break;
+                case 3:
+                    //heroInfoPanelImage.sprite = wizardInfoPanelImage;
+                    if (!GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().isUpgraded)
+                    {
+                        heroInfoPanelImage.sprite = wizardInfoPanelImage;
+                        UpgradeButton.gameObject.SetActive(true);
+                        if (Player.resource >= GameManager.gameManager.lizardUpgradeCost)
+                        {
+                            UpgradeButton.interactable = true;
+                            UpgradeButton.gameObject.SetActive(true);
+                        }
+                    }
+                    else
+                    {
+                        heroInfoPanelImage.sprite = wizardInfoPanelUpgradedImage;
+                    }
+                    break;
+            }
         }
+        
     }
 
     public void HideHeroInfo()
@@ -540,6 +575,7 @@ public class GameHUDManager : MonoBehaviour
             {
                 totalScore += score.Value;
             }
+            Debug.Log("TOTAL SCORE: " + totalScore);
             Social.ReportScore(totalScore, "christmasdefenseleaderboard", success =>
             { if (success) { Debug.Log("==iOS GC report score ok: " + totalScore + "\n"); } else { Debug.Log("==iOS GC report score Failed: " + "christmasdefenseleaderboard" + "\n"); } });
         }

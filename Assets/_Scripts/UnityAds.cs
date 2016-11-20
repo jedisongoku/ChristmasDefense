@@ -24,8 +24,10 @@ public class UnityAds : MonoBehaviour {
 
         if (Advertisement.IsReady(zone))
         {
-            Advertisement.Show(zone);
+            Advertisement.Show(zone, options);
         }
+
+        
     }
 
     void AdCallbackHandler(ShowResult result)
