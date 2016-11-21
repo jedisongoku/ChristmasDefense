@@ -33,6 +33,12 @@ public class GameHUDManager : MonoBehaviour
     public Text infoPanelText;
     public Transform spartanUnlocked;
     public Transform wizardUnlocked;
+    public Transform normalModeLevels;
+    public Transform hardModeLevels;
+    public Transform normalModeIndicator;
+    public Transform hardModeIndicator;
+    public Sprite normalModeLevelBackground;
+    public Sprite hardModeLevelBackround;
 
     [Header("GameHUD")]
     public Transform heroesPanel;
@@ -41,6 +47,7 @@ public class GameHUDManager : MonoBehaviour
     public Transform buttonsPanel;
     public Transform heroInfoPanel;
     public Transform specialHeroIndicator;
+    public Transform TutorialSkipPanel;
     public Text resourceText;
     public Text lifeText;
     public Text waveText;
@@ -65,6 +72,7 @@ public class GameHUDManager : MonoBehaviour
     public Transform selectHeroTooltip;
     public Transform resourceTooltip;
     public Transform lifeTooltip;
+    public Transform specialHeroTooltip;
     public Transform upgradeHeroTooltip;
 
     [Header("In-Game Shop")]
@@ -686,6 +694,7 @@ public class GameHUDManager : MonoBehaviour
                     tapHereTooltip.gameObject.SetActive(false);
                     resourceTooltip.gameObject.SetActive(true);
                     lifeTooltip.gameObject.SetActive(true);
+                    specialHeroTooltip.gameObject.SetActive(true);
                     selectHeroTooltip.gameObject.SetActive(true);
                     GameManager.gameManager.tutorialPhase_2 = true;
 
@@ -701,6 +710,7 @@ public class GameHUDManager : MonoBehaviour
                     selectHeroTooltip.gameObject.SetActive(false);
                     resourceTooltip.gameObject.SetActive(false);
                     lifeTooltip.gameObject.SetActive(false);
+                    selectHeroTooltip.gameObject.SetActive(false);
                     GameManager.gameManager.tutorialPhase_3 = true;
 
                 }
@@ -825,5 +835,54 @@ public class GameHUDManager : MonoBehaviour
         spartanUnlocked.gameObject.SetActive(false);
         wizardUnlocked.gameObject.SetActive(false);
     }
+
+    public void GoHomeFromLevelMenu()
+    {
+        levelMenu.gameObject.SetActive(false);
+        mainMenu.gameObject.SetActive(true);
+    }
+
+    public void ShowHardModeLevels()
+    {
+        levelPanel.GetComponent<Image>().sprite = hardModeLevelBackround;
+        normalModeLevels.gameObject.SetActive(false);
+        normalModeIndicator.gameObject.SetActive(false);
+        hardModeIndicator.gameObject.SetActive(true);
+        hardModeLevels.gameObject.SetActive(true);
+    }
+
+    public void ShowNormalModeLevels()
+    {
+        levelPanel.GetComponent<Image>().sprite = normalModeLevelBackground;
+        hardModeIndicator.gameObject.SetActive(false);
+        hardModeLevels.gameObject.SetActive(false);
+        normalModeLevels.gameObject.SetActive(true);
+        normalModeIndicator.gameObject.SetActive(true);
+        
+    }
+    public void ShowTutorialSkipPanel()
+    {
+        
+        TutorialSkipPanel.gameObject.SetActive(true);
+        TutorialSkipPanel.GetComponent<Animator>().SetTrigger("Play");
+
+    }
+
+    public void SkipTutorial(bool skip)
+    {
+        if(skip)
+        {
+            GameManager.gameManager.isTutorial = false;
+        }
+        else
+        {
+            GameManager.gameManager.isTutorial = true;
+            
+        }
+        GameManager.gameManager.StartLevel();
+        TutorialSkipPanel.gameObject.SetActive(false);
+
+    }
+
 
 }

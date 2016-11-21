@@ -8,8 +8,15 @@ public class CutSceneController : MonoBehaviour
     {
         GameHUDManager.gameHudManager.menuHUD.gameObject.SetActive(false);
         GameHUDManager.gameHudManager.gameHUD.gameObject.SetActive(true);
-
-        GameManager.gameManager.StartLevel();
+        if(GameManager.gameManager.level != 1)
+        {
+            GameManager.gameManager.StartLevel();
+        }
+        else
+        {
+            GameHUDManager.gameHudManager.ShowTutorialSkipPanel();
+        }
+        
         Camera.main.fieldOfView = 60;
         Camera.main.transform.position = GameManager.gameManager.cameraLocation.position;
         gameObject.SetActive(false);
