@@ -711,6 +711,7 @@ public class GameHUDManager : MonoBehaviour
                     resourceTooltip.gameObject.SetActive(false);
                     lifeTooltip.gameObject.SetActive(false);
                     selectHeroTooltip.gameObject.SetActive(false);
+					specialHeroTooltip.gameObject.SetActive (false);
                     GameManager.gameManager.tutorialPhase_3 = true;
 
                 }
@@ -824,6 +825,7 @@ public class GameHUDManager : MonoBehaviour
 
     public void ShowInfoPanel()
     {
+		infoPanel.localScale = new Vector3 (0, 0, 0);
         infoPanel.gameObject.SetActive(true);
         infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
     }
@@ -862,7 +864,7 @@ public class GameHUDManager : MonoBehaviour
     }
     public void ShowTutorialSkipPanel()
     {
-        
+		TutorialSkipPanel.localScale = new Vector3 (0, 0, 0);
         TutorialSkipPanel.gameObject.SetActive(true);
         TutorialSkipPanel.GetComponent<Animator>().SetTrigger("Play");
 
