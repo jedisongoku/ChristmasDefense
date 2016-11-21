@@ -21,7 +21,8 @@ public class GameHUDManager : MonoBehaviour
     public Transform levelPanel;
     public Transform shopPanel;
     public Transform loadingBar;
-    public Transform MiniGamePanel;
+    public Transform miniGamePanel;
+    public Transform infoPanel;
     public Text MiniGameCounterText;
     public Text boostPointTextMenu;
     public Text lifeTextMenu;
@@ -29,6 +30,9 @@ public class GameHUDManager : MonoBehaviour
     public Text snowFlakeText;
     public Transform specialHeroIndicatorMenu;
     public Text specialHeroIndicatorTextMenu;
+    public Text infoPanelText;
+    public Transform spartanUnlocked;
+    public Transform wizardUnlocked;
 
     [Header("GameHUD")]
     public Transform heroesPanel;
@@ -553,6 +557,17 @@ public class GameHUDManager : MonoBehaviour
 
         if (GameManager.gameManager.levelCompletedStars != 0)
         {
+            if(GameManager.gameManager.level == 1 && Player.completedLevels[GameManager.gameManager.level + 1] == -1)
+            {
+                ShowInfoPanel();
+                spartanUnlocked.gameObject.SetActive(true);
+            }
+            else if(GameManager.gameManager.level == 2 && Player.completedLevels[GameManager.gameManager.level + 1] == -1)
+            {
+                ShowInfoPanel();
+                wizardUnlocked.gameObject.SetActive(true);
+            }
+
             if (Player.levelScores[GameManager.gameManager.level] < Player.score)
             {
                 Player.levelScores[GameManager.gameManager.level] = Player.score;
@@ -601,7 +616,7 @@ public class GameHUDManager : MonoBehaviour
     public void ShowShop()
     {
         levelPanel.gameObject.SetActive(false);
-        MiniGamePanel.gameObject.SetActive(false);
+        miniGamePanel.gameObject.SetActive(false);
         shopPanel.gameObject.SetActive(true);
         ItemShopTabClicked(0);
     }
@@ -645,7 +660,7 @@ public class GameHUDManager : MonoBehaviour
 
     public void ShowMiniGamePanel()
     {
-        MiniGamePanel.gameObject.SetActive(true);
+        miniGamePanel.gameObject.SetActive(true);
         levelPanel.gameObject.SetActive(false);
         shopPanel.gameObject.SetActive(false);
         MiniGameCounterText.text = Player.snowFlakes.ToString();
@@ -654,7 +669,7 @@ public class GameHUDManager : MonoBehaviour
 
     public void HideMiniGamePanel()
     {
-        MiniGamePanel.gameObject.SetActive(false);
+        miniGamePanel.gameObject.SetActive(false);
         levelPanel.gameObject.SetActive(true);
     }
 
@@ -795,6 +810,20 @@ public class GameHUDManager : MonoBehaviour
     public void ShowLeaderboard()
     {
         Social.ShowLeaderboardUI();
+    }
+
+    public void ShowInfoPanel()
+    {
+        infoPanel.gameObject.SetActive(true);
+        infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+    }
+
+    public void HideInfoPanel()
+    {
+        infoPanel.gameObject.SetActive(false);
+        infoPanelText.gameObject.SetActive(false);
+        spartanUnlocked.gameObject.SetActive(false);
+        wizardUnlocked.gameObject.SetActive(false);
     }
 
 }

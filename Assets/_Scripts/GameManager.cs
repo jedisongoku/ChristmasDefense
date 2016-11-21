@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour {
 
     public bool canSelectSpawnPoint = true;
 
+
     [Header("Tutorial")]
     public bool isTutorial = false;
     public bool tutorialPhase_1 = false;
@@ -145,7 +146,7 @@ public class GameManager : MonoBehaviour {
         //Camera.main.transform.position = cameraLocations[level - 1].position;
         //specialHeroSpawnLocation = enemyDestination[0][enemyDestination[0].Count - 1][0];
 
-        if (isTutorial)
+        if (isTutorial && level == 1)
         {
             GameHUDManager.gameHudManager.tapHereTooltip.gameObject.SetActive(true);
             tutorialPhase_1 = true;
