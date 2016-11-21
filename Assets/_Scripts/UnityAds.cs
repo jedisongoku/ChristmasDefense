@@ -34,10 +34,11 @@ public class UnityAds : MonoBehaviour {
     {
         switch(result)
         {
-            case ShowResult.Finished:
-                Debug.Log("Reward Player");
-                GameHUDManager.gameHudManager.ShowInfoPanel();
-                Player.snowFlakes++;
+			case ShowResult.Finished:
+				Debug.Log ("Reward Player");
+				GameHUDManager.gameHudManager.ShowInfoPanel ();
+				GameHUDManager.gameHudManager.infoPanelText.gameObject.SetActive (true);           
+				Player.snowFlakes++;
                 GameHUDManager.gameHudManager.MenuHudUpdate();
                 Debug.Log("Snowflake added, make a panel for it :)");
                 break;
