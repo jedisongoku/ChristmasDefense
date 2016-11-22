@@ -77,7 +77,11 @@ public class HeroSpawnManager : MonoBehaviour
     */
     public void OnTouched()
     {
-        GameHUDManager.gameHudManager.TutorialPhaseComplete(1);
+        if(GameManager.gameManager.tutorialPhase_2)
+        {
+            GameHUDManager.gameHudManager.TutorialPhaseStart(2);
+        }
+
 
         if (!MouseController.isMouseOnUI)
         {
@@ -101,12 +105,9 @@ public class HeroSpawnManager : MonoBehaviour
                 Debug.Log("Show player updates here");
                 GameHUDManager.gameHudManager.ShowHeroInfo(assignedHero.GetComponent<Hero>().heroID);
                 radius.gameObject.SetActive(true);
-                if (GameManager.gameManager.tutorialPhase_3)
+                if (GameManager.gameManager.tutorialPhase_4)
                 {
-                    if (tapHeroTooltip.gameObject.activeInHierarchy)
-                    {
-                        tapHeroTooltip.gameObject.SetActive(false);
-                    }
+                    GameHUDManager.gameHudManager.TutorialPhaseStart(4);
                 }
             }
         }

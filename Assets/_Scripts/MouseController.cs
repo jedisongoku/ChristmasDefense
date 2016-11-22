@@ -96,7 +96,7 @@ public class MouseController : MonoBehaviour {
                     {
                         Invoke("HideHeroPanels", 0);
                         //HideHeroPanels();
-                        GameHUDManager.gameHudManager.TutorialPhaseComplete(2);
+                        //GameHUDManager.gameHudManager.TutorialPhaseComplete(2);
                         
                     }
                 }

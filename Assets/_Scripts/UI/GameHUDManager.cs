@@ -74,6 +74,13 @@ public class GameHUDManager : MonoBehaviour
     public Transform lifeTooltip;
     public Transform specialHeroTooltip;
     public Transform upgradeHeroTooltip;
+    public Transform tutorialInfoPanelPhase_1;
+    public Transform tutorialInfoPanelPhase_2;
+    public Transform tutorialInfoPanelPhase_3;
+    public Transform tutorialInfoPanelPhase_4;
+    public Transform tutorialInfoPanelPhase_5;
+    public Transform tutorialInfoPanelPhase_6;
+    public GameObject tutorialselectedHeroSpawnPoint;
 
     [Header("In-Game Shop")]
     public Transform miniGameItemPanel;
@@ -462,9 +469,10 @@ public class GameHUDManager : MonoBehaviour
         fastForwardButton.image.sprite = fastForwardImage;
         playPauseButton.image.sprite = pauseButtonImage;
         Time.timeScale = 1;
-        gameHUD.gameObject.SetActive(false);
-        GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
-        GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("Intro" + GameManager.gameManager.level);
+        //gameHUD.gameObject.SetActive(false);
+        Camera.main.transform.position = GameManager.gameManager.cameraLocation.position;
+        //GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
+        //GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("Intro" + GameManager.gameManager.level);
         //GameManager.gameManager.StartLevel();
 
     }
@@ -631,8 +639,11 @@ public class GameHUDManager : MonoBehaviour
         GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().HideObjects();
         GameManager.gameManager.selectedSpawnPoint.GetComponentInChildren<ParticleSystem>().Play();
         heroInfoPanel.gameObject.SetActive(false);
-        TutorialPhaseComplete(3);
         MouseController.isMouseOnUI = false;
+        if(GameManager.gameManager.tutorialPhase_5)
+        {
+            TutorialPhaseStart(5);
+        }
     }
 
     public void PurchaseSnowFlakesWithBoostPoints()
@@ -672,50 +683,65 @@ public class GameHUDManager : MonoBehaviour
     }
 
 
-    public void TutorialPhaseComplete(int phase)
+    public void TutorialPhaseStart(int phase)
     {
         switch (phase)
         {
             case 1:
-                if (GameManager.gameManager.tutorialPhase_1)
-                {
-                    Debug.Log("phase 1");
-                    GameManager.gameManager.tutorialPhase_1 = false;
-                    tapHereTooltip.gameObject.SetActive(false);
-                    resourceTooltip.gameObject.SetActive(true);
-                    lifeTooltip.gameObject.SetActive(true);
-                    specialHeroTooltip.gameObject.SetActive(true);
-                    selectHeroTooltip.gameObject.SetActive(true);
-                    GameManager.gameManager.tutorialPhase_2 = true;
+                Debug.Log("phase 1");
+                GameManager.gameManager.tutorialPhase_1 = true;
+                ShowInfoPanel(1);
+                    
 
-                }
+                /*
+                GameManager.gameManager.tutorialPhase_1 = false;
+                tapHereTooltip.gameObject.SetActive(false);
+                resourceTooltip.gameObject.SetActive(true);
+                lifeTooltip.gameObject.SetActive(true);
+                specialHeroTooltip.gameObject.SetActive(true);
+                selectHeroTooltip.gameObject.SetActive(true);
+                GameManager.gameManager.tutorialPhase_2 = true;
+                */
                 break;
             case 2:
-                if (GameManager.gameManager.tutorialPhase_2 && !GameManager.gameManager.tutorialPhase_1)
-                {
-                    Debug.Log("phase 2");
-                    GameManager.gameManager.ResetWaveTimer();
-                    GameManager.gameManager.isTutorial = false;
-                    GameManager.gameManager.tutorialPhase_2 = false;
-                    selectHeroTooltip.gameObject.SetActive(false);
-                    resourceTooltip.gameObject.SetActive(false);
-                    lifeTooltip.gameObject.SetActive(false);
-                    selectHeroTooltip.gameObject.SetActive(false);
-					specialHeroTooltip.gameObject.SetActive (false);
-                    GameManager.gameManager.tutorialPhase_3 = true;
 
-                }
+                Debug.Log("phase 2");
+                ShowInfoPanel(2);
+                /*
+                GameManager.gameManager.ResetWaveTimer();
+                GameManager.gameManager.isTutorial = false;
+                GameManager.gameManager.tutorialPhase_2 = false;
+                selectHeroTooltip.gameObject.SetActive(false);
+                resourceTooltip.gameObject.SetActive(false);
+                lifeTooltip.gameObject.SetActive(false);
+                selectHeroTooltip.gameObject.SetActive(false);
+				specialHeroTooltip.gameObject.SetActive (false);
+                GameManager.gameManager.tutorialPhase_3 = true;
+                */
 
                 break;
             case 3:
-                if (GameManager.gameManager.tutorialPhase_3 && !GameManager.gameManager.tutorialPhase_2)
-                {
-                    Debug.Log("phase 3");
-                    GameManager.gameManager.tutorialPhase_3 = false;
-                    upgradeHeroTooltip.gameObject.SetActive(false);
+                Debug.Log("phase 3");
+                GameManager.gameManager.tutorialPhase_3 = true;
+                ShowInfoPanel(3);
+                
 
-                }
                 break;
+            case 4:
+                Debug.Log("phase 4");
+                ShowInfoPanel(4);
+
+                break;
+            case 5:
+                Debug.Log("phase 5");
+                ShowInfoPanel(5);
+                break;
+            case 6:
+                Debug.Log("phase 6");
+                GameManager.gameManager.tutorialPhase_6 = true;
+                ShowInfoPanel(6);
+                break;
+
         }
     }
 
@@ -815,12 +841,14 @@ public class GameHUDManager : MonoBehaviour
 
     /// <summary>
     /// 0 - Snowflake
-    /// 1 - Unlock Hero
+    /// 8 - Unlock Hero
+    /// 1 - Tutorial Phase 1
     /// </summary>
     /// <param name="select"></param>
     public void ShowInfoPanel(int select)
     {
         //infoPanel.localScale = new Vector3(0, 0, 0);
+        MouseController.isMouseOnUI = true;
 
         switch (select)
         {
@@ -829,7 +857,7 @@ public class GameHUDManager : MonoBehaviour
                 infoPanel.gameObject.SetActive(true);
                 infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
                 break;
-            case 1:
+            case 8:
                 if (GameManager.gameManager.levelCompletedStars != 0)
                 {
                     if (GameManager.gameManager.level == 1 && Player.completedLevels[GameManager.gameManager.level + 1] == -1)
@@ -851,6 +879,40 @@ public class GameHUDManager : MonoBehaviour
                     
                 }
                 break;
+            case 1:
+                tutorialInfoPanelPhase_1.gameObject.SetActive(true);
+                infoPanel.gameObject.SetActive(true);
+                infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+                break;
+            case 2:
+                tutorialInfoPanelPhase_2.gameObject.SetActive(true);
+                infoPanel.gameObject.SetActive(true);
+                infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+                resourceTooltip.gameObject.SetActive(true);
+
+                break;
+            case 3:
+                tutorialInfoPanelPhase_3.gameObject.SetActive(true);
+                infoPanel.gameObject.SetActive(true);
+                infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+                lifeTooltip.gameObject.SetActive(true);
+                break;
+            case 4:
+                tutorialInfoPanelPhase_4.gameObject.SetActive(true);
+                infoPanel.gameObject.SetActive(true);
+                infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+                break;
+            case 5:
+                tutorialInfoPanelPhase_5.gameObject.SetActive(true);
+                infoPanel.gameObject.SetActive(true);
+                infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+                specialHeroTooltip.gameObject.SetActive(true);
+                break;
+            case 6:
+                tutorialInfoPanelPhase_6.gameObject.SetActive(true);
+                infoPanel.gameObject.SetActive(true);
+                infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+                break;
         }
 
         
@@ -863,6 +925,67 @@ public class GameHUDManager : MonoBehaviour
         infoPanelText.gameObject.SetActive(false);
         spartanUnlocked.gameObject.SetActive(false);
         wizardUnlocked.gameObject.SetActive(false);
+        tutorialInfoPanelPhase_1.gameObject.SetActive(false);
+        tutorialInfoPanelPhase_2.gameObject.SetActive(false);
+        tutorialInfoPanelPhase_3.gameObject.SetActive(false);
+        tutorialInfoPanelPhase_4.gameObject.SetActive(false);
+        tutorialInfoPanelPhase_5.gameObject.SetActive(false);
+        tutorialInfoPanelPhase_6.gameObject.SetActive(false);
+
+
+        if (GameManager.gameManager.isTutorial)
+        {
+            if(GameManager.gameManager.tutorialPhase_1)
+            {
+                GameManager.gameManager.tutorialPhase_1 = false;
+                GameManager.gameManager.tutorialPhase_2 = true;
+                tapHereTooltip.gameObject.SetActive(true);
+            }
+            else if(GameManager.gameManager.tutorialPhase_2)
+            {
+
+                GameManager.gameManager.tutorialPhase_2 = false;
+                tapHereTooltip.gameObject.SetActive(false);
+                resourceTooltip.gameObject.SetActive(false);
+                selectHeroTooltip.gameObject.SetActive(true);
+
+                
+                
+            }
+            else if (GameManager.gameManager.tutorialPhase_3)
+            {
+                GameManager.gameManager.tutorialPhase_3 = false;
+                GameManager.gameManager.tutorialPhase_4 = true;
+                lifeTooltip.gameObject.SetActive(false);
+                tutorialselectedHeroSpawnPoint = GameManager.gameManager.selectedSpawnPoint;
+                tutorialselectedHeroSpawnPoint.GetComponent<HeroSpawnManager>().ShowTutorialTooltip();
+                //upgradeHeroTooltip.gameObject.SetActive(true);
+            }
+            else if (GameManager.gameManager.tutorialPhase_4)
+            {
+                GameManager.gameManager.tutorialPhase_4 = false;
+                GameManager.gameManager.tutorialPhase_5 = true;
+                tutorialselectedHeroSpawnPoint.GetComponent<HeroSpawnManager>().HideTutorialTooltip();
+                upgradeHeroTooltip.gameObject.SetActive(true);
+            }
+            else if (GameManager.gameManager.tutorialPhase_5)
+            {
+                GameManager.gameManager.tutorialPhase_5 = false;
+                specialHeroTooltip.gameObject.SetActive(true);
+                TutorialPhaseStart(6);
+            }
+            else if (GameManager.gameManager.tutorialPhase_6)
+            {
+                GameManager.gameManager.tutorialPhase_6 = false;
+                selectHeroTooltip.gameObject.SetActive(false);
+                specialHeroTooltip.gameObject.SetActive(false);
+                GameManager.gameManager.ResetWaveTimer();
+                GameManager.gameManager.isTutorial = false;
+            }
+            
+
+        }
+        MouseController.isMouseOnUI = false;
     }
 
     public void GoHomeFromLevelMenu()
@@ -906,7 +1029,8 @@ public class GameHUDManager : MonoBehaviour
         else
         {
             GameManager.gameManager.isTutorial = true;
-            
+            TutorialPhaseStart(1);
+
         }
         GameManager.gameManager.StartLevel();
         TutorialSkipPanel.gameObject.SetActive(false);

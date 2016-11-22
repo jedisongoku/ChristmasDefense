@@ -49,7 +49,7 @@ public class TouchController : MonoBehaviour {
                     //Invoke("HideHeroPanels", 0.1f);
                     MouseController.isMouseOnUI = false;
                     HideHeroPanels();
-                    GameHUDManager.gameHudManager.TutorialPhaseComplete(2);
+                    //GameHUDManager.gameHudManager.TutorialPhaseComplete(2);
                 }
             }
         }

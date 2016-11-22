@@ -64,6 +64,9 @@ public class GameManager : MonoBehaviour {
     public bool tutorialPhase_1 = false;
     public bool tutorialPhase_2 = false;
     public bool tutorialPhase_3 = false;
+    public bool tutorialPhase_4 = false;
+    public bool tutorialPhase_5 = false;
+    public bool tutorialPhase_6 = false;
 
     //private Dictionary<int, Dictionary<int, List<int>>> enemySpawnList = new Dictionary<int, Dictionary<int, List<int>>>();
     private float levelTimer = 0f;
@@ -148,8 +151,8 @@ public class GameManager : MonoBehaviour {
 
         if (isTutorial && level == 1)
         {
-            GameHUDManager.gameHudManager.tapHereTooltip.gameObject.SetActive(true);
-            tutorialPhase_1 = true;
+            //GameHUDManager.gameHudManager.tapHereTooltip.gameObject.SetActive(true);
+            //tutorialPhase_1 = true;
         }
         
         SetEnemiesForNextWave();
@@ -228,9 +231,9 @@ public class GameManager : MonoBehaviour {
         //selectedSpawnPoint.GetComponent<HeroSpawnManager>().particleAfterSpawn.gameObject.SetActive(true);
         selectedSpawnPoint.GetComponentInChildren<ParticleSystem>().Play();
         
-        if(tutorialPhase_2)
+        if(isTutorial && Player.resource <= 150)
         {
-            GameHUDManager.gameHudManager.TutorialPhaseComplete(2);
+            GameHUDManager.gameHudManager.TutorialPhaseStart(3);
         }
 
         if (hero == 1 && Player.resource >= tigerCost)
@@ -255,11 +258,6 @@ public class GameManager : MonoBehaviour {
             GameHUDManager.gameHudManager.GameHudUpdate();
         }
 
-        if (tutorialPhase_3 && Player.resource <= 150)
-        {
-            tutorialHero = selectedSpawnPoint;
-            tutorialHero.GetComponent<HeroSpawnManager>().ShowTutorialTooltip();
-        }
     }
 
 
