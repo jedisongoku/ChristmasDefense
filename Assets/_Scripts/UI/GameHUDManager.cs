@@ -89,17 +89,11 @@ public class GameHUDManager : MonoBehaviour
     public Button miniGameTabButton;
     public Button heroesTabButton;
     public Button adsTabButton;
-    public Button purchaseSnowFlake_500BP;
-    public Button purchaseSnowFlake_99C;
-    public Button purchaseSnowFlake_299C;
-    public Button purchaseWarrior_99C;
-    public Button purchaseWarrior_499C;
-    public Button purhcaseAddFree_99C;
+
 
 
     [Header("Level")]
     public List<Transform> levels;
-    public List<GameObject> levelPrefabs;
 
     [Header("UI")]
     public Button playPauseButton;
@@ -471,6 +465,8 @@ public class GameHUDManager : MonoBehaviour
         Time.timeScale = 1;
         //gameHUD.gameObject.SetActive(false);
         Camera.main.transform.position = GameManager.gameManager.cameraLocation.position;
+        Camera.main.fieldOfView = 60;
+        GameManager.gameManager.StartLevel();
         //GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
         //GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("Intro" + GameManager.gameManager.level);
         //GameManager.gameManager.StartLevel();
@@ -550,6 +546,7 @@ public class GameHUDManager : MonoBehaviour
     {
 
         nextButton.interactable = true;
+        HideAllPanels();
         switch (GameManager.gameManager.levelCompletedStars)
         {
             case 0:
@@ -843,6 +840,12 @@ public class GameHUDManager : MonoBehaviour
     /// 0 - Snowflake
     /// 8 - Unlock Hero
     /// 1 - Tutorial Phase 1
+    /// 2 - Tutorial Phase 2
+    /// 3 - Tutorial Phase 3
+    /// 4 - Tutorial Phase 4
+    /// 5 - Tutorial Phase 5
+    /// 6 - Tutorial Phase 6
+
     /// </summary>
     /// <param name="select"></param>
     public void ShowInfoPanel(int select)
@@ -857,28 +860,7 @@ public class GameHUDManager : MonoBehaviour
                 infoPanel.gameObject.SetActive(true);
                 infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
                 break;
-            case 8:
-                if (GameManager.gameManager.levelCompletedStars != 0)
-                {
-                    if (GameManager.gameManager.level == 1 && Player.completedLevels[GameManager.gameManager.level + 1] == -1)
-                    {
-                        wizardUnlocked.gameObject.SetActive(false);
-                        infoPanelText.gameObject.SetActive(false);
-                        spartanUnlocked.gameObject.SetActive(true);
-                        infoPanel.gameObject.SetActive(true);
-                        infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
-                    }
-                    else if (GameManager.gameManager.level == 2 && Player.completedLevels[GameManager.gameManager.level + 1] == -1)
-                    {
-                        spartanUnlocked.gameObject.SetActive(false);
-                        infoPanelText.gameObject.SetActive(false);
-                        wizardUnlocked.gameObject.SetActive(true);
-                        infoPanel.gameObject.SetActive(true);
-                        infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
-                    }
-                    
-                }
-                break;
+            
             case 1:
                 tutorialInfoPanelPhase_1.gameObject.SetActive(true);
                 infoPanel.gameObject.SetActive(true);
@@ -913,6 +895,28 @@ public class GameHUDManager : MonoBehaviour
                 infoPanel.gameObject.SetActive(true);
                 infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
                 break;
+            case 8:
+                if (GameManager.gameManager.levelCompletedStars != 0)
+                {
+                    if (GameManager.gameManager.level == 1 && Player.completedLevels[GameManager.gameManager.level + 1] == -1)
+                    {
+                        wizardUnlocked.gameObject.SetActive(false);
+                        infoPanelText.gameObject.SetActive(false);
+                        spartanUnlocked.gameObject.SetActive(true);
+                        infoPanel.gameObject.SetActive(true);
+                        infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+                    }
+                    else if (GameManager.gameManager.level == 2 && Player.completedLevels[GameManager.gameManager.level + 1] == -1)
+                    {
+                        spartanUnlocked.gameObject.SetActive(false);
+                        infoPanelText.gameObject.SetActive(false);
+                        wizardUnlocked.gameObject.SetActive(true);
+                        infoPanel.gameObject.SetActive(true);
+                        infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+                    }
+
+                }
+                break;
         }
 
         
@@ -945,7 +949,7 @@ public class GameHUDManager : MonoBehaviour
             {
 
                 GameManager.gameManager.tutorialPhase_2 = false;
-                tapHereTooltip.gameObject.SetActive(false);
+                //tapHereTooltip.gameObject.SetActive(false);
                 resourceTooltip.gameObject.SetActive(false);
                 selectHeroTooltip.gameObject.SetActive(true);
 
@@ -1034,7 +1038,14 @@ public class GameHUDManager : MonoBehaviour
         }
         GameManager.gameManager.StartLevel();
         TutorialSkipPanel.gameObject.SetActive(false);
+        
 
+    }
+
+    public void HideAllPanels()
+    {
+        HideHeroes();
+        HideHeroInfo();
     }
 
 

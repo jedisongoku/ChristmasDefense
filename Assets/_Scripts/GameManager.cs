@@ -231,9 +231,14 @@ public class GameManager : MonoBehaviour {
         //selectedSpawnPoint.GetComponent<HeroSpawnManager>().particleAfterSpawn.gameObject.SetActive(true);
         selectedSpawnPoint.GetComponentInChildren<ParticleSystem>().Play();
         
-        if(isTutorial && Player.resource <= 150)
+        if(isTutorial && Player.resource <= 225)
         {
             GameHUDManager.gameHudManager.TutorialPhaseStart(3);
+        }
+        else
+        if(isTutorial)
+        {
+            GameHUDManager.gameHudManager.tapHereTooltip.gameObject.SetActive(false);
         }
 
         if (hero == 1 && Player.resource >= tigerCost)

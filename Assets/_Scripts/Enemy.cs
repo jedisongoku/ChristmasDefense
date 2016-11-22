@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour {
 
     public ParticleSystem slowDownParticle;
     public ParticleSystem dotParticle;
+    public ParticleSystem dodgeParticle;
 
     
     private NavMeshAgent enemyController;
@@ -89,7 +90,13 @@ public class Enemy : MonoBehaviour {
             enemyHealthMax = enemyHealth;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
         }
-        
+        if (GameManager.gameManager.level == 5 && GameManager.gameManager.GetCurrentWave() == 20)
+        {
+            enemyHealth = 1166;
+            enemyHealthMax = enemyHealth;
+            gameObject.transform.localScale = new Vector3(2, 2, 2);
+        }
+
     }
 
     void Start()
@@ -139,6 +146,11 @@ public class Enemy : MonoBehaviour {
                 isFirstHeal = false;
                 mushroomMonster.Heal();
 
+            }
+            else if(enemyId == 4 && Random.Range(0,1000) < 100)
+            {
+                Debug.Log("Enemy 4 Dodge Attack");
+                dodgeParticle.Play();
             }
             else if(canTakeDamage)
             {

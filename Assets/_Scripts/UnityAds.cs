@@ -40,7 +40,7 @@ public class UnityAds : MonoBehaviour {
 			case ShowResult.Finished:
                 if(rewardZone == "video")
                 {
-                    GameHUDManager.gameHudManager.ShowInfoPanel(1);
+                    GameHUDManager.gameHudManager.ShowInfoPanel(8);
                     
                 }
                 else

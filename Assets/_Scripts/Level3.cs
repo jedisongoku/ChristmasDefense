@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Level3 : MonoBehaviour {
-
+public class Level3 : Level
+{
+    /*
     [Header("Level")]
     public Transform[] spawnPoints;
     public Transform specialHeroSpawnPoint;
@@ -11,7 +12,7 @@ public class Level3 : MonoBehaviour {
     public Transform CameraMoveLimitTop;
     public Transform CameraMoveLimitBottom;
     public float spawnTimerMin;
-    public float spawnTimerMax;
+    public float spawnTimerMax;*/
 
     [Header("Waves")]
     public List<int> wave_1 = new List<int>();
@@ -84,6 +85,7 @@ public class Level3 : MonoBehaviour {
         GameManager.gameManager.specialHeroSpawnLocation = specialHeroSpawnPoint;
         GameManager.gameManager.spawnTimerMin = spawnTimerMin;
         GameManager.gameManager.spawnTimerMax = spawnTimerMax;
+        GameManager.gameManager.levelInitialResource = startResource;
 
     }
 }

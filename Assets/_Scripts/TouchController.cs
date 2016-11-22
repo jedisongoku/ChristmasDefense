@@ -32,27 +32,31 @@ public class TouchController : MonoBehaviour {
 
     void FixedUpdate()
     {
-
-        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        if(!MouseController.isMouseOnUI)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-
-            if (Physics.Raycast(ray, out hit, 1000))
+            if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                //Debug.Log(hit.transform.name);
-                if (hit.transform.CompareTag("SpawnLocation"))
+                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+
+                if (Physics.Raycast(ray, out hit, 1000))
                 {
-                    hit.transform.GetComponent<HeroSpawnManager>().OnTouched();
-                }
-                else
-                {
-                    //Invoke("HideHeroPanels", 0.1f);
-                    MouseController.isMouseOnUI = false;
-                    HideHeroPanels();
-                    //GameHUDManager.gameHudManager.TutorialPhaseComplete(2);
+                    //Debug.Log(hit.transform.name);
+                    if (hit.transform.CompareTag("SpawnLocation"))
+                    {
+                        hit.transform.GetComponent<HeroSpawnManager>().OnTouched();
+                    }
+                    else
+                    {
+                        //Invoke("HideHeroPanels", 0.1f);
+                        MouseController.isMouseOnUI = false;
+                        HideHeroPanels();
+                        //GameHUDManager.gameHudManager.TutorialPhaseComplete(2);
+                    }
                 }
             }
+
         }
+        
 
 
         //PinchZoom
