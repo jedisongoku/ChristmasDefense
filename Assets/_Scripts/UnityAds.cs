@@ -5,6 +5,7 @@ using System.Collections;
 public class UnityAds : MonoBehaviour {
 
     public static UnityAds ads;
+    public string rewardZone;
 
     void Start()
     {
@@ -14,9 +15,11 @@ public class UnityAds : MonoBehaviour {
 
     public void ShowAd(string zone = "")
     {
+        rewardZone = zone;
         if(string.Equals(zone, ""))
         {
             zone = null;
+            rewardZone = null;
         }
 
         ShowOptions options = new ShowOptions();
@@ -35,12 +38,19 @@ public class UnityAds : MonoBehaviour {
         switch(result)
         {
 			case ShowResult.Finished:
-				Debug.Log ("Reward Player");
-				GameHUDManager.gameHudManager.ShowInfoPanel ();
-				GameHUDManager.gameHudManager.infoPanelText.gameObject.SetActive (true);           
-				Player.snowFlakes++;
-                GameHUDManager.gameHudManager.MenuHudUpdate();
-                Debug.Log("Snowflake added, make a panel for it :)");
+                if(rewardZone == "video")
+                {
+                    GameHUDManager.gameHudManager.ShowInfoPanel(1);
+                    
+                }
+                else
+                {
+                    Debug.Log("Reward Player");
+                    GameHUDManager.gameHudManager.ShowInfoPanel(0);
+                    Player.snowFlakes++;
+                    GameHUDManager.gameHudManager.MenuHudUpdate();
+                    Debug.Log("Snowflake added, make a panel for it :)");
+                }
                 break;
             case ShowResult.Skipped:
                 Debug.Log("Ad skipped");

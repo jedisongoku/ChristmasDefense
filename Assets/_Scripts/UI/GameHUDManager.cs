@@ -242,7 +242,7 @@ public class GameHUDManager : MonoBehaviour
     {
         //UpgradeButton.gameObject.SetActive(true);
         //UpgradeButton.interactable = false;
-        if(heroInfoId != null)
+        if(heroInfoId != 0)
         {
             switch (heroInfoId)
             {
@@ -437,6 +437,7 @@ public class GameHUDManager : MonoBehaviour
     public void NextLevel()
     {
         loadingHUD.gameObject.SetActive(true);
+        gameHUD.gameObject.SetActive(false);
         HeroSpawnManager.DestroyAssignedHeroes();
         SpecialHero.DestorySpecialHeroes();
         levelCompletePanel.gameObject.SetActive(false);
@@ -565,17 +566,6 @@ public class GameHUDManager : MonoBehaviour
 
         if (GameManager.gameManager.levelCompletedStars != 0)
         {
-            if(GameManager.gameManager.level == 1 && Player.completedLevels[GameManager.gameManager.level + 1] == -1)
-            {
-                ShowInfoPanel();
-                spartanUnlocked.gameObject.SetActive(true);
-            }
-            else if(GameManager.gameManager.level == 2 && Player.completedLevels[GameManager.gameManager.level + 1] == -1)
-            {
-                ShowInfoPanel();
-                wizardUnlocked.gameObject.SetActive(true);
-            }
-
             if (Player.levelScores[GameManager.gameManager.level] < Player.score)
             {
                 Player.levelScores[GameManager.gameManager.level] = Player.score;
@@ -823,11 +813,48 @@ public class GameHUDManager : MonoBehaviour
         Social.ShowLeaderboardUI();
     }
 
-    public void ShowInfoPanel()
+    /// <summary>
+    /// 0 - Snowflake
+    /// 1 - Unlock Hero
+    /// </summary>
+    /// <param name="select"></param>
+    public void ShowInfoPanel(int select)
     {
-		infoPanel.localScale = new Vector3 (0, 0, 0);
-        infoPanel.gameObject.SetActive(true);
-        infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+        //infoPanel.localScale = new Vector3(0, 0, 0);
+
+        switch (select)
+        {
+            case 0:
+                infoPanelText.gameObject.SetActive(true);
+                infoPanel.gameObject.SetActive(true);
+                infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+                break;
+            case 1:
+                if (GameManager.gameManager.levelCompletedStars != 0)
+                {
+                    if (GameManager.gameManager.level == 1 && Player.completedLevels[GameManager.gameManager.level + 1] == -1)
+                    {
+                        wizardUnlocked.gameObject.SetActive(false);
+                        infoPanelText.gameObject.SetActive(false);
+                        spartanUnlocked.gameObject.SetActive(true);
+                        infoPanel.gameObject.SetActive(true);
+                        infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+                    }
+                    else if (GameManager.gameManager.level == 2 && Player.completedLevels[GameManager.gameManager.level + 1] == -1)
+                    {
+                        spartanUnlocked.gameObject.SetActive(false);
+                        infoPanelText.gameObject.SetActive(false);
+                        wizardUnlocked.gameObject.SetActive(true);
+                        infoPanel.gameObject.SetActive(true);
+                        infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+                    }
+                    
+                }
+                break;
+        }
+
+        
+        
     }
 
     public void HideInfoPanel()
