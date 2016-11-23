@@ -161,6 +161,8 @@ public class GameManager : MonoBehaviour {
         GameHUDManager.gameHudManager.GameHudUpdate();
         GameHUDManager.gameHudManager.SetSpecialHeroIndicator();
         GameHUDManager.gameHudManager.ActivateHeroes();
+        MouseController.isMouseOnUI = false;
+        GameHUDManager.gameHudManager.HideAllPanels();
     }
 
     IEnumerator RunGame()

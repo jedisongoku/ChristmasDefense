@@ -54,6 +54,7 @@ public class UnityAds : MonoBehaviour {
                 break;
             case ShowResult.Skipped:
                 Debug.Log("Ad skipped");
+                GameHUDManager.gameHudManager.ShowInfoPanel(8);
                 break;
             case ShowResult.Failed:
                 Debug.Log("Ad Failed");

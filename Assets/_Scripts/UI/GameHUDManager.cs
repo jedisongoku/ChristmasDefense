@@ -546,7 +546,7 @@ public class GameHUDManager : MonoBehaviour
     {
 
         nextButton.interactable = true;
-        HideAllPanels();
+        
         switch (GameManager.gameManager.levelCompletedStars)
         {
             case 0:

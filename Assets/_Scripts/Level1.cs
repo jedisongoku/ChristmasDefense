@@ -67,6 +67,8 @@ public class Level1 : Level
         GameManager.gameManager.spawnTimerMin = spawnTimerMin;
         GameManager.gameManager.spawnTimerMax = spawnTimerMax;
         GameManager.gameManager.levelInitialResource = startResource;
+        Player.resource = startResource;
+        GameHUDManager.gameHudManager.GameHudUpdate();
 
 
 
