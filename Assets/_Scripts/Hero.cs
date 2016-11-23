@@ -72,23 +72,27 @@ public class Hero : MonoBehaviour {
     {
         attackTimer += Time.deltaTime;
 
-        if (enemiesInRange.Count != 0)
+        if(!GameManager.gameManager.IsLevelEnded())
         {
-            if(enemiesInRange[0].GetComponent<Enemy>() != null)
+            if (enemiesInRange.Count != 0)
             {
-                if (enemiesInRange[0].GetComponent<Enemy>().isDead)
+                if (enemiesInRange[0].GetComponent<Enemy>() != null)
                 {
-                    RemoveEnemy(enemiesInRange[0]);
+                    if (enemiesInRange[0].GetComponent<Enemy>().isDead)
+                    {
+                        RemoveEnemy(enemiesInRange[0]);
+                    }
+                    else
+                    {
+                        transform.LookAt(enemiesInRange[0].transform.position);
+                        Attack();
+                    }
                 }
-                else
-                {
-                    transform.LookAt(enemiesInRange[0].transform.position);
-                    Attack();
-                }
+
+
             }
-            
-            
         }
+        
         
     }
 
