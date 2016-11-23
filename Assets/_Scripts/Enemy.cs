@@ -269,7 +269,7 @@ public class Enemy : MonoBehaviour {
 
     public void SlowEnemy()
     {
-        if(canSlowDown)
+        if(canSlowDown && canTakeDamage)
         {
             canSlowDown = false;
             StartCoroutine(Slow());
