@@ -121,7 +121,16 @@ public class SpecialHero : MonoBehaviour
             foreach(var enemy in enemiesInRange)
             {
                 //enemiesInRange.Remove(enemy);
-                enemy.GetComponent<Enemy>().Dead();
+                if(!enemy.GetComponent<Enemy>().isBoss)
+                {
+                    enemy.GetComponent<Enemy>().Dead();
+                }
+                else
+                {
+                    enemy.GetComponent<Enemy>().TakeDamage(150, false, null);
+                    enemiesInRange.Clear();
+                }
+                
                 
             }
             Instantiate(projectile, projectileReleaseTransform.position, transform.rotation);

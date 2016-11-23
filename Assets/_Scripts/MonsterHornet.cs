@@ -15,6 +15,7 @@ public class MonsterHornet : Enemy {
     {
         dodgeTimer = 0;
         enemyMesh.material = dodgeMaterial;
+        dodgeParticle.Play();
         
         StartCoroutine(DodgeTimer());
     }

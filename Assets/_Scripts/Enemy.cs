@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour {
     public bool isDead;
     public bool isFirstHit;
     public bool isFirstHeal;
+    public bool isBoss = false;
     public bool canTakeDamage;
     public int sinkSpeed;
     public int enemyPath;
@@ -81,20 +82,32 @@ public class Enemy : MonoBehaviour {
         isFirstHeal = true;
         canTakeDamage = true;
         healthBar.gameObject.SetActive(true);
-        slowDownParticle.Stop();
-        dotParticle.Stop();
 
         if(GameManager.gameManager.level == 3 && GameManager.gameManager.GetCurrentWave() == 15)
         {
             enemyHealth = 1166;
             enemyHealthMax = enemyHealth;
+            enemyController.speed = enemyController.speed * 0.7f;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
+            isBoss = true;
         }
+        else
         if (GameManager.gameManager.level == 5 && GameManager.gameManager.GetCurrentWave() == 20)
         {
             enemyHealth = 1166;
             enemyHealthMax = enemyHealth;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
+            enemyController.speed = enemyController.speed * 0.7f;
+            isBoss = true;
+        }
+        else
+        if(GameManager.gameManager.level == 7 && GameManager.gameManager.GetCurrentWave() == 25)
+        {
+            enemyHealth = 1440;
+            enemyHealthMax = enemyHealth;
+            gameObject.transform.localScale = new Vector3(2, 2, 2);
+            enemyController.speed = enemyController.speed * 0.9f;
+            isBoss = true;
         }
 
     }

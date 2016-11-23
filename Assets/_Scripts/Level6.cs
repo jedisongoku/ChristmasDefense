@@ -4,16 +4,6 @@ using System.Collections.Generic;
 
 public class Level6 : Level
 {
-    /*
-    [Header("Level")]
-    public Transform[] spawnPoints;
-    public Transform specialHeroSpawnPoint;
-    public Transform cameraLocation;
-    public Transform CameraMoveLimitTop;
-    public Transform CameraMoveLimitBottom;
-    public float spawnTimerMin;
-    public float spawnTimerMax;*/
-
     [Header("Waves")]
     public List<int> wave_1 = new List<int>();
     public List<int> wave_2 = new List<int>();
