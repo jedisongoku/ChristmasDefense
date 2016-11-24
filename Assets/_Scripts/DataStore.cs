@@ -51,12 +51,12 @@ public class DataStore : MonoBehaviour{
         {
             Player.specialHero = 3;
             Player.snowFlakes = 10; // dont forget to remove this or reduce the number
-            Player.completedLevels.Add(1, 3); //change back to 0
+            Player.completedLevels.Add(1, 0); //change back to 0
             
             Player.levelScores.Add(1, 0);
             for(int i = 2; i <= 12; i++)
             {
-                Player.completedLevels.Add(i, 3); //change back to -1
+                Player.completedLevels.Add(i, -1); //change back to -1
                 Player.levelScores.Add(i, 0); //change back to 0
             }
         }
