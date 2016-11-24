@@ -593,6 +593,7 @@ public class GameHUDManager : MonoBehaviour
         }
 
         ReportScore();
+        HideAllPanels();
 
 
     }
