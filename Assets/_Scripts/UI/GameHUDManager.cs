@@ -23,6 +23,9 @@ public class GameHUDManager : MonoBehaviour
     public Transform loadingBar;
     public Transform miniGamePanel;
     public Transform infoPanel;
+    public Transform informationPanel;
+    public Transform heroesInformation;
+    public Transform enemiesInformation;
     public Text MiniGameCounterText;
     public Text boostPointTextMenu;
     public Text lifeTextMenu;
@@ -621,6 +624,7 @@ public class GameHUDManager : MonoBehaviour
     {
         levelPanel.gameObject.SetActive(false);
         miniGamePanel.gameObject.SetActive(false);
+        informationPanel.gameObject.SetActive(false);
         shopPanel.gameObject.SetActive(true);
         ItemShopTabClicked(0);
     }
@@ -670,6 +674,7 @@ public class GameHUDManager : MonoBehaviour
         miniGamePanel.gameObject.SetActive(true);
         levelPanel.gameObject.SetActive(false);
         shopPanel.gameObject.SetActive(false);
+        informationPanel.gameObject.SetActive(false);
         MiniGameCounterText.text = Player.snowFlakes.ToString();
         //MiniGameManager.miniGameManager.SetTheBoard();
     }
@@ -1049,5 +1054,30 @@ public class GameHUDManager : MonoBehaviour
         HideHeroInfo();
     }
 
+    public void ShowInformationPanel(bool panel)
+    {
+        miniGamePanel.gameObject.SetActive(false);
+        levelPanel.gameObject.SetActive(false);
+        shopPanel.gameObject.SetActive(false);
+        informationPanel.gameObject.SetActive(true);
+        switch (panel)
+        {
+            case true:
+                enemiesInformation.gameObject.SetActive(false);
+                heroesInformation.gameObject.SetActive(true);
+                break;
+            case false:
+                heroesInformation.gameObject.SetActive(false);
+                enemiesInformation.gameObject.SetActive(true);
+                
+                break;
+        }
+    }
+
+    public void HideInformationPanel()
+    {
+        informationPanel.gameObject.SetActive(false);
+        levelPanel.gameObject.SetActive(true);
+    }
 
 }
