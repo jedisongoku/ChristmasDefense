@@ -94,7 +94,7 @@ public class Enemy : MonoBehaviour {
         else
         if (GameManager.gameManager.level == 5 && GameManager.gameManager.GetCurrentWave() == 20)
         {
-            enemyHealth = 1166;
+            enemyHealth = 1348;
             enemyHealthMax = enemyHealth;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
             enemyController.speed = enemyController.speed * 0.7f;
@@ -103,10 +103,19 @@ public class Enemy : MonoBehaviour {
         else
         if(GameManager.gameManager.level == 7 && GameManager.gameManager.GetCurrentWave() == 25)
         {
-            enemyHealth = 1440;
+            enemyHealth = 1855;
             enemyHealthMax = enemyHealth;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
-            enemyController.speed = enemyController.speed * 0.9f;
+            enemyController.speed = enemyController.speed * 0.8f;
+            isBoss = true;
+        }
+        else
+        if (GameManager.gameManager.level == 9 && GameManager.gameManager.GetCurrentWave() == 25)
+        {
+            enemyHealth = 2840;
+            enemyHealthMax = enemyHealth;
+            gameObject.transform.localScale = new Vector3(2, 2, 2);
+            enemyController.speed = enemyController.speed * 0.5f;
             isBoss = true;
         }
 
