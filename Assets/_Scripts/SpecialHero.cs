@@ -12,11 +12,15 @@ public class SpecialHero : MonoBehaviour
     public GameObject mineExplosion;
     public Transform projectileReleaseTransform;
     public Transform spawnParticle;
+    public AudioClip explosionClip;
+
     private List<GameObject> enemiesInRange = new List<GameObject>();
     private int currentDestination;
     private NavMeshAgent controller;
+
     //private Animation heroAnimation;
     private Animator heroAnimation;
+    private AudioSource playerAudio;
     private int path = 0;
     private bool isAttacking = false;
     private bool isStarted = false;
@@ -27,7 +31,8 @@ public class SpecialHero : MonoBehaviour
         controller = GetComponent<NavMeshAgent>();
         //heroAnimation = GetComponent<Animation>();
         heroAnimation = GetComponent<Animator>();
-        
+        playerAudio = GetComponent<AudioSource>();
+
     }
 
     void Start()
@@ -80,6 +85,7 @@ public class SpecialHero : MonoBehaviour
         else if(Vector3.Distance(transform.position, GameManager.gameManager.spawnPoints[path].position) <= 0.5f)
         {
             Instantiate(mineExplosion, transform.position - (transform.forward * 1), transform.rotation);
+            
             Destroy(gameObject);
             HeroDestroy -= DestroyHero;
         }
@@ -113,6 +119,7 @@ public class SpecialHero : MonoBehaviour
         isAttacking = true;
         //heroAnimation.Play("attack01");
         heroAnimation.SetTrigger("Attack");
+        playerAudio.Play();
 
         yield return new WaitForSeconds(0.5f);
 
@@ -134,6 +141,7 @@ public class SpecialHero : MonoBehaviour
                 
             }
             Instantiate(projectile, projectileReleaseTransform.position, transform.rotation);
+            
             enemiesInRange.Clear();
         }
 
@@ -165,5 +173,10 @@ public class SpecialHero : MonoBehaviour
     {
         Destroy(gameObject);
         HeroDestroy -= DestroyHero;
+    }
+
+    public void PlayAttackSound()
+    {
+        playerAudio.Play();
     }
 }

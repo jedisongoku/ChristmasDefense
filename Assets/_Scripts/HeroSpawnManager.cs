@@ -82,9 +82,10 @@ public class HeroSpawnManager : MonoBehaviour
             GameHUDManager.gameHudManager.TutorialPhaseStart(2);
         }
 
-
+        GameHUDManager.gameHudManager.HideInfoPanel();
         if (!MouseController.isMouseOnUI)
         {
+
             GameManager.gameManager.selectedSpawnPoint = gameObject;
             //Invoke("SetSpawnPoint", 0);
 

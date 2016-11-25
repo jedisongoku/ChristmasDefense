@@ -34,8 +34,10 @@ public class TouchController : MonoBehaviour {
     {
         if(!MouseController.isMouseOnUI)
         {
+
             if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
             {
+                
                 Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
 
                 if (Physics.Raycast(ray, out hit, 1000))

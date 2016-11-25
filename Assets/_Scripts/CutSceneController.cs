@@ -36,4 +36,9 @@ public class CutSceneController : MonoBehaviour
     {
         GameHUDManager.gameHudManager.HideLoadingHUD();
     }
+
+    public void HideOpeningPanel()
+    {
+        gameObject.SetActive(false);
+    }
 }

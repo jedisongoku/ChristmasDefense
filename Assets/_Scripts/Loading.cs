@@ -34,6 +34,7 @@ public class Loading : MonoBehaviour
             GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
             GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("Intro" + GameManager.gameManager.level);
             gameObject.SetActive(false);
+            
             //gameObject.transform.parent.gameObject.SetActive(false);
             /*
             GameHUDManager.gameHudManager.menuHUD.gameObject.SetActive(false);

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
     //public static event UIInfoAction OnUIAction;
 
     public static GameManager gameManager;
+    public AudioSource audioTrack;
 
     [Header("Menu")]
     public Transform background;
@@ -232,8 +233,10 @@ public class GameManager : MonoBehaviour {
         GameHUDManager.gameHudManager.HideHeroes();
         //selectedSpawnPoint.GetComponent<HeroSpawnManager>().particleAfterSpawn.gameObject.SetActive(true);
         selectedSpawnPoint.GetComponentInChildren<ParticleSystem>().Play();
-        
-        if(isTutorial && Player.resource <= 225)
+        PlaySound();
+
+
+        if (isTutorial && Player.resource <= 225)
         {
             GameHUDManager.gameHudManager.TutorialPhaseStart(3);
         }
@@ -416,7 +419,14 @@ public class GameManager : MonoBehaviour {
         Player.specialHero--;
         GameHUDManager.gameHudManager.SetSpecialHeroIndicator();
         Instantiate(heroes[3], specialHeroSpawnLocation.position, specialHeroSpawnLocation.rotation);
-        
+        PlaySound();
+
+
+    }
+
+    public void PlaySound()
+    {
+        audioTrack.Play();
     }
 
     

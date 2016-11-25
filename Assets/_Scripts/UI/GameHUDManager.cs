@@ -10,6 +10,7 @@ public class GameHUDManager : MonoBehaviour
     public static event SelectLevelAction SetAllImages;
 
     public static GameHUDManager gameHudManager;
+    //public AudioSource audioTrack;
 	public Text fps;
 
     [Header("MenuHUD")]
@@ -186,6 +187,7 @@ public class GameHUDManager : MonoBehaviour
         else
         {
             tigerSpawnButton.interactable = false;
+            
         }
         if (Player.resource >= GameManager.gameManager.frogCost)
         {
@@ -248,73 +250,77 @@ public class GameHUDManager : MonoBehaviour
         //UpgradeButton.interactable = false;
         if(heroInfoId != 0)
         {
-            switch (heroInfoId)
+            if(GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero != null)
             {
-                case 1:
-                    heroInfoPanelImage.sprite = archerInfoPanelImage;
-                    if (!GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().isUpgraded)
-                    {
+                switch (heroInfoId)
+                {
+                    case 1:
                         heroInfoPanelImage.sprite = archerInfoPanelImage;
-                        UpgradeButton.gameObject.SetActive(true);
-                        if (Player.resource >= GameManager.gameManager.tigerUpgradeCost)
+                        if (!GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().isUpgraded)
                         {
-                            UpgradeButton.interactable = true;
-
-                        }
-						else
-						{
-							UpgradeButton.interactable = false;
-						}
-                    }
-                    else
-                    {
-                        heroInfoPanelImage.sprite = archerInfoPanelUpgradedImage;
-                    }
-
-                    break;
-                case 2:
-                    //heroInfoPanelImage.sprite = spartanInfoPanelImage;
-                    if (!GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().isUpgraded)
-                    {
-                        heroInfoPanelImage.sprite = spartanInfoPanelImage;
-                        UpgradeButton.gameObject.SetActive(true);
-                        if (Player.resource >= GameManager.gameManager.frogUpgradeCost)
-                        {
-                            UpgradeButton.interactable = true;
+                            heroInfoPanelImage.sprite = archerInfoPanelImage;
                             UpgradeButton.gameObject.SetActive(true);
+                            if (Player.resource >= GameManager.gameManager.tigerUpgradeCost)
+                            {
+                                UpgradeButton.interactable = true;
+
+                            }
+                            else
+                            {
+                                UpgradeButton.interactable = false;
+                            }
                         }
-						else
-						{
-							UpgradeButton.interactable = false;
-						}
-                    }
-                    else
-                    {
-                        heroInfoPanelImage.sprite = spartanInfoPanelUpgradedImage;
-                    }
-                    break;
-                case 3:
-                    //heroInfoPanelImage.sprite = wizardInfoPanelImage;
-                    if (!GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().isUpgraded)
-                    {
-                        heroInfoPanelImage.sprite = wizardInfoPanelImage;
-                        UpgradeButton.gameObject.SetActive(true);
-                        if (Player.resource >= GameManager.gameManager.lizardUpgradeCost)
+                        else
                         {
-                            UpgradeButton.interactable = true;
-                            UpgradeButton.gameObject.SetActive(true);
+                            heroInfoPanelImage.sprite = archerInfoPanelUpgradedImage;
                         }
-						else
-						{
-							UpgradeButton.interactable = false;
-						}
-                    }
-                    else
-                    {
-                        heroInfoPanelImage.sprite = wizardInfoPanelUpgradedImage;
-                    }
-                    break;
+
+                        break;
+                    case 2:
+                        //heroInfoPanelImage.sprite = spartanInfoPanelImage;
+                        if (!GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().isUpgraded)
+                        {
+                            heroInfoPanelImage.sprite = spartanInfoPanelImage;
+                            UpgradeButton.gameObject.SetActive(true);
+                            if (Player.resource >= GameManager.gameManager.frogUpgradeCost)
+                            {
+                                UpgradeButton.interactable = true;
+                                UpgradeButton.gameObject.SetActive(true);
+                            }
+                            else
+                            {
+                                UpgradeButton.interactable = false;
+                            }
+                        }
+                        else
+                        {
+                            heroInfoPanelImage.sprite = spartanInfoPanelUpgradedImage;
+                        }
+                        break;
+                    case 3:
+                        //heroInfoPanelImage.sprite = wizardInfoPanelImage;
+                        if (!GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().isUpgraded)
+                        {
+                            heroInfoPanelImage.sprite = wizardInfoPanelImage;
+                            UpgradeButton.gameObject.SetActive(true);
+                            if (Player.resource >= GameManager.gameManager.lizardUpgradeCost)
+                            {
+                                UpgradeButton.interactable = true;
+                                UpgradeButton.gameObject.SetActive(true);
+                            }
+                            else
+                            {
+                                UpgradeButton.interactable = false;
+                            }
+                        }
+                        else
+                        {
+                            heroInfoPanelImage.sprite = wizardInfoPanelUpgradedImage;
+                        }
+                        break;
+                }
             }
+            
         }
         
     }
@@ -385,6 +391,7 @@ public class GameHUDManager : MonoBehaviour
         loadingBar.gameObject.SetActive(true);
         levelMenu.gameObject.SetActive(false);
         PlayLoadLevelIntro();
+        SoundManager.soundManager.SwitchSound(false);
 
         switch (level)
         {
@@ -449,7 +456,8 @@ public class GameHUDManager : MonoBehaviour
 
         menuHUD.gameObject.SetActive(true);
         SelectLevel(GameManager.gameManager.level + 1);
-        
+        SoundManager.soundManager.SwitchSound(false);
+
     }
 
     public void RestartLevel()
@@ -493,6 +501,7 @@ public class GameHUDManager : MonoBehaviour
         mainMenu.gameObject.SetActive(true);
         levelMenu.gameObject.SetActive(false);
         Time.timeScale = 1;
+        SoundManager.soundManager.SwitchSound(true);
 
     }
 
@@ -503,6 +512,7 @@ public class GameHUDManager : MonoBehaviour
         playPauseButton.image.sprite = pauseButtonImage;
         fastForwardButton.image.sprite = fastForwardImage;
         Time.timeScale = 1;
+        SoundManager.soundManager.backgroundAudioSouce.volume *= 2;
     }
 
     public void PauseGame()
@@ -512,12 +522,14 @@ public class GameHUDManager : MonoBehaviour
             Time.timeScale = 0;
             GameManager.gameManager.isGamePaused = true;
             playPauseButton.image.sprite = playButtonImage;
+            SoundManager.soundManager.backgroundAudioSouce.volume /= 2;
         }
         else
         {
             Time.timeScale = 1;
             GameManager.gameManager.isGamePaused = false;
             playPauseButton.image.sprite = pauseButtonImage;
+            SoundManager.soundManager.backgroundAudioSouce.volume *= 2;
         }
 
     }
@@ -527,6 +539,7 @@ public class GameHUDManager : MonoBehaviour
         pausePanel.gameObject.SetActive(true);
         buttonsPanel.gameObject.SetActive(false);
         Time.timeScale = 0;
+        SoundManager.soundManager.backgroundAudioSouce.volume /= 2;
     }
 
     public void FastForward()
@@ -640,6 +653,7 @@ public class GameHUDManager : MonoBehaviour
         GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().Upgrade();
         GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().HideObjects();
         GameManager.gameManager.selectedSpawnPoint.GetComponentInChildren<ParticleSystem>().Play();
+        GameManager.gameManager.PlaySound();
         heroInfoPanel.gameObject.SetActive(false);
         MouseController.isMouseOnUI = false;
         if(GameManager.gameManager.tutorialPhase_5)
