@@ -111,6 +111,8 @@ public class HeroSpawnManager : MonoBehaviour
                     GameHUDManager.gameHudManager.TutorialPhaseStart(4);
                 }
             }
+            
+            
         }
        
         

@@ -46,6 +46,7 @@ public class TouchController : MonoBehaviour {
                     if (hit.transform.CompareTag("SpawnLocation"))
                     {
                         hit.transform.GetComponent<HeroSpawnManager>().OnTouched();
+                        
                     }
                     else
                     {
@@ -56,7 +57,15 @@ public class TouchController : MonoBehaviour {
                     }
                 }
             }
+            
 
+        }
+        else
+        {
+            if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                MouseController.isMouseOnUI = false;
+            }
         }
         
 
@@ -126,7 +135,7 @@ public class TouchController : MonoBehaviour {
 
     IEnumerator CameraSwipe()
     {
-        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved && !MouseController.isMouseOnUI)
         {
             Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
 
