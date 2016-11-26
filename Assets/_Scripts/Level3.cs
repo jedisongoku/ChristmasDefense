@@ -41,7 +41,6 @@ public class Level3 : Level
     public List<Transform> destination_7 = new List<Transform>();
     public List<Transform> destination_8 = new List<Transform>();
     public List<Transform> destination_9 = new List<Transform>();
-    public List<Transform> destination_10 = new List<Transform>();
 
     private List<List<Transform>> path_1 = new List<List<Transform>>();
 
@@ -78,7 +77,6 @@ public class Level3 : Level
         path_1.Add(destination_7);
         path_1.Add(destination_8);
         path_1.Add(destination_9);
-        path_1.Add(destination_10);
         GameManager.gameManager.enemyDestination.Add(0, path_1);
 
         GameManager.gameManager.spawnPoints = spawnPoints;
