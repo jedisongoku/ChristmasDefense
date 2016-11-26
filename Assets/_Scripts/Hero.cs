@@ -76,7 +76,9 @@ public class Hero : MonoBehaviour {
         {
             if (enemiesInRange.Count != 0)
             {
-                if (enemiesInRange[0].GetComponent<Enemy>() != null)
+
+                //if (enemiesInRange[0].GetComponent<Enemy>() != null)
+                if (enemiesInRange[0] != null)
                 {
                     if (enemiesInRange[0].GetComponent<Enemy>().isDead)
                     {
@@ -107,14 +109,22 @@ public class Hero : MonoBehaviour {
             {
                 if (!enemiesInRange[0].GetComponent<Enemy>().isDead)
                 {
-                    if(isUpgraded)
+                    if(!enemiesInRange[0].GetComponent<Enemy>().isSuccess)
                     {
-                        playerAnimation.SetTrigger("Attack2");
+                        if (isUpgraded)
+                        {
+                            playerAnimation.SetTrigger("Attack2");
+                        }
+                        else
+                        {
+                            playerAnimation.SetTrigger("Attack");
+                        }
                     }
                     else
                     {
-                        playerAnimation.SetTrigger("Attack");
+                        RemoveEnemy(enemiesInRange[0]);
                     }
+                    
                     
 
                     
@@ -139,12 +149,20 @@ public class Hero : MonoBehaviour {
                 if (!isUpgraded)
                 {
                     Instantiate(projectile, projectileReleaseTransform.position, transform.rotation);
-                    enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
+                    if (enemiesInRange[0] != null)
+                    {
+                        
+                        enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
+                    }
                 }
                 else
                 {
                     Instantiate(projectileUpgraded, projectileReleaseTransform.position, transform.rotation);
-                    enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, true, gameObject);
+                    if(enemiesInRange[0] != null)
+                    {
+                        enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, true, gameObject);
+                    }
+                    
                 }
             }
             else
@@ -152,7 +170,10 @@ public class Hero : MonoBehaviour {
                 if (!isUpgraded)
                 {
                     Instantiate(projectile, projectileReleaseTransform.position, transform.rotation);
-                    enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
+                    if (enemiesInRange[0] != null)
+                    {
+                        enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
+                    }
                 }
                 else
                 {
@@ -160,7 +181,8 @@ public class Hero : MonoBehaviour {
 
                     foreach (var enemy in enemies)
                     {
-                        if (enemy.GetComponent<Enemy>() != null)
+                        //if (enemy.GetComponent<Enemy>() != null)
+                        if (enemy != null)
                         {
                             if (!enemy.GetComponent<Enemy>().isDead)
                             {

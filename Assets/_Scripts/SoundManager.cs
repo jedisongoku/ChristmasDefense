@@ -7,7 +7,7 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager soundManager;
 
-    public AudioSource backgroundAudioSouce;
+    public AudioSource backgroundAudioSource;
     public List<AudioClip> menuSounds;
     public List<AudioClip> gameSounds;
     public float fadeSpeed = 1f;

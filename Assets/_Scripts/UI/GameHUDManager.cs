@@ -102,6 +102,8 @@ public class GameHUDManager : MonoBehaviour
     [Header("UI")]
     public Button playPauseButton;
     public Button fastForwardButton;
+    public Button menuMusicButton;
+    public Button gameMenuMusicButton;
 
     [Header("UI Sprite")]
     public Sprite pauseButtonImage;
@@ -112,8 +114,8 @@ public class GameHUDManager : MonoBehaviour
     public Sprite levelComplete_Star1Image;
     public Sprite levelComplete_Star2Image;
     public Sprite levelComplete_Star3Image;
-    public Sprite soundOnImage;
-    public Sprite soundOffImage;
+    public Sprite musicOnImage;
+    public Sprite musicOffImage;
     public Sprite archerInfoPanelImage;
     public Sprite archerInfoPanelUpgradedImage;
     public Sprite spartanInfoPanelImage;
@@ -512,7 +514,7 @@ public class GameHUDManager : MonoBehaviour
         playPauseButton.image.sprite = pauseButtonImage;
         fastForwardButton.image.sprite = fastForwardImage;
         Time.timeScale = 1;
-        SoundManager.soundManager.backgroundAudioSouce.volume *= 2;
+        SoundManager.soundManager.backgroundAudioSource.volume *= 2;
     }
 
     public void PauseGame()
@@ -522,14 +524,14 @@ public class GameHUDManager : MonoBehaviour
             Time.timeScale = 0;
             GameManager.gameManager.isGamePaused = true;
             playPauseButton.image.sprite = playButtonImage;
-            SoundManager.soundManager.backgroundAudioSouce.volume /= 2;
+            SoundManager.soundManager.backgroundAudioSource.volume /= 2;
         }
         else
         {
             Time.timeScale = 1;
             GameManager.gameManager.isGamePaused = false;
             playPauseButton.image.sprite = pauseButtonImage;
-            SoundManager.soundManager.backgroundAudioSouce.volume *= 2;
+            SoundManager.soundManager.backgroundAudioSource.volume *= 2;
         }
 
     }
@@ -539,7 +541,7 @@ public class GameHUDManager : MonoBehaviour
         pausePanel.gameObject.SetActive(true);
         buttonsPanel.gameObject.SetActive(false);
         Time.timeScale = 0;
-        SoundManager.soundManager.backgroundAudioSouce.volume /= 2;
+        SoundManager.soundManager.backgroundAudioSource.volume /= 2;
     }
 
     public void FastForward()
@@ -1092,6 +1094,29 @@ public class GameHUDManager : MonoBehaviour
     {
         informationPanel.gameObject.SetActive(false);
         levelPanel.gameObject.SetActive(true);
+    }
+
+    public void MusicOnOff()
+    {
+        if(SoundManager.soundManager.backgroundAudioSource.volume < 0.1f)
+        {
+            menuMusicButton.image.sprite = musicOnImage;
+            gameMenuMusicButton.image.sprite = musicOnImage;
+            SoundManager.soundManager.backgroundAudioSource.volume = 1;
+            
+        }
+        else
+        {
+            menuMusicButton.image.sprite = musicOffImage;
+            gameMenuMusicButton.image.sprite = musicOffImage;
+            SoundManager.soundManager.backgroundAudioSource.volume = 0;
+        }
+        
+    }
+
+    public void OpenFacebook()
+    {
+        Application.OpenURL("https://www.facebook.com/ChristmasDefense");
     }
 
 }

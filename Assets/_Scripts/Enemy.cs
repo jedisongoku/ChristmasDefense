@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour {
     public int enemyPath;
     public Transform healthBar;
     public Image healthImage;
+    public bool isSuccess = false;
 
     public ParticleSystem slowDownParticle;
     public ParticleSystem dotParticle;
@@ -255,6 +256,7 @@ public class Enemy : MonoBehaviour {
     {
         if(!isDead)
         {
+            isSuccess = true;
             StopAllCoroutines();
             healthBar.gameObject.SetActive(false);
             enemyController.Stop();
