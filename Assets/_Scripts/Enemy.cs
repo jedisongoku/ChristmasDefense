@@ -104,7 +104,7 @@ public class Enemy : MonoBehaviour {
         else
         if(GameManager.gameManager.level == 7 && GameManager.gameManager.GetCurrentWave() == 25)
         {
-            enemyHealth = 1855;
+            enemyHealth = 3696;
             enemyHealthMax = enemyHealth;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
             enemyController.speed = enemyController.speed * 0.8f;

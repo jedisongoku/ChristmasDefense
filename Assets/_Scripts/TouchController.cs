@@ -62,7 +62,7 @@ public class TouchController : MonoBehaviour {
         }
         else
         {
-            if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
+            if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 MouseController.isMouseOnUI = false;
             }

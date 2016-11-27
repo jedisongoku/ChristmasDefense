@@ -652,16 +652,22 @@ public class GameHUDManager : MonoBehaviour
 
     public void UpgradeHero()
     {
-        GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().Upgrade();
-        GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().HideObjects();
-        GameManager.gameManager.selectedSpawnPoint.GetComponentInChildren<ParticleSystem>().Play();
-        GameManager.gameManager.PlaySound();
-        heroInfoPanel.gameObject.SetActive(false);
-        MouseController.isMouseOnUI = false;
-        if(GameManager.gameManager.tutorialPhase_5)
+        if(GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero != null)
         {
-            TutorialPhaseStart(5);
+            GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().Upgrade();
+            GameManager.gameManager.selectedSpawnPoint.GetComponent<HeroSpawnManager>().HideObjects();
+            GameManager.gameManager.selectedSpawnPoint.GetComponentInChildren<ParticleSystem>().Play();
+            GameManager.gameManager.PlaySound();
+            heroInfoPanel.gameObject.SetActive(false);
+            MouseController.isMouseOnUI = false;
+
+            if (GameManager.gameManager.tutorialPhase_5)
+            {
+                TutorialPhaseStart(5);
+            }
+
         }
+        
     }
 
     public void PurchaseSnowFlakesWithBoostPoints()
