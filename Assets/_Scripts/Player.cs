@@ -12,6 +12,8 @@ public class Player : MonoBehaviour {
     public static int specialHero = 0;
     public static Dictionary<int, int> completedLevels = new Dictionary<int, int>();
     public static Dictionary<int, int> levelScores = new Dictionary<int, int>();
+    public static Dictionary<int, int> completedLevelsHardMode = new Dictionary<int, int>();
+    public static Dictionary<int, int> levelScoresHardMode = new Dictionary<int, int>();
     public static bool tutorial = false;
     public static bool adFree = false;
 

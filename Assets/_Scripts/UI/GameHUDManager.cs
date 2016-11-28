@@ -131,6 +131,7 @@ public class GameHUDManager : MonoBehaviour
 
         Social.localUser.Authenticate(success => { if (success) { Debug.Log("==iOS GC authenticate OK"); } else { Debug.Log("==iOS GC authenticate Failed"); } });
 
+
         SetSpecialHeroIndicator();
 		StartCoroutine (Fps ());
         //GameManager.OnUIAction += SetText;
@@ -371,15 +372,19 @@ public class GameHUDManager : MonoBehaviour
 
     public void GoToLevelMenu()
     {
-
-
         levelMenu.gameObject.SetActive(true);
         levelPanel.gameObject.SetActive(true);
         SetAllImages();
         MenuHudUpdate();
+        HideHardModeLevels();
         //ShowAd(null);
 
 
+    }
+
+    void HideHardModeLevels()
+    {
+        hardModeLevels.gameObject.SetActive(false);
     }
 
     public void ShowAd(string zone)
@@ -389,7 +394,6 @@ public class GameHUDManager : MonoBehaviour
 
     public void SelectLevel(int level)
     {
-        
         loadingBar.gameObject.SetActive(true);
         levelMenu.gameObject.SetActive(false);
         PlayLoadLevelIntro();
@@ -480,6 +484,7 @@ public class GameHUDManager : MonoBehaviour
         Camera.main.transform.position = GameManager.gameManager.cameraLocation.position;
         Camera.main.fieldOfView = 60;
         GameManager.gameManager.StartLevel();
+        SoundManager.soundManager.backgroundAudioSource.volume = 1;
         //GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
         //GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("Intro" + GameManager.gameManager.level);
         //GameManager.gameManager.StartLevel();
@@ -500,8 +505,8 @@ public class GameHUDManager : MonoBehaviour
         levels[GameManager.gameManager.level - 1].gameObject.SetActive(false);
         gameHUD.gameObject.SetActive(false);
         menuHUD.gameObject.SetActive(true);
-        mainMenu.gameObject.SetActive(true);
-        levelMenu.gameObject.SetActive(false);
+        mainMenu.gameObject.SetActive(false);
+        levelMenu.gameObject.SetActive(true);
         Time.timeScale = 1;
         SoundManager.soundManager.SwitchSound(true);
 
@@ -515,6 +520,7 @@ public class GameHUDManager : MonoBehaviour
         fastForwardButton.image.sprite = fastForwardImage;
         Time.timeScale = 1;
         SoundManager.soundManager.backgroundAudioSource.volume *= 2;
+        GameManager.gameManager.isFastForward = false;
     }
 
     public void PauseGame()
@@ -585,30 +591,54 @@ public class GameHUDManager : MonoBehaviour
 
         levelCompletePanel.gameObject.SetActive(true);
         levelCompletePanel.GetComponent<Animator>().SetTrigger("LevelComplete");
-        Player.score += (Player.resource * 55) + (100 * GameManager.gameManager.levelCompletedStars);
+        if(GameManager.gameManager.gameMode) // HARD MODE
+        {
+            Player.score += (Player.resource * 55 * 10) + (10000 * GameManager.gameManager.levelCompletedStars * GameManager.gameManager.levelCompletedStars);
 
-        if (GameManager.gameManager.levelCompletedStars != 0)
-        {
-            if (Player.levelScores[GameManager.gameManager.level] < Player.score)
+            if (GameManager.gameManager.levelCompletedStars != 0)
             {
-                Player.levelScores[GameManager.gameManager.level] = Player.score;
+                if (Player.levelScoresHardMode[GameManager.gameManager.level] < Player.score)
+                {
+                    Player.levelScoresHardMode[GameManager.gameManager.level] = Player.score;
+                }
+                if (Player.completedLevelsHardMode[GameManager.gameManager.level] < GameManager.gameManager.levelCompletedStars)
+                {
+                    Player.completedLevelsHardMode[GameManager.gameManager.level] = GameManager.gameManager.levelCompletedStars;
+                }
+                DataStore.Save();
+                boostPointText.text = Player.resource.ToString();
+                scoreText.text = string.Format("{0:#,#}", Player.score);
+                boostPointText.enabled = true;
             }
-            if (Player.completedLevels[GameManager.gameManager.level] < GameManager.gameManager.levelCompletedStars)
-            {
-                Player.completedLevels[GameManager.gameManager.level] = GameManager.gameManager.levelCompletedStars;
-            }
-            DataStore.Save();
-            boostPointText.text = Player.resource.ToString();
-            scoreText.text = string.Format("{0:#,#}", Player.score);
-            boostPointText.enabled = true;
         }
-        else
+        else // NORMAL MODE
         {
-            boostPointText.enabled = false;
-            scoreText.enabled = false;
-            Player.life = GameManager.gameManager.levelInitialLife;
-            Player.specialHero = GameManager.gameManager.levelInitialSpecialHero;
+            Player.score += (Player.resource * 55) + (10000 * GameManager.gameManager.levelCompletedStars);
+
+            if (GameManager.gameManager.levelCompletedStars != 0)
+            {
+                if (Player.levelScores[GameManager.gameManager.level] < Player.score)
+                {
+                    Player.levelScores[GameManager.gameManager.level] = Player.score;
+                }
+                if (Player.completedLevels[GameManager.gameManager.level] < GameManager.gameManager.levelCompletedStars)
+                {
+                    Player.completedLevels[GameManager.gameManager.level] = GameManager.gameManager.levelCompletedStars;
+                }
+                DataStore.Save();
+                boostPointText.text = Player.resource.ToString();
+                scoreText.text = string.Format("{0:#,#}", Player.score);
+                boostPointText.enabled = true;
+            }
+            else
+            {
+                boostPointText.enabled = false;
+                scoreText.enabled = false;
+                Player.life = GameManager.gameManager.levelInitialLife;
+                Player.specialHero = GameManager.gameManager.levelInitialSpecialHero;
+            }
         }
+        
 
         ReportScore();
         HideAllPanels();
@@ -621,13 +651,27 @@ public class GameHUDManager : MonoBehaviour
         if (Social.localUser.authenticated)
         {
             int totalScore = 0;
-            foreach (var score in Player.levelScores)
+            if(GameManager.gameManager.gameMode)
             {
-                totalScore += score.Value;
+                foreach (var score in Player.levelScores)
+                {
+                    totalScore += score.Value;
+                }
+                Debug.Log("TOTAL SCORE: " + totalScore);
+                Social.ReportScore(totalScore, "christmasdefensehardmodeleaderboard", success =>
+                { if (success) { Debug.Log("==iOS GC report score ok: " + totalScore + "\n"); } else { Debug.Log("==iOS GC report score Failed: " + "christmasdefenseleaderboard" + "\n"); } });
             }
-            Debug.Log("TOTAL SCORE: " + totalScore);
-            Social.ReportScore(totalScore, "christmasdefenseleaderboard", success =>
-            { if (success) { Debug.Log("==iOS GC report score ok: " + totalScore + "\n"); } else { Debug.Log("==iOS GC report score Failed: " + "christmasdefenseleaderboard" + "\n"); } });
+            else
+            {
+                foreach (var score in Player.levelScores)
+                {
+                    totalScore += score.Value;
+                }
+                Debug.Log("TOTAL SCORE: " + totalScore);
+                Social.ReportScore(totalScore, "christmasdefenseleaderboard", success =>
+                { if (success) { Debug.Log("==iOS GC report score ok: " + totalScore + "\n"); } else { Debug.Log("==iOS GC report score Failed: " + "christmasdefenseleaderboard" + "\n"); } });
+            }
+            
         }
         else
         {
@@ -1033,6 +1077,7 @@ public class GameHUDManager : MonoBehaviour
         normalModeIndicator.gameObject.SetActive(false);
         hardModeIndicator.gameObject.SetActive(true);
         hardModeLevels.gameObject.SetActive(true);
+        GameManager.gameManager.gameMode = true;
     }
 
     public void ShowNormalModeLevels()
@@ -1042,6 +1087,7 @@ public class GameHUDManager : MonoBehaviour
         hardModeLevels.gameObject.SetActive(false);
         normalModeLevels.gameObject.SetActive(true);
         normalModeIndicator.gameObject.SetActive(true);
+        GameManager.gameManager.gameMode = false;
         
     }
     public void ShowTutorialSkipPanel()
@@ -1124,5 +1170,6 @@ public class GameHUDManager : MonoBehaviour
     {
         Application.OpenURL("https://www.facebook.com/ChristmasDefense");
     }
+
 
 }

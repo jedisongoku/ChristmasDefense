@@ -80,15 +80,24 @@ public class Hero : MonoBehaviour {
                 //if (enemiesInRange[0].GetComponent<Enemy>() != null)
                 if (enemiesInRange[0] != null)
                 {
-                    if (enemiesInRange[0].GetComponent<Enemy>().isDead)
+                    if (enemiesInRange[0].GetComponent<Enemy>() != null)
                     {
-                        RemoveEnemy(enemiesInRange[0]);
+                        if (enemiesInRange[0].GetComponent<Enemy>().isDead)
+                        {
+                            RemoveEnemy(enemiesInRange[0]);
+                        }
+                        else
+                        {
+                            transform.LookAt(enemiesInRange[0].transform.position);
+                            Attack();
+                        }
                     }
                     else
                     {
-                        transform.LookAt(enemiesInRange[0].transform.position);
-                        Attack();
+                        RemoveEnemy(enemiesInRange[0]);
+                        Debug.Log("Remove Enemy that is already dead");
                     }
+                    
                 }
 
 
@@ -148,7 +157,8 @@ public class Hero : MonoBehaviour {
             {
                 if (!isUpgraded)
                 {
-                    Instantiate(projectile, projectileReleaseTransform.position, transform.rotation);
+                    GameObject particle = Instantiate(projectile, projectileReleaseTransform.position, transform.rotation) as GameObject;
+                    particle.GetComponent<FX_Mover>().SetTarget(enemiesInRange[0]);
                     if (enemiesInRange[0] != null)
                     {
                         
@@ -157,8 +167,9 @@ public class Hero : MonoBehaviour {
                 }
                 else
                 {
-                    Instantiate(projectileUpgraded, projectileReleaseTransform.position, transform.rotation);
-                    if(enemiesInRange[0] != null)
+                    GameObject particle = Instantiate(projectileUpgraded, projectileReleaseTransform.position, transform.rotation) as GameObject;
+                    particle.GetComponent<FX_Mover>().SetTarget(enemiesInRange[0]);
+                    if (enemiesInRange[0] != null)
                     {
                         enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, true, gameObject);
                     }
@@ -169,7 +180,8 @@ public class Hero : MonoBehaviour {
             {
                 if (!isUpgraded)
                 {
-                    Instantiate(projectile, projectileReleaseTransform.position, transform.rotation);
+                    GameObject particle = Instantiate(projectile, projectileReleaseTransform.position, transform.rotation) as GameObject;
+                    particle.GetComponent<FX_Mover>().SetTarget(enemiesInRange[0]);
                     if (enemiesInRange[0] != null)
                     {
                         enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
@@ -195,65 +207,6 @@ public class Hero : MonoBehaviour {
                     }
                 }
             }
-            
-            /*
-            switch (heroID)
-            {
-                case 1:
-                    
-                    if(!isUpgraded)
-                    {
-                        Instantiate(Resources.Load("Archer_Projectile"), projectileReleaseTransform.position, transform.rotation);
-                        enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
-                    }
-                    else
-                    {
-                        Instantiate(Resources.Load("Archer_UpgradedProjectile"), projectileReleaseTransform.position, transform.rotation);
-                        enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, true, gameObject);
-                    }
-                    break;
-                case 2:
-                    
-                    if (!isUpgraded)
-                    {
-                        Instantiate(Resources.Load("Spartan_Projectile"), projectileReleaseTransform.position, transform.rotation);
-                        enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
-                    }
-                    else
-                    {
-                        Instantiate(Resources.Load("Spartan_UpgradedProjectile"), projectileReleaseTransform.position, transform.rotation);
-                        enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
-                    }
-                    break;
-                case 3:
-                    
-                    if (!isUpgraded)
-                    {
-                        Instantiate(Resources.Load("Wizard_Projectile"), projectileReleaseTransform.position, transform.rotation);
-                        enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
-                    }
-                    else
-                    {
-                        Collider[] enemies = Physics.OverlapSphere(gameObject.transform.position, heroAttackRadius, LayerMask.GetMask("Enemy"));
-                        
-                        foreach (var enemy in enemies)
-                        {
-                            if(enemy.GetComponent<Enemy>() != null)
-                            {
-                                if(!enemy.GetComponent<Enemy>().isDead)
-                                {
-                                    Instantiate(Resources.Load("Wizard_UpgradedProjectile"), enemy.transform.position + (enemy.transform.forward * 1), transform.rotation);
-                                    enemy.GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
-
-                                }
-                            }
-                            
-                        }
-                    }
-                    break;
-
-            }
-            */
         }
     }
 

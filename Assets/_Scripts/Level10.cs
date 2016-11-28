@@ -108,10 +108,25 @@ public class Level10 : Level {
 
         GameManager.gameManager.enemyDestination.Add(0, path_1);
 
+        Debug.Log("Game Mode: " + GameManager.gameManager.gameMode);
+        if (GameManager.gameManager.gameMode)
+        {
+            GameManager.gameManager.spawnTimerMin = hardModeSpawnTimerMin;
+            GameManager.gameManager.spawnTimerMax = hardModeSpawnTimerMax;
+            GameManager.gameManager.levelInitialResource = hardModeStartResource;
+        }
+        else
+        {
+            GameManager.gameManager.spawnTimerMin = spawnTimerMin;
+            GameManager.gameManager.spawnTimerMax = spawnTimerMax;
+            GameManager.gameManager.levelInitialResource = startResource;
+        }
+
+
         GameManager.gameManager.spawnPoints = spawnPoints;
         GameManager.gameManager.specialHeroSpawnLocation = specialHeroSpawnPoint;
-        GameManager.gameManager.spawnTimerMin = spawnTimerMin;
-        GameManager.gameManager.spawnTimerMax = spawnTimerMax;
-        GameManager.gameManager.levelInitialResource = startResource;
+
+        Player.resource = GameManager.gameManager.levelInitialResource;
+        GameHUDManager.gameHudManager.GameHudUpdate();
     }
 }

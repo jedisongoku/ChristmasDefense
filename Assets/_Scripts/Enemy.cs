@@ -256,6 +256,7 @@ public class Enemy : MonoBehaviour {
     {
         if(!isDead)
         {
+            //SinkEnemy();
             isSuccess = true;
             StopAllCoroutines();
             healthBar.gameObject.SetActive(false);
@@ -264,8 +265,9 @@ public class Enemy : MonoBehaviour {
             GameHUDManager.gameHudManager.GameHudUpdate();
             slowDownParticle.Stop();
             dotParticle.Stop();
-            Invoke("SinkEnemy", 0);
             DestroyAll -= DestroyOnRestart;
+
+            Destroy(gameObject, 0);
 
         }
         

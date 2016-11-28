@@ -13,7 +13,7 @@ namespace MagicalFX
 		public float LifeTimeAfterHit = 1;
 		public float LifeTime = 0;
 
-        private Vector3 hitLocation;
+        //private Vector3 hitLocation;
         private GameObject hitTarget;
 	
 		void Start ()
@@ -44,7 +44,7 @@ namespace MagicalFX
 		{
             if(other.CompareTag("Enemy"))
             {
-                hitLocation = other.transform.position;
+                //hitLocation = other.transform.position;
                 hitTarget = other.gameObject;
                 Invoke("Spawn", 0.03f);
             }

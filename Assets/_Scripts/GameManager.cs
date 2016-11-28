@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 
     [Header("Menu")]
     public Transform background;
+    public Transform videoCameraLocation;
     public Camera menuCamera;
     public Camera introCamera;
 
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour {
     public List<int> enemyListForCurrentWave = new List<int>();
 
     public GameObject activeLevel;
+    public bool gameMode = false;
     public int levelInitialResource;
     public int levelInitialLife;
     public int levelInitialSpecialHero;
@@ -90,6 +92,7 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         gameManager = this;
+        
 
     }
 
@@ -172,8 +175,12 @@ public class GameManager : MonoBehaviour {
 
         if(Input.GetKeyDown("space"))
         {
-            currentWave++;
+            //currentWave++;
+            //GameHUDManager.gameHudManager.gameHUD.gameObject.SetActive(false);
+            Camera.main.transform.position = videoCameraLocation.position;
+            Camera.main.transform.rotation = videoCameraLocation.rotation;
         }
+
 
         if (levelTimer >= levelStartTimer && !isLevelStarted)
         {
@@ -350,7 +357,7 @@ public class GameManager : MonoBehaviour {
         {
             GameHUDManager.gameHudManager.FastForward();
         }
-        if ((float)Player.life / (float)levelInitialLife > .8f)
+        if (Player.life == levelInitialLife)
         {
             levelCompletedStars = 3;
         }
@@ -369,7 +376,7 @@ public class GameManager : MonoBehaviour {
 
         if (levelCompletedStars > Player.completedLevels[level])
         {
-            Player.completedLevels[level] = levelCompletedStars;
+            //Player.completedLevels[level] = levelCompletedStars;
         }
 
         if(levelCompletedStars != 0)

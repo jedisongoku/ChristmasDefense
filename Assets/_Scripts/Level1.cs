@@ -41,6 +41,8 @@ public class Level1 : Level
         GameManager.gameManager.cameraLocation = cameraLocation;
         TouchController.touchController.CameraMoveLimitTop = CameraMoveLimitTop;
         TouchController.touchController.CameraMoveLimitBottom = CameraMoveLimitBottom;
+        //MouseController.mouseController.CameraMoveLimitTop = CameraMoveLimitTop;
+        //MouseController.mouseController.CameraMoveLimitBottom = CameraMoveLimitBottom;
 
         GameManager.gameManager.enemyListForCurrentLevel.Clear();
         GameManager.gameManager.enemyListForCurrentLevel.Add(wave_1);
@@ -62,16 +64,53 @@ public class Level1 : Level
         path_1.Add(destination_7);
         GameManager.gameManager.enemyDestination.Add(0, path_1);
 
+        Debug.Log("Game Mode: " + GameManager.gameManager.gameMode);
+        if(GameManager.gameManager.gameMode)
+        {
+            GameManager.gameManager.spawnTimerMin = hardModeSpawnTimerMin;
+            GameManager.gameManager.spawnTimerMax = hardModeSpawnTimerMax;
+            GameManager.gameManager.levelInitialResource = hardModeStartResource;
+        }
+        else
+        {
+            GameManager.gameManager.spawnTimerMin = spawnTimerMin;
+            GameManager.gameManager.spawnTimerMax = spawnTimerMax;
+            GameManager.gameManager.levelInitialResource = startResource;
+        }
+        
+        
         GameManager.gameManager.spawnPoints = spawnPoints;
         GameManager.gameManager.specialHeroSpawnLocation = specialHeroSpawnPoint;
-        GameManager.gameManager.spawnTimerMin = spawnTimerMin;
-        GameManager.gameManager.spawnTimerMax = spawnTimerMax;
-        GameManager.gameManager.levelInitialResource = startResource;
-        Player.resource = startResource;
+        
+        Player.resource = GameManager.gameManager.levelInitialResource;
         GameHUDManager.gameHudManager.GameHudUpdate();
 
 
 
+    }
+
+    void OnDisable()
+    {
+        if(GameManager.gameManager.isTutorial)
+        {
+            GameManager.gameManager.isTutorial = false;
+            GameManager.gameManager.tutorialPhase_1 = false;
+            GameManager.gameManager.tutorialPhase_2 = false;
+            GameManager.gameManager.tutorialPhase_3 = false;
+            GameManager.gameManager.tutorialPhase_4 = false;
+            GameManager.gameManager.tutorialPhase_5 = false;
+            GameManager.gameManager.tutorialPhase_6 = false;
+            GameHUDManager.gameHudManager.lifeTooltip.gameObject.SetActive(false);
+            GameHUDManager.gameHudManager.resourceTooltip.gameObject.SetActive(false);
+            GameHUDManager.gameHudManager.selectHeroTooltip.gameObject.SetActive(false);
+            GameHUDManager.gameHudManager.specialHeroTooltip.gameObject.SetActive(false);
+            GameHUDManager.gameHudManager.tapHereTooltip.gameObject.SetActive(false);
+            GameHUDManager.gameHudManager.upgradeHeroTooltip.gameObject.SetActive(false);
+        }
+        
+
+
+        Debug.Log("Disable Level 1");
     }
 
 }
