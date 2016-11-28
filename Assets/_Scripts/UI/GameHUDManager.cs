@@ -39,10 +39,6 @@ public class GameHUDManager : MonoBehaviour
     public Transform wizardUnlocked;
     public Transform normalModeLevels;
     public Transform hardModeLevels;
-    public Transform normalModeIndicator;
-    public Transform hardModeIndicator;
-    public Sprite normalModeLevelBackground;
-    public Sprite hardModeLevelBackround;
 
     [Header("GameHUD")]
     public Transform heroesPanel;
@@ -376,15 +372,24 @@ public class GameHUDManager : MonoBehaviour
         levelPanel.gameObject.SetActive(true);
         SetAllImages();
         MenuHudUpdate();
-        HideHardModeLevels();
+
+        HideLevels();
         //ShowAd(null);
 
 
     }
 
-    void HideHardModeLevels()
+    void HideLevels()
     {
-        hardModeLevels.gameObject.SetActive(false);
+        if(GameManager.gameManager.gameMode)
+        {
+            normalModeLevels.gameObject.SetActive(false);
+        }
+        else
+        {
+            hardModeLevels.gameObject.SetActive(false);
+        }
+        
     }
 
     public void ShowAd(string zone)
@@ -662,7 +667,7 @@ public class GameHUDManager : MonoBehaviour
             int totalScore = 0;
             if(GameManager.gameManager.gameMode)
             {
-                foreach (var score in Player.levelScores)
+                foreach (var score in Player.levelScoresHardMode)
                 {
                     totalScore += score.Value;
                 }
@@ -1083,21 +1088,15 @@ public class GameHUDManager : MonoBehaviour
 
     public void ShowHardModeLevels()
     {
-        levelPanel.GetComponent<Image>().sprite = hardModeLevelBackround;
         normalModeLevels.gameObject.SetActive(false);
-        normalModeIndicator.gameObject.SetActive(false);
-        hardModeIndicator.gameObject.SetActive(true);
         hardModeLevels.gameObject.SetActive(true);
         GameManager.gameManager.gameMode = true;
     }
 
     public void ShowNormalModeLevels()
     {
-        levelPanel.GetComponent<Image>().sprite = normalModeLevelBackground;
-        hardModeIndicator.gameObject.SetActive(false);
         hardModeLevels.gameObject.SetActive(false);
         normalModeLevels.gameObject.SetActive(true);
-        normalModeIndicator.gameObject.SetActive(true);
         GameManager.gameManager.gameMode = false;
         
     }
