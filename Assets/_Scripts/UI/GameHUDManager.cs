@@ -503,10 +503,12 @@ public class GameHUDManager : MonoBehaviour
         buttonsPanel.gameObject.SetActive(true);
         GameManager.gameManager.OnGoHome();
         levels[GameManager.gameManager.level - 1].gameObject.SetActive(false);
+        levelMenu.gameObject.SetActive(false);
         gameHUD.gameObject.SetActive(false);
         menuHUD.gameObject.SetActive(true);
-        mainMenu.gameObject.SetActive(false);
-        levelMenu.gameObject.SetActive(true);
+        mainMenu.gameObject.SetActive(true);
+        SetAllImages();
+        
         Time.timeScale = 1;
         SoundManager.soundManager.SwitchSound(true);
 
@@ -609,6 +611,13 @@ public class GameHUDManager : MonoBehaviour
                 boostPointText.text = Player.resource.ToString();
                 scoreText.text = string.Format("{0:#,#}", Player.score);
                 boostPointText.enabled = true;
+            }
+            else
+            {
+                boostPointText.enabled = false;
+                scoreText.enabled = false;
+                Player.life = GameManager.gameManager.levelInitialLife;
+                Player.specialHero = GameManager.gameManager.levelInitialSpecialHero;
             }
         }
         else // NORMAL MODE
@@ -818,6 +827,8 @@ public class GameHUDManager : MonoBehaviour
     {
         GameManager.gameManager.menuCamera.enabled = false;
         mainMenu.gameObject.SetActive(false);
+        normalModeLevels.gameObject.SetActive(true);
+        hardModeLevels.gameObject.SetActive(true);
         GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
         GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("MenuLevel");
         /*

@@ -22,10 +22,14 @@ public class FX_Mover : MonoBehaviour
 	
 		void Update ()
 		{
+            if(target != null)
+            {
             transform.LookAt(target.transform.position + target.transform.up * 0.5f);
             //direction = Quaternion.LookRotation(target.transform.position);
             //this.transform.rotation = Quaternion.Lerp(target.transform.rotation, direction, Damping); /*(this.transform.rotation, direction, Damping)*/;
-			this.transform.position += this.transform.forward * Speed * Time.deltaTime;
+            this.transform.position += this.transform.forward * Speed * Time.deltaTime;
+            }
+            
 		}
 
         public void SetTarget(GameObject _target)

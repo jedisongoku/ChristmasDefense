@@ -28,6 +28,7 @@ public class Hero : MonoBehaviour {
     private AudioSource playerAudio;
     private float attackTimer = 0f;
     private bool isFirstShot = true;
+    private float autoClearEnemyListTimer = 0f;
     
  
     void Awake()
@@ -43,6 +44,7 @@ public class Hero : MonoBehaviour {
 
     void OnTriggerEnter(Collider enemy)
     {
+        autoClearEnemyListTimer = 0f;
         if (enemy.CompareTag("Enemy"))
         {
             //Debug.Log(enemy.gameObject);
@@ -71,6 +73,13 @@ public class Hero : MonoBehaviour {
     void Update()
     {
         attackTimer += Time.deltaTime;
+        autoClearEnemyListTimer += Time.deltaTime;
+
+        if(autoClearEnemyListTimer >= 5f)
+        {
+            autoClearEnemyListTimer = 0f;
+            enemiesInRange.Clear();
+        }
 
         if(!GameManager.gameManager.IsLevelEnded())
         {
@@ -114,7 +123,7 @@ public class Hero : MonoBehaviour {
             isFirstShot = false;
             attackTimer = 0f;
             
-            if(enemiesInRange[0].GetComponent<Enemy>() != null)
+            if(enemiesInRange[0] != null)
             {
                 if (!enemiesInRange[0].GetComponent<Enemy>().isDead)
                 {
@@ -171,7 +180,14 @@ public class Hero : MonoBehaviour {
                     particle.GetComponent<FX_Mover>().SetTarget(enemiesInRange[0]);
                     if (enemiesInRange[0] != null)
                     {
-                        enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, true, gameObject);
+                        if(heroID == 1)
+                        {
+                            enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, true, gameObject);
+                        }
+                        else
+                        {
+                            enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
+                        }
                     }
                     
                 }

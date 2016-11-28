@@ -18,6 +18,7 @@ public class SetLevelStars : MonoBehaviour {
 
     public void SetStar()
     {
+        Debug.Log("STAR");
         levelImage.transform.GetComponent<Button>().interactable = true;
         if(gameMode)
         {

@@ -14,8 +14,12 @@ public class ExplosionDamage : MonoBehaviour {
         if(other.CompareTag("Enemy"))
         {
             //Debug.Log("YOOOO");
-            other.GetComponent<Enemy>().SlowEnemy();
-            other.GetComponent<Enemy>().TakeDamage(0, false, null); //just to activate hornet's dodge
+            if(!other.GetComponent<Enemy>().isDead)
+            {
+                other.GetComponent<Enemy>().SlowEnemy();
+                other.GetComponent<Enemy>().TakeDamage(0, false, null); //just to activate hornet's dodge
+            }
+            
         }
     }
 }

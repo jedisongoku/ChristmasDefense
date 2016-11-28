@@ -311,7 +311,7 @@ public class Enemy : MonoBehaviour {
 
         yield return new WaitForSeconds(3);
 
-        enemyController.speed = 2 * enemySpeed;
+        enemyController.speed = 3 * enemySpeed;
         slowDownParticle.Stop();
         canSlowDown = true;
     }
