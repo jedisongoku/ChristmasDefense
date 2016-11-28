@@ -215,7 +215,7 @@ public class Hero : MonoBehaviour {
                             if (!enemy.GetComponent<Enemy>().isDead)
                             {
                                 Instantiate(projectileUpgraded, enemy.transform.position + (enemy.transform.forward * 1), transform.rotation);
-                                enemy.GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
+                                enemy.GetComponent<Enemy>().TakeDamage((int)(heroDamage*1.25), false, gameObject);
 
                             }
                         }
