@@ -27,9 +27,15 @@ namespace MagicalFX
 				Quaternion rotate = this.transform.rotation;
 				if (!FixRotation)
 					rotate = FXSpawn.transform.rotation;
-                GameObject fx = (GameObject)GameObject.Instantiate(FXSpawn, /*this.transform.position*/ hitTarget.transform.position, rotate);
-				if (LifeTime > 0)
-					GameObject.Destroy (fx.gameObject, LifeTime);
+                if(hitTarget != null)
+                {
+                    GameObject fx = (GameObject)GameObject.Instantiate(FXSpawn, /*this.transform.position*/ hitTarget.transform.position, rotate);
+
+                    if (LifeTime > 0)
+                        GameObject.Destroy(fx.gameObject, LifeTime);
+                }
+                
+				
 			}
 			if (DestoyOnHit) {
 			

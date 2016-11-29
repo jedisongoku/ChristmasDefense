@@ -473,6 +473,7 @@ public class GameHUDManager : MonoBehaviour
 
     public void RestartLevel()
     {
+        HideAllPanels();
         pausePanel.gameObject.SetActive(false);
         buttonsPanel.gameObject.SetActive(true);
 
@@ -498,6 +499,7 @@ public class GameHUDManager : MonoBehaviour
 
     public void GoHome()
     {
+        HideAllPanels();
         GameManager.gameManager.menuCamera.enabled = true;
         //GameManager.gameManager.background.gameObject.SetActive(true);
         HeroSpawnManager.DestroyAssignedHeroes();
@@ -575,7 +577,7 @@ public class GameHUDManager : MonoBehaviour
 
     public void LevelComplete()
     {
-
+        HideAllPanels();
         nextButton.interactable = true;
         
         switch (GameManager.gameManager.levelCompletedStars)
@@ -655,7 +657,7 @@ public class GameHUDManager : MonoBehaviour
         
 
         ReportScore();
-        HideAllPanels();
+        
 
 
     }
@@ -899,15 +901,45 @@ public class GameHUDManager : MonoBehaviour
 
     public void ActivateHeroes()
     {
-
-        if (Player.completedLevels[1] > 0)
+        if(GameManager.gameManager.gameMode)
         {
-            frogSpawnButton.gameObject.SetActive(true);
+            if (Player.completedLevelsHardMode[1] > 0)
+            {
+                frogSpawnButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                frogSpawnButton.gameObject.SetActive(false);
+            }
+            if (Player.completedLevelsHardMode[2] > 0)
+            {
+                lizardSpawnButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                lizardSpawnButton.gameObject.SetActive(false);
+            }
         }
-        if(Player.completedLevels[2] > 0)
+        else
         {
-            lizardSpawnButton.gameObject.SetActive(true);
+            if (Player.completedLevels[1] > 0)
+            {
+                frogSpawnButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                frogSpawnButton.gameObject.SetActive(false);
+            }
+            if (Player.completedLevels[2] > 0)
+            {
+                lizardSpawnButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                lizardSpawnButton.gameObject.SetActive(false);
+            }
         }
+        
     }
 
 	IEnumerator Fps()
