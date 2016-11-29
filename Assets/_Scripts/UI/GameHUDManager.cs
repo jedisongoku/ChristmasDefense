@@ -349,10 +349,6 @@ public class GameHUDManager : MonoBehaviour
 
     public void HideHeroes()
     {
-        if (GameManager.gameManager.tutorialPhase_3)
-        {
-            upgradeHeroTooltip.gameObject.SetActive(true);
-        }
         Invoke("HideHeroesDelayed", 0.1f);
     }
 
@@ -1012,6 +1008,7 @@ public class GameHUDManager : MonoBehaviour
                 break;
             case 6:
                 tutorialInfoPanelPhase_6.gameObject.SetActive(true);
+                upgradeHeroTooltip.gameObject.SetActive(false);
                 infoPanel.gameObject.SetActive(true);
                 infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
                 break;
