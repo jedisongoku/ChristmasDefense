@@ -21,6 +21,7 @@ public class Hero : MonoBehaviour {
     public Material upgradeSkinMaterial;
     public AudioClip baseProjectileSound;
     public AudioClip upgradedProjectileSound;
+    public Transform wizardUpgradeParticle;
 
 
     private List<GameObject> enemiesInRange = new List<GameObject>();
@@ -132,6 +133,10 @@ public class Hero : MonoBehaviour {
                         if (isUpgraded)
                         {
                             playerAnimation.SetTrigger("Attack2");
+                            if(heroID == 3)
+                            {
+                                wizardUpgradeParticle.gameObject.SetActive(true);
+                            }
                         }
                         else
                         {
@@ -141,6 +146,10 @@ public class Hero : MonoBehaviour {
                     else
                     {
 						playerAnimation.Stop ();
+                        if(heroID == 3)
+                        {
+                            wizardUpgradeParticle.gameObject.SetActive(false);
+                        }
                         RemoveEnemy(enemiesInRange[0]);
                     }
                     
@@ -239,6 +248,7 @@ public class Hero : MonoBehaviour {
 						}
 
                     }
+                    wizardUpgradeParticle.gameObject.SetActive(false);
                 }
             }
         }

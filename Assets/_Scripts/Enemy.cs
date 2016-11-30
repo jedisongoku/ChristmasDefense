@@ -86,7 +86,7 @@ public class Enemy : MonoBehaviour {
 
         if(GameManager.gameManager.level == 3 && GameManager.gameManager.GetCurrentWave() == 15)
         {
-            enemyHealth = 1166;
+            enemyHealth = 1369;
             enemyHealthMax = enemyHealth;
             enemyController.speed = enemyController.speed * 0.7f;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
