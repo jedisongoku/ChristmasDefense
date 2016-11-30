@@ -11,7 +11,7 @@ public class DataStore : MonoBehaviour{
     public static void Save()
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo40.dat");
+        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo41.dat");
 
         PlayerData data = new PlayerData();
         data.life = Player.life;
@@ -32,10 +32,10 @@ public class DataStore : MonoBehaviour{
 
     public static void Load()
     {
-        if(File.Exists(Application.persistentDataPath + "/playerInfo40.dat"))
+        if(File.Exists(Application.persistentDataPath + "/playerInfo41.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo40.dat", FileMode.Open);
+            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo41.dat", FileMode.Open);
             PlayerData data = (PlayerData)bf.Deserialize(file);
             file.Close();
 
@@ -53,16 +53,16 @@ public class DataStore : MonoBehaviour{
         }
         else
         {
-            Player.specialHero = 12;
+            Player.specialHero = 5;
             Player.snowFlakes = 3; // dont forget to remove this or reduce the number
-            Player.completedLevels.Add(1, 0); //change back to 0
+            Player.completedLevels.Add(1, 3); //change back to 0
             Player.completedLevelsHardMode.Add(1, 0);
 
             Player.levelScores.Add(1, 0);
             Player.levelScoresHardMode.Add(1, 0);
             for (int i = 2; i <= 12; i++)
             {
-                Player.completedLevels.Add(i, -1); //change back to -1
+                Player.completedLevels.Add(i, 3); //change back to -1
                 Player.levelScores.Add(i, 0); //change back to 0
                 Player.completedLevelsHardMode.Add(i, -1); //change back to -1
                 Player.levelScoresHardMode.Add(i, 0); //change back to 0

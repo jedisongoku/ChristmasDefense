@@ -213,9 +213,7 @@ public class Enemy : MonoBehaviour {
             if(player != null)
             {
                 player.GetComponent<Hero>().RemoveEnemy(gameObject);
-            }
-            
-            
+            } 
         }
         
     }

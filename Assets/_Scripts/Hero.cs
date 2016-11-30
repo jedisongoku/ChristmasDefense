@@ -140,6 +140,7 @@ public class Hero : MonoBehaviour {
                     }
                     else
                     {
+						playerAnimation.Stop ();
                         RemoveEnemy(enemiesInRange[0]);
                     }
                     
@@ -166,20 +167,25 @@ public class Hero : MonoBehaviour {
             {
                 if (!isUpgraded)
                 {
-                    GameObject particle = Instantiate(projectile, projectileReleaseTransform.position, transform.rotation) as GameObject;
-                    particle.GetComponent<FX_Mover>().SetTarget(enemiesInRange[0]);
+                    
                     if (enemiesInRange[0] != null)
                     {
-                        
+						GameObject particle = Instantiate(projectile, projectileReleaseTransform.position, transform.rotation) as GameObject;
+						particle.GetComponent<FX_Mover>().SetTarget(enemiesInRange[0]);
                         enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
                     }
+					else
+					{
+						enemiesInRange.Remove(enemiesInRange[0]);
+					}
                 }
                 else
                 {
-                    GameObject particle = Instantiate(projectileUpgraded, projectileReleaseTransform.position, transform.rotation) as GameObject;
-                    particle.GetComponent<FX_Mover>().SetTarget(enemiesInRange[0]);
+                    
                     if (enemiesInRange[0] != null)
                     {
+						GameObject particle = Instantiate(projectileUpgraded, projectileReleaseTransform.position, transform.rotation) as GameObject;
+						particle.GetComponent<FX_Mover>().SetTarget(enemiesInRange[0]);
                         if(heroID == 1)
                         {
                             enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, true, gameObject);
@@ -189,6 +195,10 @@ public class Hero : MonoBehaviour {
                             enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
                         }
                     }
+					else
+					{
+						enemiesInRange.Remove(enemiesInRange[0]);
+					}
                     
                 }
             }
@@ -196,12 +206,16 @@ public class Hero : MonoBehaviour {
             {
                 if (!isUpgraded)
                 {
-                    GameObject particle = Instantiate(projectile, projectileReleaseTransform.position, transform.rotation) as GameObject;
-                    particle.GetComponent<FX_Mover>().SetTarget(enemiesInRange[0]);
                     if (enemiesInRange[0] != null)
                     {
+						GameObject particle = Instantiate(projectile, projectileReleaseTransform.position, transform.rotation) as GameObject;
+						particle.GetComponent<FX_Mover>().SetTarget(enemiesInRange[0]);
                         enemiesInRange[0].GetComponent<Enemy>().TakeDamage(heroDamage, false, gameObject);
                     }
+					else
+					{
+						enemiesInRange.Remove(enemiesInRange[0]);
+					}
                 }
                 else
                 {
@@ -219,6 +233,10 @@ public class Hero : MonoBehaviour {
 
                             }
                         }
+						else
+						{
+							enemiesInRange.Remove(enemiesInRange[0]);
+						}
 
                     }
                 }
