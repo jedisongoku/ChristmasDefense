@@ -16,5 +16,5 @@ public class Player : MonoBehaviour {
     public static Dictionary<int, int> levelScoresHardMode = new Dictionary<int, int>();
     public static bool tutorial = false;
     public static bool adFree = false;
-
+    public static bool gameMode = false;
 }

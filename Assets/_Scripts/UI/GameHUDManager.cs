@@ -39,6 +39,8 @@ public class GameHUDManager : MonoBehaviour
     public Transform wizardUnlocked;
     public Transform normalModeLevels;
     public Transform hardModeLevels;
+    public Transform normalLevelIndicator;
+    public Transform hardLevelIndicator;
 
     [Header("GameHUD")]
     public Transform heroesPanel;
@@ -54,6 +56,7 @@ public class GameHUDManager : MonoBehaviour
     public Text boostPointText;
     public Text scoreText;
     public Text specialHeroIndicatorText;
+    public Text levelTimerText;
     public Button tigerSpawnButton;
     public Button frogSpawnButton;
     public Button lizardSpawnButton;
@@ -377,7 +380,7 @@ public class GameHUDManager : MonoBehaviour
 
     void HideLevels()
     {
-        if(GameManager.gameManager.gameMode)
+        if(Player.gameMode)
         {
             normalModeLevels.gameObject.SetActive(false);
         }
@@ -524,7 +527,11 @@ public class GameHUDManager : MonoBehaviour
         playPauseButton.image.sprite = pauseButtonImage;
         fastForwardButton.image.sprite = fastForwardImage;
         Time.timeScale = 1;
-        SoundManager.soundManager.backgroundAudioSource.volume *= 2;
+        if(!SoundManager.soundManager.isMute)
+        {
+            SoundManager.soundManager.backgroundAudioSource.volume *= 2;
+        }
+        
         GameManager.gameManager.isFastForward = false;
     }
 
@@ -576,6 +583,7 @@ public class GameHUDManager : MonoBehaviour
         HideAllPanels();
 		buttonsPanel.gameObject.SetActive (false);
         nextButton.interactable = true;
+        Player.gameMode = GameManager.gameManager.gameMode;
         
         switch (GameManager.gameManager.levelCompletedStars)
         {
@@ -1120,14 +1128,19 @@ public class GameHUDManager : MonoBehaviour
     public void ShowHardModeLevels()
     {
         normalModeLevels.gameObject.SetActive(false);
+        normalLevelIndicator.gameObject.SetActive(false);
         hardModeLevels.gameObject.SetActive(true);
+        hardLevelIndicator.gameObject.SetActive(true);
+
         GameManager.gameManager.gameMode = true;
     }
 
     public void ShowNormalModeLevels()
     {
         hardModeLevels.gameObject.SetActive(false);
+        hardLevelIndicator.gameObject.SetActive(false);
         normalModeLevels.gameObject.SetActive(true);
+        normalLevelIndicator.gameObject.SetActive(true);
         GameManager.gameManager.gameMode = false;
         
     }
@@ -1196,13 +1209,15 @@ public class GameHUDManager : MonoBehaviour
             menuMusicButton.image.sprite = musicOnImage;
             gameMenuMusicButton.image.sprite = musicOnImage;
             SoundManager.soundManager.backgroundAudioSource.volume = 1;
-            
+            SoundManager.soundManager.isMute = false;
+
         }
         else
         {
             menuMusicButton.image.sprite = musicOffImage;
             gameMenuMusicButton.image.sprite = musicOffImage;
             SoundManager.soundManager.backgroundAudioSource.volume = 0;
+            SoundManager.soundManager.isMute = true;
         }
         
     }
@@ -1210,6 +1225,11 @@ public class GameHUDManager : MonoBehaviour
     public void OpenFacebook()
     {
         Application.OpenURL("https://www.facebook.com/ChristmasDefense");
+    }
+
+    public void SetLevelTimerText(int second)
+    {
+        levelTimerText.text = "Level begins in " + second;
     }
 
 

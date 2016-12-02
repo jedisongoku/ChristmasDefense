@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
     public List<AudioClip> menuSounds;
     public List<AudioClip> gameSounds;
     public float fadeSpeed = 1f;
+    public bool isMute = false;
 
     private AudioSource track;
     private bool isMenuMusicOn = true;

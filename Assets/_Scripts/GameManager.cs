@@ -140,6 +140,8 @@ public class GameManager : MonoBehaviour {
         currentWave = 0;
         healthMultiplier = 1;
 
+        GameHUDManager.gameHudManager.levelTimerText.enabled = true;
+
         isWaveStarted = false;
         isLevelStarted = false;
         isLevelEnded = false;
@@ -186,9 +188,14 @@ public class GameManager : MonoBehaviour {
         {
             
             isLevelStarted = true;
+            GameHUDManager.gameHudManager.levelTimerText.enabled = false;
+        }
+        else
+        {
+            GameHUDManager.gameHudManager.SetLevelTimerText(Mathf.RoundToInt(levelStartTimer) - Mathf.FloorToInt(levelTimer));
         }
 
-        if (waveTimer >= waveStartTimer && !isWaveStarted && !isTutorial)
+        if (waveTimer >= waveStartTimer && !isWaveStarted && !isTutorial && isLevelStarted)
         {
             isWaveStarted = true;
             GameHUDManager.gameHudManager.GameHudUpdate();

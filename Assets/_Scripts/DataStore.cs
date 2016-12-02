@@ -24,6 +24,7 @@ public class DataStore : MonoBehaviour{
         data.specialHero = Player.specialHero;
         data.tutorial = Player.tutorial;
         data.adFree = Player.adFree;
+        data.gameMode = Player.gameMode;
 
         bf.Serialize(file, data);
         file.Close();
@@ -49,6 +50,7 @@ public class DataStore : MonoBehaviour{
             Player.specialHero = data.specialHero;
             Player.tutorial = data.tutorial;
             Player.adFree = data.adFree;
+            Player.gameMode = data.gameMode;
 
         }
         else
@@ -84,4 +86,5 @@ class PlayerData
     public Dictionary<int, int> levelScoresHardMode;
     public bool tutorial = false;
     public bool adFree = false;
+    public bool gameMode = false;
 }

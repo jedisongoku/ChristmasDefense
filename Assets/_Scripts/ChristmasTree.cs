@@ -10,6 +10,7 @@ public class ChristmasTree : MonoBehaviour {
         if (other != null && other.CompareTag("Enemy"))
         {
             Debug.Log("Life Lost");
+            Handheld.Vibrate();
             if ((GameManager.gameManager.level == 3 && GameManager.gameManager.GetCurrentWave() == 15) || 
                 (GameManager.gameManager.level == 5 && GameManager.gameManager.GetCurrentWave() == 20) || 
                 (GameManager.gameManager.level == 7 && GameManager.gameManager.GetCurrentWave() == 25))
