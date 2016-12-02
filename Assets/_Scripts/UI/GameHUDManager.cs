@@ -623,7 +623,7 @@ public class GameHUDManager : MonoBehaviour
                 boostPointText.text = Player.resource.ToString();
                 scoreText.text = string.Format("{0:#,#}", Player.score);
                 boostPointText.enabled = true;
-				scoreText.enabled = false;
+				scoreText.enabled = true;
             }
             else
             {
@@ -651,6 +651,7 @@ public class GameHUDManager : MonoBehaviour
                 boostPointText.text = Player.resource.ToString();
                 scoreText.text = string.Format("{0:#,#}", Player.score);
                 boostPointText.enabled = true;
+                scoreText.enabled = true;
             }
             else
             {
