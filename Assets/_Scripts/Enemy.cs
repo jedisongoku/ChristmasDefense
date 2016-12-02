@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour {
     private int currentDestination = 0;
     private int randomDestinationIndex;
     private int enemyHealthMax;
+	private float navMeshSpeed;
     private bool canSlowDown = true;
     private bool canDebuffed = true;
     private float debufTimer;
@@ -50,17 +51,9 @@ public class Enemy : MonoBehaviour {
             enemyAnimation = GetComponent<Animator>();
         }
 
-
-
-
         DestroyAll += DestroyOnRestart;
 
-        //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        if (enemyId == 4)
-        {
-
-        }
-        else if (enemyId == 5)
+        if (enemyId == 5)
         {
             monsterHornet = GetComponent<MonsterHornet>();
         }
@@ -69,9 +62,6 @@ public class Enemy : MonoBehaviour {
             mushroomMonster = GetComponent<MushroomMonster>();
             Debug.Log("MUSHROOM");
         }
-
-
-        //enemyCollider = GetComponent<Collider>();
 
         enemyHealth = (int)(enemyHealth * GameManager.gameManager.healthMultiplier);
         //Debug.Log(name + " health " + enemyHealth);
@@ -83,12 +73,13 @@ public class Enemy : MonoBehaviour {
         isFirstHeal = true;
         canTakeDamage = true;
         healthBar.gameObject.SetActive(true);
+		navMeshSpeed = enemyController.speed;
 
         if(GameManager.gameManager.level == 3 && GameManager.gameManager.GetCurrentWave() == 15)
         {
             enemyHealth = 1369;
             enemyHealthMax = enemyHealth;
-            enemyController.speed = enemyController.speed * 0.7f;
+			enemyController.speed = navMeshSpeed * 0.7f;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
             isBoss = true;
         }
@@ -98,7 +89,7 @@ public class Enemy : MonoBehaviour {
             enemyHealth = 1348;
             enemyHealthMax = enemyHealth;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
-            enemyController.speed = enemyController.speed * 0.7f;
+			enemyController.speed = navMeshSpeed * 0.7f;
             isBoss = true;
         }
         else
@@ -107,7 +98,7 @@ public class Enemy : MonoBehaviour {
             enemyHealth = 3696;
             enemyHealthMax = enemyHealth;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
-            enemyController.speed = enemyController.speed * 0.8f;
+			enemyController.speed = navMeshSpeed * 0.8f;
             isBoss = true;
         }
         else
@@ -116,7 +107,7 @@ public class Enemy : MonoBehaviour {
             enemyHealth = 2840;
             enemyHealthMax = enemyHealth;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
-            enemyController.speed = enemyController.speed * 0.5f;
+			enemyController.speed = navMeshSpeed * 0.5f;
             isBoss = true;
         }
 
@@ -268,11 +259,6 @@ public class Enemy : MonoBehaviour {
             Destroy(gameObject, 0);
 
         }
-        
-
-
-
-        
     }
 
     public void SinkEnemy()
@@ -309,14 +295,13 @@ public class Enemy : MonoBehaviour {
 
         yield return new WaitForSeconds(3);
 
-        enemyController.speed = 3 * enemySpeed;
+		enemyController.speed = navMeshSpeed * enemySpeed;
         slowDownParticle.Stop();
         canSlowDown = true;
     }
 
     IEnumerator DamageOverTime()
     {
-        //Debug.Log("DOT");
 
         TakeDamage(2, false, null);
        

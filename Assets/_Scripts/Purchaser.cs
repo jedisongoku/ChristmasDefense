@@ -22,11 +22,11 @@ public class Purchaser : MonoBehaviour, IStoreListener
     public static string kProductIDNonConsumable = "nonconsumable";
     public static string kProductIDSubscription = "subscription";
 
-    public static string purchaseSnowflake_5 = "snowflake5";
-    public static string purchaseSnowflake_25 = "snowflake25";
-    public static string purchaseWarrior_3 = "warrior3";
-    public static string purchaseWarrior_20 = "warrior20";
-    public static string purchaseAdFree = "adfree";
+	public static string purchaseSnowflake_5 = "com.christmasdefense.snowflake5";
+	public static string purchaseSnowflake_25 = "com.christmasdefense.snowflake25";
+	public static string purchaseWarrior_3 = "wcom.christmasdefense.specialhero3";
+	public static string purchaseWarrior_20 = "com.christmasdefense.specialhero20";
+	public static string purchaseAdFree = "com.christmasdefense.adfree";
 
     // Apple App Store-specific product identifier for the subscription product.
     private static string kProductNameAppleSubscription = "com.unity3d.subscription.new";
@@ -235,13 +235,14 @@ public class Purchaser : MonoBehaviour, IStoreListener
         else if (String.Equals(args.purchasedProduct.definition.id, purchaseAdFree, StringComparison.Ordinal))
         {
             Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
+			Player.adFree = true;
         }
         // Or ... an unknown product has been purchased by this user. Fill in additional products here....
         else
         {
             Debug.Log(string.Format("ProcessPurchase: FAIL. Unrecognized product: '{0}'", args.purchasedProduct.definition.id));
         }
-
+		DataStore.Save ();
         GameHUDManager.gameHudManager.MenuHudUpdate();
 
         // Return a flag indicating whether this product has completely been received, or if the application needs 

@@ -175,10 +175,10 @@ public class GameManager : MonoBehaviour {
 
         if(Input.GetKeyDown("space"))
         {
-            //currentWave++;
+            currentWave++;
             //GameHUDManager.gameHudManager.gameHUD.gameObject.SetActive(false);
-            Camera.main.transform.position = videoCameraLocation.position;
-            Camera.main.transform.rotation = videoCameraLocation.rotation;
+            //Camera.main.transform.position = videoCameraLocation.position;
+            //Camera.main.transform.rotation = videoCameraLocation.rotation;
         }
 
 

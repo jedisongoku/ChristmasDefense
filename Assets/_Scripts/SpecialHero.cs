@@ -29,7 +29,6 @@ public class SpecialHero : MonoBehaviour
     void Awake()
     {
         controller = GetComponent<NavMeshAgent>();
-        //heroAnimation = GetComponent<Animation>();
         heroAnimation = GetComponent<Animator>();
         playerAudio = GetComponent<AudioSource>();
 
@@ -41,18 +40,15 @@ public class SpecialHero : MonoBehaviour
         currentDestination = GameManager.gameManager.enemyDestination[path].Count - 2;
         HeroDestroy += DestroyHero;
         Invoke("StartHeroDelayed", 0.5f);
-        //Debug.Log(currentDestination);
-        //heroAnimation.Play("run");
     }
 
     public void StartHero()
     {
         isStarted = true;
         controller.SetDestination(GameManager.gameManager.enemyDestination[path][currentDestination][0].position);
-        
-        //spawnParticle.gameObject.SetActive(false);
     }
 
+	//It is used incase StartHero is not called - That happens because the animation ends early and event never get a chance run
     void StartHeroDelayed()
     {
         if (!isStarted)
@@ -125,20 +121,22 @@ public class SpecialHero : MonoBehaviour
 
         if(enemiesInRange.Count != 0)
         {
-            foreach(var enemy in enemiesInRange)
-            {
-                //enemiesInRange.Remove(enemy);
-                if(!enemy.GetComponent<Enemy>().isBoss)
-                {
-                    enemy.GetComponent<Enemy>().Dead();
-                }
-                else
-                {
-                    enemy.GetComponent<Enemy>().TakeDamage(150, false, null);
-                    enemiesInRange.Clear();
-                }
-                
-                
+			foreach (var enemy in enemiesInRange)
+			{
+				if (!enemy.GetComponent<Enemy> ().isDead && !enemy.GetComponent<Enemy> ().isSuccess)
+				{
+					//enemiesInRange.Remove(enemy);
+					if (!enemy.GetComponent<Enemy> ().isBoss)
+					{
+						
+						enemy.GetComponent<Enemy> ().Dead ();
+					} 
+					else 
+					{
+					enemy.GetComponent<Enemy> ().TakeDamage (150, false, null);
+					enemiesInRange.Clear ();
+					}
+				}    
             }
             Instantiate(projectile, projectileReleaseTransform.position, transform.rotation);
             
@@ -154,12 +152,8 @@ public class SpecialHero : MonoBehaviour
             //heroAnimation.Play("run");
             heroAnimation.SetTrigger("Run");
             controller.Resume();
-            isAttacking = false;
-            
-            
+            isAttacking = false;           
         }
-
-
     }
 
     public static void DestorySpecialHeroes()

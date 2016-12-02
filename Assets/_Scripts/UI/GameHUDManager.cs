@@ -574,6 +574,7 @@ public class GameHUDManager : MonoBehaviour
     public void LevelComplete()
     {
         HideAllPanels();
+		buttonsPanel.gameObject.SetActive (false);
         nextButton.interactable = true;
         
         switch (GameManager.gameManager.levelCompletedStars)
@@ -614,6 +615,7 @@ public class GameHUDManager : MonoBehaviour
                 boostPointText.text = Player.resource.ToString();
                 scoreText.text = string.Format("{0:#,#}", Player.score);
                 boostPointText.enabled = true;
+				scoreText.enabled = false;
             }
             else
             {

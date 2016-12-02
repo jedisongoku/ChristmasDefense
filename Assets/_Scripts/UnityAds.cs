@@ -16,19 +16,27 @@ public class UnityAds : MonoBehaviour {
     public void ShowAd(string zone = "")
     {
         rewardZone = zone;
+		/*
         if(string.Equals(zone, ""))
         {
             zone = null;
             rewardZone = null;
-        }
+        }*/
 
         ShowOptions options = new ShowOptions();
         options.resultCallback = AdCallbackHandler;
 
-        if (Advertisement.IsReady(zone))
-        {
-            Advertisement.Show(zone, options);
-        }
+		Debug.Log ("Ad Free Status " + Player.adFree);
+		Debug.Log ("Rewardzone Status " + rewardZone);
+
+		if (!Player.adFree || (Player.adFree && rewardZone.Equals("rewardedVideo")))
+		{
+			if (Advertisement.IsReady(zone))
+			{
+				Advertisement.Show(zone, options);
+			}
+		}
+        
 
         
     }
