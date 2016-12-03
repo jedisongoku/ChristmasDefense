@@ -123,18 +123,18 @@ public class SpecialHero : MonoBehaviour
         {
 			foreach (var enemy in enemiesInRange)
 			{
-				if (!enemy.GetComponent<Enemy> ().isDead && !enemy.GetComponent<Enemy> ().isSuccess)
+				if (!enemy.GetComponent<Enemy>().isDead && !enemy.GetComponent<Enemy> ().isSuccess)
 				{
 					//enemiesInRange.Remove(enemy);
-					if (!enemy.GetComponent<Enemy> ().isBoss)
+					if (!enemy.GetComponent<Enemy>().isBoss)
 					{
 						
-						enemy.GetComponent<Enemy> ().Dead ();
+						enemy.GetComponent<Enemy>().Dead ();
 					} 
 					else 
 					{
-					enemy.GetComponent<Enemy> ().TakeDamage (150, false, null);
-					enemiesInRange.Clear ();
+					enemy.GetComponent<Enemy>().TakeDamage (enemy.GetComponent<Enemy>().GetMaxHealth() / 5, false, null);
+					//enemiesInRange.Clear ();
 					}
 				}    
             }

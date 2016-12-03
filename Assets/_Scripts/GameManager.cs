@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour {
         currentWave = 0;
         healthMultiplier = 1;
 
-        GameHUDManager.gameHudManager.levelTimerText.enabled = true;
+        
 
         isWaveStarted = false;
         isLevelStarted = false;
@@ -150,13 +150,15 @@ public class GameManager : MonoBehaviour {
         Player.resource = levelInitialResource;
         levelInitialLife = Player.life;
         levelInitialSpecialHero = Player.specialHero;
-        
+
 
         //Camera.main.transform.position = cameraLocations[level - 1].position;
         //specialHeroSpawnLocation = enemyDestination[0][enemyDestination[0].Count - 1][0];
 
-        if (isTutorial && level == 1)
+        GameHUDManager.gameHudManager.levelTimerText.enabled = true;
+        if (isTutorial)
         {
+            GameHUDManager.gameHudManager.levelTimerText.enabled = false;
             //GameHUDManager.gameHudManager.tapHereTooltip.gameObject.SetActive(true);
             //tutorialPhase_1 = true;
         }

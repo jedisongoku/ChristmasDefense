@@ -27,6 +27,10 @@ public class GameHUDManager : MonoBehaviour
     public Transform informationPanel;
     public Transform heroesInformation;
     public Transform enemiesInformation;
+    public Transform instructions;
+    public Transform optionsPanel;
+    public Transform warningPanel;
+    public Transform creditsPanel;
     public Text MiniGameCounterText;
     public Text boostPointTextMenu;
     public Text lifeTextMenu;
@@ -380,13 +384,18 @@ public class GameHUDManager : MonoBehaviour
 
     void HideLevels()
     {
+        GameManager.gameManager.gameMode = Player.gameMode;
         if(Player.gameMode)
         {
             normalModeLevels.gameObject.SetActive(false);
+            hardLevelIndicator.gameObject.SetActive(true);
+            normalLevelIndicator.gameObject.SetActive(false);
         }
         else
         {
             hardModeLevels.gameObject.SetActive(false);
+            hardLevelIndicator.gameObject.SetActive(false);
+            normalLevelIndicator.gameObject.SetActive(true);
         }
         
     }
@@ -400,6 +409,7 @@ public class GameHUDManager : MonoBehaviour
     {
         loadingBar.gameObject.SetActive(true);
         levelMenu.gameObject.SetActive(false);
+        specialHeroSpawnButton.gameObject.SetActive(true);
         PlayLoadLevelIntro();
         SoundManager.soundManager.SwitchSound(false);
 
@@ -463,6 +473,7 @@ public class GameHUDManager : MonoBehaviour
         SpecialHero.DestorySpecialHeroes();
         levelCompletePanel.gameObject.SetActive(false);
         levels[GameManager.gameManager.level - 1].gameObject.SetActive(false);
+        specialHeroSpawnButton.gameObject.SetActive(true);
 
         menuHUD.gameObject.SetActive(true);
         SelectLevel(GameManager.gameManager.level + 1);
@@ -475,6 +486,7 @@ public class GameHUDManager : MonoBehaviour
         HideAllPanels();
         pausePanel.gameObject.SetActive(false);
         buttonsPanel.gameObject.SetActive(true);
+        specialHeroSpawnButton.gameObject.SetActive(true);
 
         HeroSpawnManager.DestroyAssignedHeroes();
         SpecialHero.DestorySpecialHeroes();
@@ -582,6 +594,7 @@ public class GameHUDManager : MonoBehaviour
     {
         HideAllPanels();
 		buttonsPanel.gameObject.SetActive (false);
+        specialHeroSpawnButton.gameObject.SetActive(false);
         nextButton.interactable = true;
         Player.gameMode = GameManager.gameManager.gameMode;
         
@@ -840,6 +853,7 @@ public class GameHUDManager : MonoBehaviour
     public void PlayMenuIntro()
     {
         GameManager.gameManager.menuCamera.enabled = false;
+        optionsPanel.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(false);
         normalModeLevels.gameObject.SetActive(true);
         hardModeLevels.gameObject.SetActive(true);
@@ -1005,11 +1019,14 @@ public class GameHUDManager : MonoBehaviour
                 infoPanel.gameObject.SetActive(true);
                 infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
                 lifeTooltip.gameObject.SetActive(true);
+                specialHeroSpawnButton.gameObject.SetActive(false);
+                //GameManager.gameManager.tutorialPhase_4 = true;
                 break;
             case 4:
                 tutorialInfoPanelPhase_4.gameObject.SetActive(true);
                 infoPanel.gameObject.SetActive(true);
                 infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+                
                 break;
             case 5:
                 tutorialInfoPanelPhase_5.gameObject.SetActive(true);
@@ -1088,6 +1105,7 @@ public class GameHUDManager : MonoBehaviour
             {
                 GameManager.gameManager.tutorialPhase_3 = false;
                 GameManager.gameManager.tutorialPhase_4 = true;
+                specialHeroSpawnButton.gameObject.SetActive(true);
                 lifeTooltip.gameObject.SetActive(false);
                 tutorialselectedHeroSpawnPoint = GameManager.gameManager.selectedSpawnPoint;
                 tutorialselectedHeroSpawnPoint.GetComponent<HeroSpawnManager>().ShowTutorialTooltip();
@@ -1095,6 +1113,7 @@ public class GameHUDManager : MonoBehaviour
             }
             else if (GameManager.gameManager.tutorialPhase_4)
             {
+                Debug.Log("Phase 4 disables");
                 GameManager.gameManager.tutorialPhase_4 = false;
                 GameManager.gameManager.tutorialPhase_5 = true;
                 tutorialselectedHeroSpawnPoint.GetComponent<HeroSpawnManager>().HideTutorialTooltip();
@@ -1162,6 +1181,7 @@ public class GameHUDManager : MonoBehaviour
         else
         {
             GameManager.gameManager.isTutorial = true;
+            
             TutorialPhaseStart(1);
 
         }
@@ -1177,7 +1197,7 @@ public class GameHUDManager : MonoBehaviour
         HideHeroInfo();
     }
 
-    public void ShowInformationPanel(bool panel)
+    public void ShowInformationPanel(int panel)
     {
         miniGamePanel.gameObject.SetActive(false);
         levelPanel.gameObject.SetActive(false);
@@ -1185,14 +1205,21 @@ public class GameHUDManager : MonoBehaviour
         informationPanel.gameObject.SetActive(true);
         switch (panel)
         {
-            case true:
+            case 1:
+                instructions.gameObject.SetActive(false);
                 enemiesInformation.gameObject.SetActive(false);
                 heroesInformation.gameObject.SetActive(true);
                 break;
-            case false:
+            case 2:
+                instructions.gameObject.SetActive(false);
                 heroesInformation.gameObject.SetActive(false);
                 enemiesInformation.gameObject.SetActive(true);
                 
+                break;
+            case 3:
+                instructions.gameObject.SetActive(true);
+                heroesInformation.gameObject.SetActive(false);
+                enemiesInformation.gameObject.SetActive(false);
                 break;
         }
     }
@@ -1233,5 +1260,44 @@ public class GameHUDManager : MonoBehaviour
         levelTimerText.text = "Level begins in " + second;
     }
 
+    public void ShowOptionsPanel()
+    {
+        optionsPanel.gameObject.SetActive(true);
+    }
+
+    public void HideOptionsPanel()
+    {
+        optionsPanel.gameObject.SetActive(false);
+        DataStore.Save();
+        Debug.Log(Player.soundVolume);
+    }
+
+    public void ShowResetWarning()
+    {
+        optionsPanel.gameObject.SetActive(false);
+        warningPanel.gameObject.SetActive(true);
+    }
+
+    public void ResetGame(bool reset)
+    {
+        if(reset)
+        {
+            DataStore.Reset();
+        }
+        warningPanel.gameObject.SetActive(false);
+        optionsPanel.gameObject.SetActive(true);
+    }
+
+    public void ToggleCredits(bool credits)
+    {
+        if(credits)
+        {
+            creditsPanel.gameObject.SetActive(true);
+        }
+        else
+        {
+            creditsPanel.gameObject.SetActive(false);
+        }
+    }
 
 }

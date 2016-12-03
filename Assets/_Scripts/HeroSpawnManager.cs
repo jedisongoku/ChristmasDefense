@@ -82,7 +82,7 @@ public class HeroSpawnManager : MonoBehaviour
             GameHUDManager.gameHudManager.TutorialPhaseStart(2);
         }
 
-        GameHUDManager.gameHudManager.HideInfoPanel();
+        
         if (!MouseController.isMouseOnUI)
         {
 
@@ -103,7 +103,7 @@ public class HeroSpawnManager : MonoBehaviour
             else
             {
 
-                Debug.Log("Show player updates here");
+                Debug.Log("Show player updates here" + GameManager.gameManager.tutorialPhase_4);
                 GameHUDManager.gameHudManager.ShowHeroInfo(assignedHero.GetComponent<Hero>().heroID);
                 radius.gameObject.SetActive(true);
                 if (GameManager.gameManager.tutorialPhase_4)
@@ -114,8 +114,8 @@ public class HeroSpawnManager : MonoBehaviour
             
             
         }
-       
-        
+        //GameHUDManager.gameHudManager.HideInfoPanel();
+
 
     }
 

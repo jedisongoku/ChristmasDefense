@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour {
     public int sinkSpeed;
     public int enemyPath;
     public Transform healthBar;
+    public Transform floatingText;
     public Image healthImage;
     public bool isSuccess = false;
 
@@ -220,6 +221,7 @@ public class Enemy : MonoBehaviour {
             dotParticle.Stop();
             GameManager.gameManager.EnemyDead();
             healthBar.gameObject.SetActive(false);
+            floatingText.gameObject.SetActive(true);
             Player.resource += enemyCoin;
             Player.score += enemyCoin * 101;
             GameHUDManager.gameHudManager.GameHudUpdate(); 
