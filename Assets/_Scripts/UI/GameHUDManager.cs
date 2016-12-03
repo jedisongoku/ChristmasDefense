@@ -474,6 +474,7 @@ public class GameHUDManager : MonoBehaviour
         levelCompletePanel.gameObject.SetActive(false);
         levels[GameManager.gameManager.level - 1].gameObject.SetActive(false);
         specialHeroSpawnButton.gameObject.SetActive(true);
+        buttonsPanel.gameObject.SetActive(true);
 
         menuHUD.gameObject.SetActive(true);
         SelectLevel(GameManager.gameManager.level + 1);
@@ -519,6 +520,7 @@ public class GameHUDManager : MonoBehaviour
         levelCompletePanel.gameObject.SetActive(false);
         pausePanel.gameObject.SetActive(false);
         buttonsPanel.gameObject.SetActive(true);
+        specialHeroSpawnButton.gameObject.SetActive(true);
         GameManager.gameManager.OnGoHome();
         levels[GameManager.gameManager.level - 1].gameObject.SetActive(false);
         levelMenu.gameObject.SetActive(false);

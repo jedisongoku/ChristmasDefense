@@ -68,6 +68,10 @@ public class Hero : MonoBehaviour {
         if (enemiesInRange.Contains(enemy))
         {
             enemiesInRange.Remove(enemy);
+            if (heroID == 3)
+            {
+                wizardUpgradeParticle.gameObject.SetActive(false);
+            }
         }
     }
 

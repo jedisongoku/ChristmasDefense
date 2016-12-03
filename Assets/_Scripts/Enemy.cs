@@ -80,7 +80,8 @@ public class Enemy : MonoBehaviour {
         {
             enemyHealth = 1369;
             enemyHealthMax = enemyHealth;
-			enemyController.speed = navMeshSpeed * 0.7f;
+            navMeshSpeed *= 0.7f;
+            enemyController.speed = navMeshSpeed;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
             isBoss = true;
         }
@@ -90,7 +91,8 @@ public class Enemy : MonoBehaviour {
             enemyHealth = 1348;
             enemyHealthMax = enemyHealth;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
-			enemyController.speed = navMeshSpeed * 0.7f;
+            navMeshSpeed *= 0.7f;
+            enemyController.speed = navMeshSpeed;
             isBoss = true;
         }
         else
@@ -99,7 +101,8 @@ public class Enemy : MonoBehaviour {
             enemyHealth = 3696;
             enemyHealthMax = enemyHealth;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
-			enemyController.speed = navMeshSpeed * 0.8f;
+            navMeshSpeed *= 0.8f;
+            enemyController.speed = navMeshSpeed;
             isBoss = true;
         }
         else
@@ -108,7 +111,8 @@ public class Enemy : MonoBehaviour {
             enemyHealth = 2840;
             enemyHealthMax = enemyHealth;
             gameObject.transform.localScale = new Vector3(2, 2, 2);
-			enemyController.speed = navMeshSpeed * 0.5f;
+            navMeshSpeed *= 0.5f;
+            enemyController.speed = navMeshSpeed;
             isBoss = true;
         }
 

@@ -25,56 +25,7 @@ public class HeroSpawnManager : MonoBehaviour
     {
         HeroSpawn -= HideObjects;
     }
-    /*
-    void OnMouseDown()
-    {
-        if (!MouseController.isMouseOnUI)
-        {
-            
-            GameHUDManager.gameHudManager.TutorialPhaseComplete(1);
-
-            GameManager.gameManager.selectedSpawnPoint = gameObject;
-            //Debug.Log(assignedHero);
-            if(HeroSpawn != null)
-            {
-                HeroSpawn();
-            }
-            //Invoke("HideHeroPanels", 0.25f);
-            //GameHUDManager.gameHudManager.HideHeroes();
-
-            //GameManager.gameManager.selectedSpawnPoint = gameObject;
-
-
-
-            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && assignedHero == null)
-            {
-
-                GameHUDManager.gameHudManager.ShowHeroes();
-                GameHUDManager.gameHudManager.HideHeroInfo();
-                particleOnClick.gameObject.SetActive(true);
-
-
-            }
-
-            if (assignedHero != null)
-            {
-                //GameHUDManager.gameHudManager.HideHeroes();
-
-                //Debug.Log("Show player updates here");
-                GameHUDManager.gameHudManager.ShowHeroInfo(assignedHero.GetComponent<Hero>().heroID);
-                radius.gameObject.SetActive(true);
-                if (GameManager.gameManager.tutorialPhase_3)
-                {
-                    if (tapHeroTooltip.gameObject.activeInHierarchy)
-                    {
-                        tapHeroTooltip.gameObject.SetActive(false);
-                    }
-                }
-
-            }
-        }      
-    }
-    */
+    
     public void OnTouched()
     {
         if(GameManager.gameManager.tutorialPhase_2)
@@ -110,6 +61,10 @@ public class HeroSpawnManager : MonoBehaviour
                 {
                     GameHUDManager.gameHudManager.TutorialPhaseStart(4);
                 }
+                if(tapHeroTooltip.gameObject.activeInHierarchy)
+                {
+                    tapHeroTooltip.gameObject.SetActive(false);
+                }
             }
             
             
@@ -128,47 +83,6 @@ public class HeroSpawnManager : MonoBehaviour
     {
         GameHUDManager.gameHudManager.HideHeroes();
     }
-
-    /*void OnMouseDown()
-    {
-        GameManager.gameManager.selectedSpawnPoint = gameObject;
-
-        if (previousSpawnLocation != null && previousSpawnLocation != gameObject)
-        {
-            previousSpawnLocation.GetComponent<HeroSpawnManager>().particle.gameObject.SetActive(false);
-            if (radius != null)
-            {
-                previousSpawnLocation.GetComponent<HeroSpawnManager>().radius.gameObject.SetActive(false);
-            }
-        }
-
-        previousSpawnLocation = gameObject;
-
-        
-        if (HeroSpawn != null)
-        {
-            HeroSpawn();
-        }
-
-        
-
-        if(assignedHero == null)
-        {
-            GameHUDManager.gameHudManager.ShowHeroes();
-            GameHUDManager.gameHudManager.HideHeroInfo();
-            particle.gameObject.SetActive(true);
-        }
-        else
-        {
-            if (!isHeroUpdated)
-            {
-                radius = assignedHero.GetComponent<Hero>().radius;
-            }
-            Debug.Log("Show player updates here");
-            GameHUDManager.gameHudManager.ShowHeroInfo(assignedHero.GetComponent<Hero>().heroID);
-            radius.gameObject.SetActive(true);
-        }
-    }*/
 
     public void HideObjects()
     {
