@@ -93,7 +93,7 @@ public class SpecialHero : MonoBehaviour
         if (enemy.CompareTag("Enemy"))
         {
 
-            if(!enemy.GetComponent<Enemy>().isDead)
+            if(!enemy.GetComponent<Enemy>().isDead || !enemy.GetComponent<Enemy>().isSuccess)
             {
                 if(!enemy.GetComponent<Enemy>().isBoss)
                 {
@@ -127,20 +127,24 @@ public class SpecialHero : MonoBehaviour
         {
 			foreach (var enemy in enemiesInRange)
 			{
-				if (!enemy.GetComponent<Enemy>().isDead && !enemy.GetComponent<Enemy> ().isSuccess)
-				{
-					//enemiesInRange.Remove(enemy);
-					if (!enemy.GetComponent<Enemy>().isBoss)
-					{
-						
-						enemy.GetComponent<Enemy>().Dead ();
-					} 
-					else 
-					{
-					enemy.GetComponent<Enemy>().TakeDamage (enemy.GetComponent<Enemy>().GetMaxHealth() / 5, false, null);
-					//enemiesInRange.Clear ();
-					}
-				}    
+                if(enemy != null)
+                {
+                    if (!enemy.GetComponent<Enemy>().isDead && !enemy.GetComponent<Enemy>().isSuccess)
+                    {
+                        //enemiesInRange.Remove(enemy);
+                        if (!enemy.GetComponent<Enemy>().isBoss)
+                        {
+
+                            enemy.GetComponent<Enemy>().Dead();
+                        }
+                        else
+                        {
+                            enemy.GetComponent<Enemy>().TakeDamage(enemy.GetComponent<Enemy>().GetMaxHealth() / 5, false, null);
+                            //enemiesInRange.Clear ();
+                        }
+                    }
+                }
+				
             }
             Instantiate(projectile, projectileReleaseTransform.position, transform.rotation);
             
