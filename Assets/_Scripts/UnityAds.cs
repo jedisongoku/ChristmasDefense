@@ -10,7 +10,20 @@ public class UnityAds : MonoBehaviour {
     void Start()
     {
         ads = this;
-        Advertisement.Initialize("1179838", false);
+
+        if(Application.platform == RuntimePlatform.Android)
+        {
+            Advertisement.Initialize("1179839", false);
+        }
+        else if(Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            Advertisement.Initialize("1179838", false);
+        }
+        else
+        {
+            Advertisement.Initialize("1179838", false);
+        }
+        
     }
 
     public void ShowAd(string zone = "")

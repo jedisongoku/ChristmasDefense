@@ -126,6 +126,15 @@ public class GameHUDManager : MonoBehaviour
     public Sprite wizardInfoPanelImage;
     public Sprite wizardInfoPanelUpgradedImage;
 
+    [Header("Game Center")]
+    private string ios_normalModeLeaderboard = "christmasdefenseleaderboard";
+    private string ios_hardModeLeaderboard = "christmasdefensehardmodeleaderboard";
+    private string android_normalModeLeaderboard = "CgkI9Lat8aMREAIQAA";
+    private string android_hardModeLeaderboard = "CgkI9Lat8aMREAIQAQ";
+    private string normalModeLeaderboard;
+    private string hardModeLeaderboard;
+
+
 
     void Start()
     {
@@ -133,6 +142,22 @@ public class GameHUDManager : MonoBehaviour
         menuHUD.gameObject.SetActive(true);
 
         Social.localUser.Authenticate(success => { if (success) { Debug.Log("==iOS GC authenticate OK"); } else { Debug.Log("==iOS GC authenticate Failed"); } });
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            normalModeLeaderboard = android_normalModeLeaderboard;
+            hardModeLeaderboard = android_hardModeLeaderboard;
+        }
+        else if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            normalModeLeaderboard = ios_normalModeLeaderboard;
+            hardModeLeaderboard = ios_hardModeLeaderboard;
+        }
+        else
+        {
+            normalModeLeaderboard = ios_normalModeLeaderboard;
+            hardModeLeaderboard = ios_hardModeLeaderboard;
+        }
 
 
         SetSpecialHeroIndicator();
@@ -696,8 +721,8 @@ public class GameHUDManager : MonoBehaviour
                     totalScore += score.Value;
                 }
                 Debug.Log("TOTAL SCORE: " + totalScore);
-                Social.ReportScore(totalScore, "christmasdefensehardmodeleaderboard", success =>
-                { if (success) { Debug.Log("==iOS GC report score ok: " + totalScore + "\n"); } else { Debug.Log("==iOS GC report score Failed: " + "christmasdefenseleaderboard" + "\n"); } });
+                Social.ReportScore(totalScore, normalModeLeaderboard, success =>
+                { if (success) { Debug.Log("==iOS GC report score ok: " + totalScore + "\n"); } else { Debug.Log("==iOS GC report score Failed: " + normalModeLeaderboard + "\n"); } });
             }
             else
             {
@@ -706,8 +731,8 @@ public class GameHUDManager : MonoBehaviour
                     totalScore += score.Value;
                 }
                 Debug.Log("TOTAL SCORE: " + totalScore);
-                Social.ReportScore(totalScore, "christmasdefenseleaderboard", success =>
-                { if (success) { Debug.Log("==iOS GC report score ok: " + totalScore + "\n"); } else { Debug.Log("==iOS GC report score Failed: " + "christmasdefenseleaderboard" + "\n"); } });
+                Social.ReportScore(totalScore, hardModeLeaderboard, success =>
+                { if (success) { Debug.Log("==iOS GC report score ok: " + totalScore + "\n"); } else { Debug.Log("==iOS GC report score Failed: " + hardModeLeaderboard + "\n"); } });
             }
             
         }
