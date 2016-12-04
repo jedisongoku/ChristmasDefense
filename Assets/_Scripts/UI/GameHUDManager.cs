@@ -588,6 +588,7 @@ public class GameHUDManager : MonoBehaviour
             Time.timeScale = 1;
             GameManager.gameManager.isGamePaused = false;
             playPauseButton.image.sprite = pauseButtonImage;
+            fastForwardButton.image.sprite = fastForwardImage;
             SoundManager.soundManager.backgroundAudioSource.volume *= 2;
         }
 

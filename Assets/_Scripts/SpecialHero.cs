@@ -99,16 +99,18 @@ public class SpecialHero : MonoBehaviour
 
             if(!enemy.GetComponent<Enemy>().isDead || !enemy.GetComponent<Enemy>().isSuccess)
             {
-                if(!enemy.GetComponent<Enemy>().isBoss)
-                {
-                    controller.Stop();
+                controller.Stop();
 
-                    enemiesInRange.Add(enemy.gameObject);
-                    if (!isAttacking)
-                    {
-                        StartCoroutine(Attack());
-                    }
+                enemiesInRange.Add(enemy.gameObject);
+                if (!isAttacking)
+                {
+                    StartCoroutine(Attack());
                 }
+                /*
+                if (!enemy.GetComponent<Enemy>().isBoss)
+                {
+                    
+                }*/
                 
             }
             
