@@ -127,8 +127,8 @@ public class GameHUDManager : MonoBehaviour
     public Sprite wizardInfoPanelUpgradedImage;
 
     [Header("Game Center")]
-    private string ios_normalModeLeaderboard = "christmasdefenseleaderboard";
-    private string ios_hardModeLeaderboard = "christmasdefensehardmodeleaderboard";
+    private string ios_normalModeLeaderboard = "christmasdefense_normalmode";
+    private string ios_hardModeLeaderboard = "christmasdefense_hardmode";
     private string android_normalModeLeaderboard = "CgkI9Lat8aMREAIQAA";
     private string android_hardModeLeaderboard = "CgkI9Lat8aMREAIQAQ";
     private string normalModeLeaderboard;

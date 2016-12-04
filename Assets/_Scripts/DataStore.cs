@@ -7,7 +7,7 @@ using System.IO;
 
 public class DataStore : MonoBehaviour{
 
-    public static string saveFilePath = "/playerInfo45.dat";
+    public static string saveFilePath = "/ctd01.dat";
 
     public static void Save()
     {
@@ -62,16 +62,16 @@ public class DataStore : MonoBehaviour{
         {
             Player.specialHero = 5;
             Player.snowFlakes = 3; // dont forget to remove this or reduce the number
-            Player.completedLevels.Add(1, 3); //change back to 0
-            Player.completedLevelsHardMode.Add(1, 3);
+            Player.completedLevels.Add(1, 0); //change back to 0
+            Player.completedLevelsHardMode.Add(1, 0);
 
             Player.levelScores.Add(1, 0);
             Player.levelScoresHardMode.Add(1, 0);
             for (int i = 2; i <= 12; i++)
             {
-                Player.completedLevels.Add(i, 3); //change back to -1
+                Player.completedLevels.Add(i, -1); //change back to -1
                 Player.levelScores.Add(i, 0); //change back to 0
-                Player.completedLevelsHardMode.Add(i, 3); //change back to -1
+                Player.completedLevelsHardMode.Add(i, -1); //change back to -1
                 Player.levelScoresHardMode.Add(i, 0); //change back to 0
             }
         }
@@ -89,16 +89,16 @@ public class DataStore : MonoBehaviour{
         Player.levelScores.Clear();
         Player.levelScoresHardMode.Clear();
 
-        Player.completedLevels.Add(1, 3); //change back to 0
-        Player.completedLevelsHardMode.Add(1, 3);
+        Player.completedLevels.Add(1, 0); //change back to 0
+        Player.completedLevelsHardMode.Add(1, 0);
 
         Player.levelScores.Add(1, 0);
         Player.levelScoresHardMode.Add(1, 0);
         for (int i = 2; i <= 12; i++)
         {
-            Player.completedLevels.Add(i, 3); //change back to -1
+            Player.completedLevels.Add(i, -1); //change back to -1
             Player.levelScores.Add(i, 0); //change back to 0
-            Player.completedLevelsHardMode.Add(i, 3); //change back to -1
+            Player.completedLevelsHardMode.Add(i, -1); //change back to -1
             Player.levelScoresHardMode.Add(i, 0); //change back to 0
         }
 
