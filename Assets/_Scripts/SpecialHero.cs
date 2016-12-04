@@ -44,8 +44,12 @@ public class SpecialHero : MonoBehaviour
 
     public void StartHero()
     {
-        isStarted = true;
-        controller.SetDestination(GameManager.gameManager.enemyDestination[path][currentDestination][0].position);
+        if(!isStarted)
+        {
+            isStarted = true;
+            controller.SetDestination(GameManager.gameManager.enemyDestination[path][currentDestination][0].position);
+        }
+        
     }
 
 	//It is used incase StartHero is not called - That happens because the animation ends early and event never get a chance run
