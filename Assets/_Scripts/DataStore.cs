@@ -28,6 +28,7 @@ public class DataStore : MonoBehaviour{
         data.gameMode = Player.gameMode;
         data.soundVolume = Player.soundVolume;
         data.fxVolume = Player.fxVolume;
+        data.christmasGift = Player.christmasGift;
 
         bf.Serialize(file, data);
         file.Close();
@@ -56,6 +57,7 @@ public class DataStore : MonoBehaviour{
             Player.gameMode = data.gameMode;
             Player.soundVolume = data.soundVolume;
             Player.fxVolume = data.fxVolume;
+            Player.christmasGift = data.christmasGift;
 
         }
         else
@@ -122,4 +124,5 @@ class PlayerData
     public bool gameMode = false;
     public float soundVolume;
     public float fxVolume;
+    public bool christmasGift = false;
 }
