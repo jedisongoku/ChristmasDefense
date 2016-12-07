@@ -97,7 +97,7 @@ public class SpecialHero : MonoBehaviour
         if (enemy.CompareTag("Enemy"))
         {
 
-            if(!enemy.GetComponent<Enemy>().isDead || !enemy.GetComponent<Enemy>().isSuccess)
+            if(!enemy.GetComponent<Enemy>().isDead && !enemy.GetComponent<Enemy>().isSuccess)
             {
                 controller.Stop();
 

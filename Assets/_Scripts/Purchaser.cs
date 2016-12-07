@@ -24,7 +24,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
 
 	public static string purchaseSnowflake_5 = "com.christmasdefense.snowflake5";
 	public static string purchaseSnowflake_25 = "com.christmasdefense.snowflake25";
-	public static string purchaseWarrior_3 = "wcom.christmasdefense.specialhero3";
+	public static string purchaseWarrior_3 = "com.christmasdefense.specialhero3";
 	public static string purchaseWarrior_20 = "com.christmasdefense.specialhero20";
 	public static string purchaseAdFree = "com.christmasdefense.adfree";
 

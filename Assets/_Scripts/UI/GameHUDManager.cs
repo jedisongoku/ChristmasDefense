@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using GooglePlayGames;
 using UnityEngine.SocialPlatforms;
 using System.Collections;
 using System.Collections.Generic;
@@ -139,12 +140,11 @@ public class GameHUDManager : MonoBehaviour
     void Start()
     {
         gameHudManager = this;
-        menuHUD.gameObject.SetActive(true);
-
-        Social.localUser.Authenticate(success => { if (success) { Debug.Log("==iOS GC authenticate OK"); } else { Debug.Log("==iOS GC authenticate Failed"); } });
+        menuHUD.gameObject.SetActive(true);    
 
         if (Application.platform == RuntimePlatform.Android)
         {
+            PlayGamesPlatform.Activate();
             normalModeLeaderboard = android_normalModeLeaderboard;
             hardModeLeaderboard = android_hardModeLeaderboard;
         }
@@ -159,7 +159,7 @@ public class GameHUDManager : MonoBehaviour
             hardModeLeaderboard = ios_hardModeLeaderboard;
         }
 
-
+        Social.localUser.Authenticate(success => { if (success) { Debug.Log("==iOS GC authenticate OK"); } else { Debug.Log("==iOS GC authenticate Failed"); } });
         SetSpecialHeroIndicator();
 		StartCoroutine (Fps ());
         //GameManager.OnUIAction += SetText;
