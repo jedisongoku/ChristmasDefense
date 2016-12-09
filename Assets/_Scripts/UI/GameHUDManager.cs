@@ -519,10 +519,9 @@ public class GameHUDManager : MonoBehaviour
         Enemy.DestroyAllEnemies();
         levelCompletePanel.gameObject.SetActive(false);
         GameManager.gameManager.OnRestartLevel();
-        GameManager.gameManager.isFastForward = false;
         fastForwardButton.image.sprite = fastForwardImage;
         playPauseButton.image.sprite = pauseButtonImage;
-        Time.timeScale = 1;
+        FastForward();
         //gameHUD.gameObject.SetActive(false);
         Camera.main.transform.position = GameManager.gameManager.cameraLocation.position;
         Camera.main.fieldOfView = 60;
@@ -553,8 +552,8 @@ public class GameHUDManager : MonoBehaviour
         menuHUD.gameObject.SetActive(true);
         mainMenu.gameObject.SetActive(true);
         SetAllImages();
-        
-        Time.timeScale = 1;
+
+        FastForward();
         SoundManager.soundManager.SwitchSound(true);
 
     }

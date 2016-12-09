@@ -80,6 +80,11 @@ public class SpecialHero : MonoBehaviour
             {
                 currentDestination--;
                 controller.SetDestination(GameManager.gameManager.spawnPoints[path].position);
+                if(controller.destination != GameManager.gameManager.spawnPoints[path].position)
+                {
+                    controller.ResetPath();
+                    controller.SetDestination(GameManager.gameManager.spawnPoints[path].position);
+                }
             }
         }
         else if(Vector3.Distance(transform.position, GameManager.gameManager.spawnPoints[path].position) <= 0.5f)
