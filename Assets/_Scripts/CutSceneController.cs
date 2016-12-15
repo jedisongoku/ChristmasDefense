@@ -31,6 +31,7 @@ public class CutSceneController : MonoBehaviour
 			Player.christmasGift = true;
 			Player.snowFlakes += 5;
 			DataStore.Save ();
+			GameHUDManager.gameHudManager.MenuHudUpdate();
 		}
     }
 

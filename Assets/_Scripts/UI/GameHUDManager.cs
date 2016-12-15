@@ -1074,8 +1074,9 @@ public class GameHUDManager : MonoBehaviour
 				infoPanelText.gameObject.SetActive (false);
 				wizardUnlocked.gameObject.SetActive (false);
 				christmasGiftText.gameObject.SetActive (true);
-				infoPanel.gameObject.SetActive(true);
-				infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
+				infoPanel.gameObject.SetActive (true);
+				infoPanel.gameObject.GetComponent<Animator> ().SetTrigger ("Play");
+				break;
             case 8:
                 if (GameManager.gameManager.levelCompletedStars != 0)
                 {
