@@ -536,6 +536,8 @@ public class GameHUDManager : MonoBehaviour
     public void GoHome()
     {
         HideAllPanels();
+        GameManager.gameManager.isFastForward = true;
+        FastForward();
         GameManager.gameManager.menuCamera.enabled = true;
         //GameManager.gameManager.background.gameObject.SetActive(true);
         HeroSpawnManager.DestroyAssignedHeroes();
@@ -552,8 +554,6 @@ public class GameHUDManager : MonoBehaviour
         menuHUD.gameObject.SetActive(true);
         mainMenu.gameObject.SetActive(true);
         SetAllImages();
-
-        FastForward();
         SoundManager.soundManager.SwitchSound(true);
 
     }
@@ -587,6 +587,7 @@ public class GameHUDManager : MonoBehaviour
             Time.timeScale = 1;
             GameManager.gameManager.isGamePaused = false;
             playPauseButton.image.sprite = pauseButtonImage;
+            GameManager.gameManager.isFastForward = false;
             fastForwardButton.image.sprite = fastForwardImage;
             SoundManager.soundManager.backgroundAudioSource.volume *= 2;
         }
