@@ -46,6 +46,7 @@ public class GameHUDManager : MonoBehaviour
     public Transform hardModeLevels;
     public Transform normalLevelIndicator;
     public Transform hardLevelIndicator;
+	public Transform christmasGiftText;
 
     [Header("GameHUD")]
     public Transform heroesPanel;
@@ -1068,6 +1069,13 @@ public class GameHUDManager : MonoBehaviour
                 infoPanel.gameObject.SetActive(true);
                 infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
                 break;
+			case 7:
+				spartanUnlocked.gameObject.SetActive (false);
+				infoPanelText.gameObject.SetActive (false);
+				wizardUnlocked.gameObject.SetActive (false);
+				christmasGiftText.gameObject.SetActive (true);
+				infoPanel.gameObject.SetActive(true);
+				infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
             case 8:
                 if (GameManager.gameManager.levelCompletedStars != 0)
                 {
@@ -1075,6 +1083,7 @@ public class GameHUDManager : MonoBehaviour
                     {
                         wizardUnlocked.gameObject.SetActive(false);
                         infoPanelText.gameObject.SetActive(false);
+						christmasGiftText.gameObject.SetActive (false);
                         spartanUnlocked.gameObject.SetActive(true);
                         infoPanel.gameObject.SetActive(true);
                         infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
@@ -1084,16 +1093,16 @@ public class GameHUDManager : MonoBehaviour
                         spartanUnlocked.gameObject.SetActive(false);
                         infoPanelText.gameObject.SetActive(false);
                         wizardUnlocked.gameObject.SetActive(true);
+						christmasGiftText.gameObject.SetActive (false);
                         infoPanel.gameObject.SetActive(true);
                         infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
                     }
 
                 }
                 break;
-        }
 
-        
-        
+			
+        }   
     }
 
     public void HideInfoPanel()

@@ -25,6 +25,13 @@ public class CutSceneController : MonoBehaviour
     public void ShowLevelHUD()
     {
         GameHUDManager.gameHudManager.GoToLevelMenu();
+		if (!Player.christmasGift)
+		{
+			GameHUDManager.gameHudManager.ShowInfoPanel(7);
+			Player.christmasGift = true;
+			Player.snowFlakes += 5;
+			DataStore.Save ();
+		}
     }
 
     public void ShowLoadingHUD()
