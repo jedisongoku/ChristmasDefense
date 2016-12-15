@@ -439,7 +439,7 @@ public class IAPDemo : MonoBehaviour, IStoreListener
 		if (GetLoginButton() != null)
 		{
 			GetLoginButton().onClick.AddListener (() => {
-				m_MoolahExtensions.Login(m_CloudMoolahUserName, "CMPassword", LoginSucceeded, LoginFailed);
+				m_MoolahExtensions.Login(m_CloudMoolahUserName, "CMPassword", LoginResult);
 			});
 		}
 
@@ -459,16 +459,17 @@ public class IAPDemo : MonoBehaviour, IStoreListener
 		}
 	}
 
-	public void LoginSucceeded (string token)
+	public void LoginResult (LoginResultState state, string errorMsg)
 	{
-		Debug.Log ("LoginSucceeded: token = " + token);
-		m_IsLoggedIn = true;
-	}
-
-	public void LoginFailed (LoginError error, string errorMessage)
-	{
-		Debug.Log ("LoginFailed: error = " + error.ToString() + ", errorMessage = " + errorMessage);
-		m_IsLoggedIn = false;
+		if(state == LoginResultState.LoginSucceed)
+		{
+			m_IsLoggedIn = true;
+		}
+		else
+		{
+			m_IsLoggedIn = false;
+		}	
+		Debug.Log ("LoginResult: state: " + state.ToString () + " errorMsg: " + errorMsg);
 	}
 
 	public void RegisterSucceeded(string cmUserName)

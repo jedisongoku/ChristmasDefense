@@ -80,6 +80,10 @@ public class SpecialHero : MonoBehaviour
             {
                 currentDestination--;
                 controller.SetDestination(GameManager.gameManager.spawnPoints[path].position);
+                if (Vector3.Distance(controller.destination, GameManager.gameManager.spawnPoints[path].position) > 1)
+                {
+                    controller.SetDestination(GameManager.gameManager.spawnPoints[path].position);
+                }
             }
         }
         else if(Vector3.Distance(transform.position, GameManager.gameManager.spawnPoints[path].position) <= 0.5f)
@@ -97,7 +101,7 @@ public class SpecialHero : MonoBehaviour
         if (enemy.CompareTag("Enemy"))
         {
 
-            if(!enemy.GetComponent<Enemy>().isDead || !enemy.GetComponent<Enemy>().isSuccess)
+            if(!enemy.GetComponent<Enemy>().isDead && !enemy.GetComponent<Enemy>().isSuccess)
             {
                 controller.Stop();
 

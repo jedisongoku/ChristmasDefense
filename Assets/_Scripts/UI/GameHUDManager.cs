@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using GooglePlayGames;
 using UnityEngine.SocialPlatforms;
 using System.Collections;
 using System.Collections.Generic;
@@ -139,12 +140,11 @@ public class GameHUDManager : MonoBehaviour
     void Start()
     {
         gameHudManager = this;
-        menuHUD.gameObject.SetActive(true);
-
-        Social.localUser.Authenticate(success => { if (success) { Debug.Log("==iOS GC authenticate OK"); } else { Debug.Log("==iOS GC authenticate Failed"); } });
+        menuHUD.gameObject.SetActive(true);    
 
         if (Application.platform == RuntimePlatform.Android)
         {
+            PlayGamesPlatform.Activate();
             normalModeLeaderboard = android_normalModeLeaderboard;
             hardModeLeaderboard = android_hardModeLeaderboard;
         }
@@ -159,7 +159,7 @@ public class GameHUDManager : MonoBehaviour
             hardModeLeaderboard = ios_hardModeLeaderboard;
         }
 
-
+        Social.localUser.Authenticate(success => { if (success) { Debug.Log("==iOS GC authenticate OK"); } else { Debug.Log("==iOS GC authenticate Failed"); } });
         SetSpecialHeroIndicator();
 		StartCoroutine (Fps ());
         //GameManager.OnUIAction += SetText;
@@ -519,10 +519,9 @@ public class GameHUDManager : MonoBehaviour
         Enemy.DestroyAllEnemies();
         levelCompletePanel.gameObject.SetActive(false);
         GameManager.gameManager.OnRestartLevel();
-        GameManager.gameManager.isFastForward = false;
         fastForwardButton.image.sprite = fastForwardImage;
         playPauseButton.image.sprite = pauseButtonImage;
-        Time.timeScale = 1;
+        FastForward();
         //gameHUD.gameObject.SetActive(false);
         Camera.main.transform.position = GameManager.gameManager.cameraLocation.position;
         Camera.main.fieldOfView = 60;
@@ -537,6 +536,8 @@ public class GameHUDManager : MonoBehaviour
     public void GoHome()
     {
         HideAllPanels();
+        GameManager.gameManager.isFastForward = true;
+        FastForward();
         GameManager.gameManager.menuCamera.enabled = true;
         //GameManager.gameManager.background.gameObject.SetActive(true);
         HeroSpawnManager.DestroyAssignedHeroes();
@@ -553,8 +554,6 @@ public class GameHUDManager : MonoBehaviour
         menuHUD.gameObject.SetActive(true);
         mainMenu.gameObject.SetActive(true);
         SetAllImages();
-        
-        Time.timeScale = 1;
         SoundManager.soundManager.SwitchSound(true);
 
     }
@@ -588,6 +587,7 @@ public class GameHUDManager : MonoBehaviour
             Time.timeScale = 1;
             GameManager.gameManager.isGamePaused = false;
             playPauseButton.image.sprite = pauseButtonImage;
+            GameManager.gameManager.isFastForward = false;
             fastForwardButton.image.sprite = fastForwardImage;
             SoundManager.soundManager.backgroundAudioSource.volume *= 2;
         }
