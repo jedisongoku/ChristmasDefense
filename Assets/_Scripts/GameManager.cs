@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour {
     public float spawnTimerMax;
     public float healthMultiplier = 1;
     //public int randomVariableMax;
+	public int restartAd = 0;
 
     [Header("Heroes")]
     public int tigerCost;

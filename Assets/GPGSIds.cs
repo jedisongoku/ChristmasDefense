@@ -24,13 +24,9 @@
 
 public static class GPGSIds
 {
-        public const string leaderboard_normal_mode = "CgkI9Lat8aMREAIQAA"; // <GPGSID>
-        public const string leaderboard_hard_mode = "CgkI9Lat8aMREAIQAQ"; // <GPGSID>
-        public const string achievement_level_4_complete = "CgkI9Lat8aMREAIQBg"; // <GPGSID>
-        public const string achievement_level_3_complete = "CgkI9Lat8aMREAIQBQ"; // <GPGSID>
-        public const string achievement_level_2_complete = "CgkI9Lat8aMREAIQBA"; // <GPGSID>
-        public const string achievement_level_1_complete = "CgkI9Lat8aMREAIQAw"; // <GPGSID>
-        public const string achievement_level_5_complete = "CgkI9Lat8aMREAIQBw"; // <GPGSID>
+        public const string xml = "version=1.0"; // <GPGSID>
+        public const string Google = "Play"; // <GPGSID>
+        public const string Save = "this"; // <GPGSID>
 
 }
 
