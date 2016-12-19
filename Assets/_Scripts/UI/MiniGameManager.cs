@@ -56,7 +56,7 @@ public class MiniGameManager : MonoBehaviour {
                 break;
             case 1:
                 gameBoardSprites[selection].sprite = boost500;
-                Player.boostPoints += 250;
+                Player.boostPoints += 500;
                 break;
             case 2:
                 gameBoardSprites[selection].sprite = giftBox;

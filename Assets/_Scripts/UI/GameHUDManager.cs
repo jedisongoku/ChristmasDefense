@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using GooglePlayGames;
+//using GooglePlayGames;
 using UnityEngine.SocialPlatforms;
 using System.Collections;
 using System.Collections.Generic;
@@ -145,7 +145,7 @@ public class GameHUDManager : MonoBehaviour
 
         if (Application.platform == RuntimePlatform.Android)
         {
-            PlayGamesPlatform.Activate();
+            //PlayGamesPlatform.Activate();
             normalModeLeaderboard = android_normalModeLeaderboard;
             hardModeLeaderboard = android_hardModeLeaderboard;
         }
@@ -510,6 +510,12 @@ public class GameHUDManager : MonoBehaviour
 
     public void RestartLevel()
     {
+		GameManager.gameManager.restartAd++;
+		if (GameManager.gameManager.restartAd == 3)
+		{
+			UnityAds.ads.ShowAd ("video");
+			GameManager.gameManager.restartAd = 0;
+		}
         HideAllPanels();
         pausePanel.gameObject.SetActive(false);
         buttonsPanel.gameObject.SetActive(true);
@@ -522,7 +528,6 @@ public class GameHUDManager : MonoBehaviour
         GameManager.gameManager.OnRestartLevel();
         fastForwardButton.image.sprite = fastForwardImage;
         playPauseButton.image.sprite = pauseButtonImage;
-        FastForward();
         //gameHUD.gameObject.SetActive(false);
         Camera.main.transform.position = GameManager.gameManager.cameraLocation.position;
         Camera.main.fieldOfView = 60;

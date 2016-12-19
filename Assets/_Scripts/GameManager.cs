@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour {
     public float spawnTimerMax;
     public float healthMultiplier = 1;
     //public int randomVariableMax;
+	public int restartAd = 0;
 
     [Header("Heroes")]
     public int tigerCost;
@@ -171,6 +172,8 @@ public class GameManager : MonoBehaviour {
         GameHUDManager.gameHudManager.ActivateHeroes();
         MouseController.isMouseOnUI = false;
         GameHUDManager.gameHudManager.HideAllPanels();
+
+		Debug.Log ("Game manager destinations: " + enemyDestination [0].Count);
     }
 
     IEnumerator RunGame()
