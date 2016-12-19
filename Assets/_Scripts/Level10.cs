@@ -92,6 +92,7 @@ public class Level10 : Level {
         GameManager.gameManager.enemyListForCurrentLevel.Add(wave_30);
 
         GameManager.gameManager.enemyDestination.Clear();
+		path_1.Clear ();
         path_1.Add(destination_1);
         path_1.Add(destination_2);
         path_1.Add(destination_3);

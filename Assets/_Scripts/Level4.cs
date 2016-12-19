@@ -92,6 +92,7 @@ public class Level4 : Level
         GameManager.gameManager.enemyListForCurrentLevel.Add(wave_15);
 
         GameManager.gameManager.enemyDestination.Clear();
+		path_1.Clear ();
         path_1.Add(destination_1_1);
         path_1.Add(destination_1_2);
         path_1.Add(destination_1_3);
@@ -107,7 +108,7 @@ public class Level4 : Level
         path_1.Add(destination_All_10);
         path_1.Add(destination_All_11);
         GameManager.gameManager.enemyDestination.Add(0, path_1);
-
+		path_2.Clear ();
         path_2.Add(destination_2_1);
         path_2.Add(destination_2_2);
         path_2.Add(destination_2_3);
@@ -123,7 +124,7 @@ public class Level4 : Level
         path_2.Add(destination_All_10);
         path_2.Add(destination_All_11);
         GameManager.gameManager.enemyDestination.Add(1, path_2);
-
+		path_3.Clear ();
         path_3.Add(destination_3_1);
         path_3.Add(destination_3_2);
         path_3.Add(destination_3_3);

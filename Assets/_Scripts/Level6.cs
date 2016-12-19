@@ -93,6 +93,7 @@ public class Level6 : Level
         GameManager.gameManager.enemyListForCurrentLevel.Add(wave_25);
 
         GameManager.gameManager.enemyDestination.Clear();
+		path_1.Clear ();
         path_1.Add(destination_1_1);
         path_1.Add(destination_1_2);
         path_1.Add(destination_All_1);
@@ -107,7 +108,7 @@ public class Level6 : Level
         path_1.Add(destination_All_10);
         path_1.Add(destination_All_11);
         GameManager.gameManager.enemyDestination.Add(0, path_1);
-
+		path_2.Clear ();
         path_2.Add(destination_2_1);
         path_2.Add(destination_2_2);
         path_2.Add(destination_All_1);

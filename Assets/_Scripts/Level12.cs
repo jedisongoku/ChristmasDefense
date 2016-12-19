@@ -135,6 +135,7 @@ public class Level12 : Level {
         GameManager.gameManager.enemyListForCurrentLevel.Add(wave_45);
 
         GameManager.gameManager.enemyDestination.Clear();
+		path_1.Clear ();
         path_1.Add(destination_1_1);
         path_1.Add(destination_1_2);
         path_1.Add(destination_1_3);
@@ -147,7 +148,7 @@ public class Level12 : Level {
         path_1.Add(destination_All_4);
         path_1.Add(destination_All_5);
         GameManager.gameManager.enemyDestination.Add(0, path_1);
-
+		path_2.Clear ();
         path_2.Add(destination_2_1);
         path_2.Add(destination_2_2);
         path_2.Add(destination_2_3);

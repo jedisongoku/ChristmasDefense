@@ -110,6 +110,7 @@ public class Level11 : Level {
         GameManager.gameManager.enemyListForCurrentLevel.Add(wave_35);
 
         GameManager.gameManager.enemyDestination.Clear();
+		path_1.Clear ();
         path_1.Add(destination_1_1);
         path_1.Add(destination_1_2);
         path_1.Add(destination_1_3);
@@ -118,8 +119,9 @@ public class Level11 : Level {
         path_1.Add(destination_1_6);
         path_1.Add(destination_1_7);
 
-        GameManager.gameManager.enemyDestination.Add(0, path_1);
 
+        GameManager.gameManager.enemyDestination.Add(0, path_1);
+		path_2.Clear ();
         path_2.Add(destination_2_1);
         path_2.Add(destination_2_2);
         path_2.Add(destination_2_3);
@@ -128,6 +130,7 @@ public class Level11 : Level {
         path_2.Add(destination_2_6);
         path_2.Add(destination_2_7);
         path_2.Add(destination_2_8);
+
         GameManager.gameManager.enemyDestination.Add(1, path_2);
 
         Debug.Log("Game Mode: " + GameManager.gameManager.gameMode);

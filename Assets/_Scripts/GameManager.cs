@@ -172,6 +172,8 @@ public class GameManager : MonoBehaviour {
         GameHUDManager.gameHudManager.ActivateHeroes();
         MouseController.isMouseOnUI = false;
         GameHUDManager.gameHudManager.HideAllPanels();
+
+		Debug.Log ("Game manager destinations: " + enemyDestination [0].Count);
     }
 
     IEnumerator RunGame()

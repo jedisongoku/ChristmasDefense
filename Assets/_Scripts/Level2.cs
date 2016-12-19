@@ -58,6 +58,7 @@ public class Level2 : Level
         Debug.Log(GameManager.gameManager.enemyListForCurrentLevel.Count);
 
         GameManager.gameManager.enemyDestination.Clear();
+		path_1.Clear ();
         path_1.Add(destination_1);
         path_1.Add(destination_2);
         path_1.Add(destination_3);

@@ -37,6 +37,7 @@ public class SpecialHero : MonoBehaviour
     void Start()
     {
         path = Mathf.CeilToInt(Random.Range(0, GameManager.gameManager.enemyDestination.Count));
+		Debug.Log ("Destination count: " + GameManager.gameManager.enemyDestination [path].Count);
         currentDestination = GameManager.gameManager.enemyDestination[path].Count - 2;
         HeroDestroy += DestroyHero;
         Invoke("StartHeroDelayed", 0.5f);
@@ -69,7 +70,9 @@ public class SpecialHero : MonoBehaviour
             if (Vector3.Distance(transform.position, GameManager.gameManager.enemyDestination[path][currentDestination][0].position) <= 0.5f)
             {
                 
-                currentDestination--;
+
+				currentDestination--;
+				Debug.Log ("Current Destination: " + currentDestination);
                 controller.SetDestination(GameManager.gameManager.enemyDestination[path][currentDestination][0].position);
             }
         }
@@ -80,6 +83,9 @@ public class SpecialHero : MonoBehaviour
             {
                 currentDestination--;
                 controller.SetDestination(GameManager.gameManager.spawnPoints[path].position);
+				Debug.Log ("path " + path);
+				Debug.Log ("destination position " + GameManager.gameManager.spawnPoints [path].position);
+
                 if (Vector3.Distance(controller.destination, GameManager.gameManager.spawnPoints[path].position) > 1)
                 {
                     controller.SetDestination(GameManager.gameManager.spawnPoints[path].position);
@@ -93,6 +99,15 @@ public class SpecialHero : MonoBehaviour
             Destroy(gameObject);
             HeroDestroy -= DestroyHero;
         }
+
+		if((currentDestination < 0) && (Vector3.Distance(controller.destination, GameManager.gameManager.spawnPoints[path].position) > 1))
+		{
+			if (controller.enabled)
+			{
+				controller.SetDestination(GameManager.gameManager.spawnPoints[path].position);
+			}
+
+		}
 
     }
     
