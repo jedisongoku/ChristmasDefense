@@ -22,11 +22,11 @@ public class Purchaser : MonoBehaviour, IStoreListener
     public static string kProductIDNonConsumable = "nonconsumable";
     public static string kProductIDSubscription = "subscription";
 
-	public static string purchaseSnowflake_5 = "com.christmasdefense.snowflake5";
-	public static string purchaseSnowflake_25 = "com.christmasdefense.snowflake25";
-	public static string purchaseWarrior_3 = "com.christmasdefense.specialhero3";
-	public static string purchaseWarrior_20 = "com.christmasdefense.specialhero20";
-	public static string purchaseAdFree = "com.christmasdefense.adfree";
+	public static string purchaseSnowflake_5 = "com.christmasdefence.snowflake5";
+	public static string purchaseSnowflake_25 = "com.christmasdefence.snowflake25";
+	public static string purchaseWarrior_3 = "com.christmasdefence.specialhero3";
+	public static string purchaseWarrior_20 = "com.christmasdefence.specialhero20";
+	public static string purchaseAdFree = "com.christmasdefence.adfree";
 
     // Apple App Store-specific product identifier for the subscription product.
     private static string kProductNameAppleSubscription = "com.unity3d.subscription.new";
