@@ -17,11 +17,11 @@ public class UnityAds : MonoBehaviour {
         }
         else if(Application.platform == RuntimePlatform.IPhonePlayer)
         {
-            Advertisement.Initialize("1179838", false);
+            Advertisement.Initialize("1244895", false);
         }
         else
         {
-            Advertisement.Initialize("1179838", false);
+            Advertisement.Initialize("1244895", false);
         }
         
     }
