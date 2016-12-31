@@ -31,6 +31,7 @@ public class GameHUDManager : MonoBehaviour
     public Transform instructions;
     public Transform optionsPanel;
     public Transform warningPanel;
+    public Transform ratePanel;
     public Transform creditsPanel;
     public Text MiniGameCounterText;
     public Text boostPointTextMenu;
@@ -47,6 +48,7 @@ public class GameHUDManager : MonoBehaviour
     public Transform normalLevelIndicator;
     public Transform hardLevelIndicator;
 	public Transform christmasGiftText;
+    public Transform rateBox;
 
     [Header("GameHUD")]
     public Transform heroesPanel;
@@ -751,6 +753,14 @@ public class GameHUDManager : MonoBehaviour
 
     public void ShowShop()
     {
+        if(Player.rated)
+        {
+            rateBox.gameObject.SetActive(false);
+        }
+        else
+        {
+            rateBox.gameObject.SetActive(true);
+        }
         levelPanel.gameObject.SetActive(false);
         miniGamePanel.gameObject.SetActive(false);
         informationPanel.gameObject.SetActive(false);
@@ -1319,6 +1329,7 @@ public class GameHUDManager : MonoBehaviour
     {
         optionsPanel.gameObject.SetActive(false);
         warningPanel.gameObject.SetActive(true);
+        
     }
 
     public void ResetGame(bool reset)
@@ -1340,6 +1351,39 @@ public class GameHUDManager : MonoBehaviour
         else
         {
             creditsPanel.gameObject.SetActive(false);
+        }
+    }
+
+    public void RateBox()
+    {
+        ratePanel.gameObject.SetActive(true);
+    }
+
+    public void RateGame(bool reset)
+    {
+        if (reset)
+        {
+            ratePanel.gameObject.SetActive(false);
+            rateBox.gameObject.SetActive(false);
+            Player.specialHero += 5;
+            Player.rated = true;
+            DataStore.Save();
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                Application.OpenURL("https://play.google.com/store/apps/details?id=com.christmasdefense");
+            }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                Application.OpenURL("https://itunes.apple.com/us/app/christmas-defense-tower-defense/id1060009746?ls=1&mt=8");
+            }
+            else
+            {
+                Application.OpenURL("https://itunes.apple.com/us/app/christmas-defense-tower-defense/id1060009746?ls=1&mt=8");
+            }
+        }
+        else
+        {
+            ratePanel.gameObject.SetActive(false);
         }
     }
 
