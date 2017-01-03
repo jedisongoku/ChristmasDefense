@@ -20,5 +20,6 @@ public class Player : MonoBehaviour {
     public static float soundVolume;
     public static float fxVolume;
     public static bool christmasGift = false;
+    public static bool newYearGift = false;
     public static bool rated = false;
 }

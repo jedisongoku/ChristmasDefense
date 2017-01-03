@@ -25,10 +25,10 @@ public class CutSceneController : MonoBehaviour
     public void ShowLevelHUD()
     {
         GameHUDManager.gameHudManager.GoToLevelMenu();
-		if (!Player.christmasGift)
+		if (!Player.newYearGift)
 		{
 			GameHUDManager.gameHudManager.ShowInfoPanel(7);
-			Player.christmasGift = true;
+			Player.newYearGift = true;
 			Player.snowFlakes += 5;
 			DataStore.Save ();
 			GameHUDManager.gameHudManager.MenuHudUpdate();
