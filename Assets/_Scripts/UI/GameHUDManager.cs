@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using GooglePlayGames;
+//using GooglePlayGames;
 using UnityEngine.SocialPlatforms;
 using System.Collections;
 using System.Collections.Generic;
@@ -147,7 +147,7 @@ public class GameHUDManager : MonoBehaviour
 
         if (Application.platform == RuntimePlatform.Android)
         {
-            PlayGamesPlatform.Activate();
+            //PlayGamesPlatform.Activate();
             normalModeLeaderboard = android_normalModeLeaderboard;
             hardModeLeaderboard = android_hardModeLeaderboard;
         }
@@ -1368,6 +1368,7 @@ public class GameHUDManager : MonoBehaviour
             Player.specialHero += 5;
             Player.rated = true;
             DataStore.Save();
+            MenuHudUpdate();
             if (Application.platform == RuntimePlatform.Android)
             {
                 Application.OpenURL("https://play.google.com/store/apps/details?id=com.christmasdefense");
