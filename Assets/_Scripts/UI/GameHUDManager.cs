@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using GooglePlayGames;
+//using GooglePlayGames;
 using UnityEngine.SocialPlatforms;
 using System.Collections;
 using System.Collections.Generic;
@@ -131,8 +131,8 @@ public class GameHUDManager : MonoBehaviour
     public Sprite wizardInfoPanelUpgradedImage;
 
     [Header("Game Center")]
-    private string ios_normalModeLeaderboard = "christmasdefense_normalmode";
-    private string ios_hardModeLeaderboard = "christmasdefense_hardmode";
+    private string ios_normalModeLeaderboard = "farmDefense_normalMode";
+    private string ios_hardModeLeaderboard = "farmDefense_hardMode";
     private string android_normalModeLeaderboard = "CgkI9Lat8aMREAIQAA";
     private string android_hardModeLeaderboard = "CgkI9Lat8aMREAIQAQ";
     private string normalModeLeaderboard;
@@ -730,7 +730,7 @@ public class GameHUDManager : MonoBehaviour
                     totalScore += score.Value;
                 }
                 Debug.Log("TOTAL SCORE: " + totalScore);
-                Social.ReportScore(totalScore, normalModeLeaderboard, success =>
+				Social.ReportScore(totalScore, hardModeLeaderboard, success =>
                 { if (success) { Debug.Log("==iOS GC report score ok: " + totalScore + "\n"); } else { Debug.Log("==iOS GC report score Failed: " + normalModeLeaderboard + "\n"); } });
             }
             else
@@ -740,7 +740,7 @@ public class GameHUDManager : MonoBehaviour
                     totalScore += score.Value;
                 }
                 Debug.Log("TOTAL SCORE: " + totalScore);
-                Social.ReportScore(totalScore, hardModeLeaderboard, success =>
+				Social.ReportScore(totalScore, normalModeLeaderboard, success =>
                 { if (success) { Debug.Log("==iOS GC report score ok: " + totalScore + "\n"); } else { Debug.Log("==iOS GC report score Failed: " + hardModeLeaderboard + "\n"); } });
             }
             
