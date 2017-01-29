@@ -19,5 +19,6 @@ public class Player : MonoBehaviour {
     public static bool gameMode = false;
     public static float soundVolume;
     public static float fxVolume;
-    public static bool christmasGift = false;
+    public static bool christmasGift = true;
+    public static bool rated = false;
 }

@@ -31,6 +31,7 @@ public class GameHUDManager : MonoBehaviour
     public Transform instructions;
     public Transform optionsPanel;
     public Transform warningPanel;
+    public Transform ratePanel;
     public Transform creditsPanel;
     public Text MiniGameCounterText;
     public Text boostPointTextMenu;
@@ -47,6 +48,7 @@ public class GameHUDManager : MonoBehaviour
     public Transform normalLevelIndicator;
     public Transform hardLevelIndicator;
 	public Transform christmasGiftText;
+    public Transform rateBox;
 
     [Header("GameHUD")]
     public Transform heroesPanel;
@@ -1343,4 +1345,37 @@ public class GameHUDManager : MonoBehaviour
         }
     }
 
+    public void RateBox()
+    {
+        ratePanel.gameObject.SetActive(true);
+    }
+
+    public void RateGame(bool reset)
+    {
+        if (reset)
+        {
+            ratePanel.gameObject.SetActive(false);
+            rateBox.gameObject.SetActive(false);
+            Player.specialHero += 5;
+            Player.rated = true;
+            DataStore.Save();
+            MenuHudUpdate();
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                Application.OpenURL("https://play.google.com/store/apps/details?id=com.christmasdefense");
+            }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                Application.OpenURL("https://itunes.apple.com/app/id1189745545");
+            }
+            else
+            {
+                Application.OpenURL("https://itunes.apple.com/app/id1189745545");
+            }
+        }
+        else
+        {
+            ratePanel.gameObject.SetActive(false);
+        }
+    }
 }
