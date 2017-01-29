@@ -147,7 +147,7 @@ public class GameHUDManager : MonoBehaviour
 
         if (Application.platform == RuntimePlatform.Android)
         {
-            PlayGamesPlatform.Activate();
+            //PlayGamesPlatform.Activate();
             normalModeLeaderboard = android_normalModeLeaderboard;
             hardModeLeaderboard = android_hardModeLeaderboard;
         }
