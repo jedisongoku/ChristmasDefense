@@ -753,6 +753,15 @@ public class GameHUDManager : MonoBehaviour
 
     public void ShowShop()
     {
+
+		if(Player.rated)
+		{
+			rateBox.gameObject.SetActive (false);
+		}
+		else
+		{
+			rateBox.gameObject.SetActive (true);
+		}
         levelPanel.gameObject.SetActive(false);
         miniGamePanel.gameObject.SetActive(false);
         informationPanel.gameObject.SetActive(false);
