@@ -18,21 +18,21 @@ public class Purchaser : MonoBehaviour, IStoreListener
     // when defining the Product Identifiers on the store. Except, for illustration purposes, the 
     // kProductIDSubscription - it has custom Apple and Google identifiers. We declare their store-
     // specific mapping to Unity Purchasing's AddProduct, below.
-    public static string kProductIDConsumable = "consumable";
-    public static string kProductIDNonConsumable = "nonconsumable";
-    public static string kProductIDSubscription = "subscription";
+    //public static string kProductIDConsumable = "consumable";
+    //public static string kProductIDNonConsumable = "nonconsumable";
+    //public static string kProductIDSubscription = "subscription";
 
 	public static string purchaseSnowflake_5 = "com.farmdefense2.crystal5";
 	public static string purchaseSnowflake_25 = "com.farmdefense2.crystal25";
 	public static string purchaseWarrior_3 = "com.farmdefense2.specialhero3";
 	public static string purchaseWarrior_20 = "com.farmdefense2.specialhero20";
-	public static string purchaseAdFree = "ccom.farmdefense2.adfree";
+	public static string purchaseAdFree = "com.farmdefense2.adfree";
 
     // Apple App Store-specific product identifier for the subscription product.
-    private static string kProductNameAppleSubscription = "com.unity3d.subscription.new";
+    //private static string kProductNameAppleSubscription = "com.unity3d.subscription.new";
 
     // Google Play Store-specific product identifier subscription product.
-    private static string kProductNameGooglePlaySubscription = "com.unity3d.subscription.original";
+    //private static string kProductNameGooglePlaySubscription = "com.unity3d.subscription.original";
 
     void Start()
     {
@@ -69,10 +69,10 @@ public class Purchaser : MonoBehaviour, IStoreListener
         // if the Product ID was configured differently between Apple and Google stores. Also note that
         // one uses the general kProductIDSubscription handle inside the game - the store-specific IDs 
         // must only be referenced here. 
-        builder.AddProduct(kProductIDSubscription, ProductType.Subscription, new IDs(){
+        /*builder.AddProduct(kProductIDSubscription, ProductType.Subscription, new IDs(){
                 { kProductNameAppleSubscription, AppleAppStore.Name },
                 { kProductNameGooglePlaySubscription, GooglePlay.Name },
-            });
+            });*/
 
         // Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
         // and this class' instance. Expect a response either in OnInitialized or OnInitializeFailed.
@@ -109,7 +109,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
         // through ProcessPurchase or OnPurchaseFailed asynchronously.
         // Notice how we use the general product identifier in spite of this ID being mapped to
         // custom store-specific identifiers above.
-        BuyProductID(kProductIDSubscription);
+        //BuyProductID(kProductIDSubscription);
     }
 
 
