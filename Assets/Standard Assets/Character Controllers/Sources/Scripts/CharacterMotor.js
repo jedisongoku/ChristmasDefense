@@ -181,12 +181,9 @@ function Awake () {
 }
 
 private function UpdateFunction () {
-
 	// We copy the actual velocity into a temporary variable that we can manipulate.
 	var velocity : Vector3 = movement.velocity;
 	
-	
-
 	// Update velocity based on input
 	velocity = ApplyInputVelocityChange(velocity);
 	
