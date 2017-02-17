@@ -30,8 +30,10 @@ public class Hero : MonoBehaviour {
     private float attackTimer = 0f;
     private bool isFirstShot = true;
     private float autoClearEnemyListTimer = 0f;
-    
- 
+
+    [Header("IGT")]
+    public Transform towerBase;
+
     void Awake()
     {
         GetComponent<SphereCollider>().radius = heroAttackRadius;
@@ -102,7 +104,15 @@ public class Hero : MonoBehaviour {
                         }
                         else
                         {
-                            transform.LookAt(enemiesInRange[0].transform.position);
+                            /*towerBase.LookAt(enemiesInRange[0].transform.position);
+                            towerBase.rotation = Quaternion.Euler(new Vector3(0, towerBase.rotation.y, 0));*/
+                            //transform.LookAt(enemiesInRange[0].transform.position);
+
+                            towerBase.LookAt(enemiesInRange[0].transform.position);
+                            Vector3 eulerAngles = towerBase.rotation.eulerAngles;
+                            eulerAngles = new Vector3(10, eulerAngles.y, 0);
+                            towerBase.rotation = Quaternion.Euler(eulerAngles);
+
                             Attack();
                         }
                     }
@@ -119,6 +129,11 @@ public class Hero : MonoBehaviour {
         }
         
         
+    }
+
+    protected void LateUpdate()
+    {
+        //towerBase.localEulerAngles = new Vector3(0, towerBase.localEulerAngles.z, 0);
     }
 
     void Attack()
