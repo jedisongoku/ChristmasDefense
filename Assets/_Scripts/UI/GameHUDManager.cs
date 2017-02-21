@@ -65,9 +65,9 @@ public class GameHUDManager : MonoBehaviour
     public Text scoreText;
     public Text specialHeroIndicatorText;
     public Text levelTimerText;
-    public Button tigerSpawnButton;
-    public Button frogSpawnButton;
-    public Button lizardSpawnButton;
+    public Toggle tigerSpawnButton;
+    public Toggle frogSpawnButton;
+    public Toggle lizardSpawnButton;
     public Button specialHeroSpawnButton;
     public Image levelCompleteImage;
     public Image heroInfoPanelImage;
@@ -137,6 +137,10 @@ public class GameHUDManager : MonoBehaviour
     private string android_hardModeLeaderboard = "CgkI9Lat8aMREAIQAQ";
     private string normalModeLeaderboard;
     private string hardModeLeaderboard;
+
+    [Header("IGT")]
+    private Toggle selectedTowerToggle;
+
 
 
 
@@ -373,7 +377,7 @@ public class GameHUDManager : MonoBehaviour
     {
         heroInfoPanel.gameObject.SetActive(false);
     }
-
+    /*
     public void ShowHeroes()
     {
         HideHeroInfo();
@@ -384,7 +388,7 @@ public class GameHUDManager : MonoBehaviour
 
     public void HideHeroes()
     {
-        Invoke("HideHeroesDelayed", 0.1f);
+        //Invoke("HideHeroesDelayed", 0.1f);
     }
 
     void HideHeroesDelayed()
@@ -395,7 +399,7 @@ public class GameHUDManager : MonoBehaviour
         }
 
         heroesPanel.gameObject.SetActive(false);
-    }
+    }*/
 
     public void GoToLevelMenu()
     {
@@ -438,7 +442,7 @@ public class GameHUDManager : MonoBehaviour
         loadingBar.gameObject.SetActive(true);
         levelMenu.gameObject.SetActive(false);
         specialHeroSpawnButton.gameObject.SetActive(true);
-        PlayLoadLevelIntro();
+        //PlayLoadLevelIntro();
         SoundManager.soundManager.SwitchSound(false);
 
         switch (level)
@@ -479,6 +483,7 @@ public class GameHUDManager : MonoBehaviour
 
         GameManager.gameManager.level = level;
         levels[level - 1].gameObject.SetActive(true);
+        ShowLoadingHUD();
 
         //gameHUD.gameObject.SetActive(true);
         //GameManager.gameManager.StartLevel();
@@ -523,7 +528,8 @@ public class GameHUDManager : MonoBehaviour
         buttonsPanel.gameObject.SetActive(true);
         specialHeroSpawnButton.gameObject.SetActive(true);
 
-        HeroSpawnManager.DestroyAssignedHeroes();
+        //HeroSpawnManager.DestroyAssignedHeroes();
+        Hero.DestroyAssignedTowers();
         SpecialHero.DestorySpecialHeroes();
         Enemy.DestroyAllEnemies();
         levelCompletePanel.gameObject.SetActive(false);
@@ -548,7 +554,8 @@ public class GameHUDManager : MonoBehaviour
         FastForward();
         GameManager.gameManager.menuCamera.enabled = true;
         //GameManager.gameManager.background.gameObject.SetActive(true);
-        HeroSpawnManager.DestroyAssignedHeroes();
+        //HeroSpawnManager.DestroyAssignedHeroes();
+        Hero.DestroyAssignedTowers();
         SpecialHero.DestorySpecialHeroes();
         Enemy.DestroyAllEnemies();
         levelCompletePanel.gameObject.SetActive(false);
@@ -896,13 +903,14 @@ public class GameHUDManager : MonoBehaviour
 
     public void PlayMenuIntro()
     {
-        GameManager.gameManager.menuCamera.enabled = false;
+        //GameManager.gameManager.menuCamera.enabled = false;
         optionsPanel.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(false);
         normalModeLevels.gameObject.SetActive(true);
         hardModeLevels.gameObject.SetActive(true);
-        GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
-        GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("MenuLevel");
+        GoToLevelMenu();
+        //GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
+        //GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("MenuLevel");
         /*
         foreach (var level in levels)
         {
@@ -1246,7 +1254,7 @@ public class GameHUDManager : MonoBehaviour
 
     public void HideAllPanels()
     {
-        HideHeroes();
+        //HideHeroes();
         HideHeroInfo();
     }
 
@@ -1388,4 +1396,30 @@ public class GameHUDManager : MonoBehaviour
         }
     }
 
+    //IGT FUNCTIONS
+
+    public void SelectTower(int id)
+    {
+        GameManager.gameManager.SetTowerID(id);
+    }
+
+    public void SelectToggle(Toggle toggle)
+    {
+        Debug.Log(toggle.isOn);
+        if(toggle.isOn)
+        {
+            selectedTowerToggle = toggle;
+            GameManager.gameManager.isTowerSelected = true;
+            TowerSpawnManager.ShowAvailableTowers();
+        }
+        else
+        {
+            GameManager.gameManager.isTowerSelected = false;
+        }
+    }
+
+    public void DeselectTower()
+    {
+        selectedTowerToggle.isOn = false;
+    }
 }

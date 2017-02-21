@@ -39,7 +39,7 @@ public class DataStore : MonoBehaviour{
 
     public static void Load()
     {
-        if(File.Exists(Application.persistentDataPath + saveFilePath))
+        if (File.Exists(Application.persistentDataPath + saveFilePath))
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + saveFilePath, FileMode.Open);
@@ -80,6 +80,12 @@ public class DataStore : MonoBehaviour{
                 Player.completedLevelsHardMode.Add(i, -1); //change back to -1
                 Player.levelScoresHardMode.Add(i, 0); //change back to 0
             }
+
+            Player.unlockedTowers.Add(1, true);
+            for (int i = 2; i <= 3; i++)
+            {
+                Player.unlockedTowers.Add(i, false);
+            }
         }
     }
 
@@ -108,6 +114,13 @@ public class DataStore : MonoBehaviour{
             Player.levelScoresHardMode.Add(i, 0); //change back to 0
         }
 
+        Player.unlockedTowers.Clear();
+        Player.unlockedTowers.Add(1, true);
+        for (int i = 2; i <= 3; i++)
+        {
+            Player.unlockedTowers.Add(i, false);
+        }
+
         Save();
     }
 }
@@ -123,6 +136,7 @@ class PlayerData
     public Dictionary<int, int> levelScores;
     public Dictionary<int, int> completedLevelsHardMode;
     public Dictionary<int, int> levelScoresHardMode;
+    public Dictionary<int, bool> unlockedTowers;
     public bool tutorial = false;
     public bool adFree = false;
     public bool gameMode = false;

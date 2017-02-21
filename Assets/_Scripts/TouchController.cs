@@ -45,8 +45,9 @@ public class TouchController : MonoBehaviour {
                     //Debug.Log(hit.transform.name);
                     if (hit.transform.CompareTag("SpawnLocation"))
                     {
-                        hit.transform.GetComponent<HeroSpawnManager>().OnTouched();
-                        
+                        //hit.transform.GetComponent<HeroSpawnManager>().OnTouched();
+                        hit.transform.GetComponent<TowerSpawnManager>().OnTouched();
+
                     }
                     else
                     {
@@ -180,7 +181,7 @@ public class TouchController : MonoBehaviour {
 
     void HideHeroPanels()
     {
-        GameHUDManager.gameHudManager.HideHeroes();
+        //GameHUDManager.gameHudManager.HideHeroes();
         GameHUDManager.gameHudManager.HideHeroInfo();
     }
 }

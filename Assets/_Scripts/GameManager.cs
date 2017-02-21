@@ -90,6 +90,12 @@ public class GameManager : MonoBehaviour {
 
     private Vector3 spawnOffset = new Vector3(0, 0.1f, 0);
 
+    [Header("IGT")]
+    public bool isTowerSelected = false;
+
+    private int towerID = 0;
+    
+
     void Awake()
     {
         gameManager = this;
@@ -242,7 +248,7 @@ public class GameManager : MonoBehaviour {
         }
         
     }
-
+    /*
     public void SpawnHero(int hero)
     {
 
@@ -288,7 +294,7 @@ public class GameManager : MonoBehaviour {
         }
 
     }
-
+    */
 
     IEnumerator SpawnEnemy()
     {
@@ -449,5 +455,62 @@ public class GameManager : MonoBehaviour {
     }
 
     
+
+    //IGT FUNCTIONS
+
+    public void SetTowerID(int id)
+    {
+        towerID = id;
+    }
+
+    public void SpawnTower()
+    {
+
+        //HideHeroes();
+        MouseController.isMouseOnUI = false;
+        canSpawnHero = false;
+        //GameHUDManager.gameHudManager.HideHeroes();
+        //selectedSpawnPoint.GetComponent<HeroSpawnManager>().particleAfterSpawn.gameObject.SetActive(true);
+        //selectedSpawnPoint.GetComponentInChildren<ParticleSystem>().Play();
+        PlaySound();
+
+        /*
+        if (isTutorial && Player.resource <= 225)
+        {
+            GameHUDManager.gameHudManager.TutorialPhaseStart(3);
+        }
+        else
+        if (isTutorial)
+        {
+            GameHUDManager.gameHudManager.tapHereTooltip.gameObject.SetActive(false);
+        }*/
+
+        if (towerID == 1 && Player.resource >= tigerCost)
+        {
+            Player.resource -= tigerCost;
+            //selectedSpawnPoint.GetComponent<TowerSpawnManager>().assignedTower = Instantiate(heroes[0], selectedSpawnPoint.transform.position + spawnOffset, Quaternion.identity) as GameObject;
+            GameObject assignedTower = Instantiate(heroes[0], selectedSpawnPoint.transform.position + spawnOffset, Quaternion.identity) as GameObject;
+            assignedTower.GetComponent<Hero>().heroID = towerID;
+            //selectedSpawnPoint.GetComponent<HeroSpawnManager>().radius = selectedSpawnPoint.GetComponent<HeroSpawnManager>().assignedHero.GetComponent<Hero>().radius;
+            GameHUDManager.gameHudManager.GameHudUpdate();
+        }
+        else if (towerID == 2 && Player.resource >= frogCost)
+        {
+            Player.resource -= frogCost;
+            GameObject assignedTower = Instantiate(heroes[1], selectedSpawnPoint.transform.position + spawnOffset, Quaternion.identity) as GameObject;
+            assignedTower.GetComponent<Hero>().heroID = towerID;
+            GameHUDManager.gameHudManager.GameHudUpdate();
+        }
+        else if (towerID == 3 && Player.resource >= lizardCost)
+        {
+            Player.resource -= lizardCost;
+            GameObject assignedTower = Instantiate(heroes[2], selectedSpawnPoint.transform.position + spawnOffset, Quaternion.identity) as GameObject;
+            assignedTower.GetComponent<Hero>().heroID = towerID;
+            GameHUDManager.gameHudManager.GameHudUpdate();
+        }
+
+        GameHUDManager.gameHudManager.DeselectTower();
+
+    }
 
 }

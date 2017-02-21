@@ -47,11 +47,11 @@ TextureImporter:
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 8
+  textureType: 5
   buildTargetSettings:
   - buildTarget: iPhone
     maxTextureSize: 2048
-    textureFormat: -3
+    textureFormat: 4
     compressionQuality: 50
     allowsAlphaSplitting: 0
   spriteSheet:

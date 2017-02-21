@@ -90,7 +90,7 @@ public class MouseController : MonoBehaviour {
         {
             initialMousePosition = Input.mousePosition;
         }
-
+        /*
         if (!isMouseOnUI)
         {
 
@@ -101,10 +101,11 @@ public class MouseController : MonoBehaviour {
 
                 if (Physics.Raycast(ray, out hit, 1000))
                 {
-                    //Debug.Log(hit.transform.name);
+                    Debug.Log(hit.transform.name);
                     if (hit.transform.CompareTag("SpawnLocation"))
                     {
-                        hit.transform.GetComponent<HeroSpawnManager>().OnTouched();
+                        //hit.transform.GetComponent<HeroSpawnManager>().OnTouched();
+                        hit.transform.GetComponent<TowerSpawnManager>().OnTouched();
 
                     }
                     else
@@ -124,6 +125,30 @@ public class MouseController : MonoBehaviour {
             if (Input.GetMouseButtonDown(0))
             {
                 isMouseOnUI = false;
+            }
+        }
+        */
+        if (Input.GetMouseButtonDown(0))
+        {
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, 1000))
+            {
+                //Debug.Log(hit.transform.name);
+                if (hit.transform.CompareTag("SpawnLocation"))
+                {
+                    //hit.transform.GetComponent<HeroSpawnManager>().OnTouched();
+                    hit.transform.GetComponent<TowerSpawnManager>().OnTouched();
+
+                }
+                else
+                {
+                    //Invoke("HideHeroPanels", 0.1f);
+                    isMouseOnUI = false;
+                    HideHeroPanels();
+                    //GameHUDManager.gameHudManager.TutorialPhaseComplete(2);
+                }
             }
         }
 
@@ -157,7 +182,7 @@ public class MouseController : MonoBehaviour {
 
     void HideHeroPanels()
     {
-        GameHUDManager.gameHudManager.HideHeroes();
+        //GameHUDManager.gameHudManager.HideHeroes();
         GameHUDManager.gameHudManager.HideHeroInfo();
     }
 

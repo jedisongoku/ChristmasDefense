@@ -21,7 +21,7 @@ public class Hero : MonoBehaviour {
     public Material upgradeSkinMaterial;
     public AudioClip baseProjectileSound;
     public AudioClip upgradedProjectileSound;
-    public Transform wizardUpgradeParticle;
+    //public Transform wizardUpgradeParticle;
 
 
     private List<GameObject> enemiesInRange = new List<GameObject>();
@@ -33,6 +33,10 @@ public class Hero : MonoBehaviour {
 
     [Header("IGT")]
     public Transform towerBase;
+    public float turretLookAtAngle_X;
+
+    public delegate void TowerAction();
+    public static event TowerAction DestroyTowers;
 
     void Awake()
     {
@@ -40,6 +44,8 @@ public class Hero : MonoBehaviour {
         playerAnimation = GetComponent<Animator>();
         playerAudio = GetComponent<AudioSource>();
         radius.parent = GameManager.gameManager.selectedSpawnPoint.transform;
+
+        DestroyTowers += DestroyTower;
 
         //transform.rotation = Quaternion.identity;
         //playerAttackSpeed = 1 / playerAttackSpeed;
@@ -72,7 +78,7 @@ public class Hero : MonoBehaviour {
             enemiesInRange.Remove(enemy);
             if (heroID == 3)
             {
-                wizardUpgradeParticle.gameObject.SetActive(false);
+                //wizardUpgradeParticle.gameObject.SetActive(false);
             }
         }
     }
@@ -107,11 +113,14 @@ public class Hero : MonoBehaviour {
                             /*towerBase.LookAt(enemiesInRange[0].transform.position);
                             towerBase.rotation = Quaternion.Euler(new Vector3(0, towerBase.rotation.y, 0));*/
                             //transform.LookAt(enemiesInRange[0].transform.position);
-
-                            towerBase.LookAt(enemiesInRange[0].transform.position);
-                            Vector3 eulerAngles = towerBase.rotation.eulerAngles;
-                            eulerAngles = new Vector3(10, eulerAngles.y, 0);
-                            towerBase.rotation = Quaternion.Euler(eulerAngles);
+                            if(heroID != 3)
+                            {
+                                towerBase.LookAt(enemiesInRange[0].transform.position);
+                                Vector3 eulerAngles = towerBase.rotation.eulerAngles;
+                                eulerAngles = new Vector3(turretLookAtAngle_X, eulerAngles.y, 0);
+                                towerBase.rotation = Quaternion.Euler(eulerAngles);
+                            }
+                            
 
                             Attack();
                         }
@@ -154,7 +163,7 @@ public class Hero : MonoBehaviour {
                             playerAnimation.SetTrigger("Attack2");
                             if(heroID == 3)
                             {
-                                wizardUpgradeParticle.gameObject.SetActive(true);
+                                //wizardUpgradeParticle.gameObject.SetActive(true);
                             }
                         }
                         else
@@ -167,7 +176,7 @@ public class Hero : MonoBehaviour {
 						playerAnimation.Stop ();
                         if(heroID == 3)
                         {
-                            wizardUpgradeParticle.gameObject.SetActive(false);
+                            //wizardUpgradeParticle.gameObject.SetActive(false);
                         }
                         RemoveEnemy(enemiesInRange[0]);
                     }
@@ -267,7 +276,7 @@ public class Hero : MonoBehaviour {
 						}
 
                     }
-                    wizardUpgradeParticle.gameObject.SetActive(false);
+                    //wizardUpgradeParticle.gameObject.SetActive(false);
                 }
             }
         }
@@ -302,5 +311,29 @@ public class Hero : MonoBehaviour {
         }
     }
 
+    //IGT FUNCTIONS
 
+    void OnMouseDown()
+    {
+        Debug.Log("SHOW TOWER STATS");
+
+    }
+
+    public static void DestroyAssignedTowers()
+    {
+        if(DestroyTowers != null)
+        {
+            DestroyTowers();
+        }
+    }
+
+    void DestroyTower()
+    {
+        Destroy(gameObject);
+    }
+
+    void OnDestroy()
+    {
+        DestroyTowers -= DestroyTower;
+    }
 }

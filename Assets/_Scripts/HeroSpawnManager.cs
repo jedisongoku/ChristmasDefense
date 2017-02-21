@@ -47,7 +47,7 @@ public class HeroSpawnManager : MonoBehaviour
 
             if (assignedHero == null)
             {
-                GameHUDManager.gameHudManager.ShowHeroes();
+                //GameHUDManager.gameHudManager.ShowHeroes();
                 particleOnClick.gameObject.SetActive(true);
 
             }
@@ -81,7 +81,7 @@ public class HeroSpawnManager : MonoBehaviour
 
     void HideHeroPanels()
     {
-        GameHUDManager.gameHudManager.HideHeroes();
+        //GameHUDManager.gameHudManager.HideHeroes();
     }
 
     public void HideObjects()
