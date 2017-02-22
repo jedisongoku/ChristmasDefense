@@ -65,9 +65,11 @@ public class GameHUDManager : MonoBehaviour
     public Text scoreText;
     public Text specialHeroIndicatorText;
     public Text levelTimerText;
-    public Toggle tigerSpawnButton;
-    public Toggle frogSpawnButton;
-    public Toggle lizardSpawnButton;
+    public Toggle towerSpawnButton_1;
+    public Toggle towerSpawnButton_2;
+    public Toggle towerSpawnButton_3;
+    public Toggle towerSpawnButton_4;
+    public Toggle towerSpawnButton_5;
     public Button specialHeroSpawnButton;
     public Image levelCompleteImage;
     public Image heroInfoPanelImage;
@@ -140,6 +142,7 @@ public class GameHUDManager : MonoBehaviour
 
     [Header("IGT")]
     private Toggle selectedTowerToggle;
+    public Transform towerPanel;
 
 
 
@@ -171,12 +174,14 @@ public class GameHUDManager : MonoBehaviour
 		StartCoroutine (Fps ());
         //GameManager.OnUIAction += SetText;
         //GameManager.OnUIAction += SetHeroAvailability;
+        Player.unlockedTowers[2] = true;
+        Player.unlockedTowers[3] = true;
     }
 
     public void GameHudUpdate()
     {
         SetText();
-        SetHeroAvailability();
+        SetTowerAvailability();
         if (heroInfoPanel.gameObject.activeInHierarchy)
         {
             setUpgradeAvailability();
@@ -216,8 +221,8 @@ public class GameHUDManager : MonoBehaviour
 
     }
 
-    void SetHeroAvailability()
-    {
+    void SetTowerAvailability()
+    {/*
         if (Player.resource >= GameManager.gameManager.tigerCost)
         {
             tigerSpawnButton.interactable = true;
@@ -242,6 +247,66 @@ public class GameHUDManager : MonoBehaviour
         else
         {
             lizardSpawnButton.interactable = false;
+        }*/
+
+        if(GameManager.selectedTowers.Count >= 1)
+        {
+            if (Player.resource >= GameManager.gameManager.towerCosts[GameManager.selectedTowers[0]-1])
+            {
+                towerSpawnButton_1.interactable = true;
+            }
+            else
+            {
+                towerSpawnButton_1.interactable = false;
+            }
+        }
+        
+        if (GameManager.selectedTowers.Count >= 2)
+        {
+            if (Player.resource >= GameManager.gameManager.towerCosts[GameManager.selectedTowers[1]-1])
+            {
+                towerSpawnButton_2.interactable = true;
+            }
+            else
+            {
+                towerSpawnButton_2.interactable = false;
+            }
+        }
+
+        if (GameManager.selectedTowers.Count >= 3)
+        {
+            if (Player.resource >= GameManager.gameManager.towerCosts[GameManager.selectedTowers[2]-1])
+            {
+                towerSpawnButton_3.interactable = true;
+            }
+            else
+            {
+                towerSpawnButton_3.interactable = false;
+            }
+        }
+
+        if (GameManager.selectedTowers.Count >= 4)
+        {
+            if (Player.resource >= GameManager.gameManager.towerCosts[GameManager.selectedTowers[3]-1])
+            {
+                towerSpawnButton_4.interactable = true;
+            }
+            else
+            {
+                towerSpawnButton_4.interactable = false;
+            }
+        }
+
+        if (GameManager.selectedTowers.Count >= 5)
+        {
+            if (Player.resource >= GameManager.gameManager.towerCosts[GameManager.selectedTowers[4]-1])
+            {
+                towerSpawnButton_5.interactable = true;
+            }
+            else
+            {
+                towerSpawnButton_5.interactable = false;
+            }
         }
     }
 
@@ -439,55 +504,26 @@ public class GameHUDManager : MonoBehaviour
 
     public void SelectLevel(int level)
     {
+        GameManager.gameManager.level = level;
+        ShowTowerPanel();
+        
+
+        //gameHUD.gameObject.SetActive(true);
+        //GameManager.gameManager.StartLevel();
+
+    }
+
+    public void StartLevel()
+    {
+        HideTowerPanel();
         loadingBar.gameObject.SetActive(true);
         levelMenu.gameObject.SetActive(false);
         specialHeroSpawnButton.gameObject.SetActive(true);
         //PlayLoadLevelIntro();
         SoundManager.soundManager.SwitchSound(false);
 
-        switch (level)
-        {
-            case 1:
-
-                break;
-            case 2:
-
-                break;
-            case 3:
-
-                break;
-            case 4:
-
-                break;
-            case 5:
-
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            case 10:
-                break;
-            case 11:
-                break;
-            case 12:
-                break;
-
-
-        }
-
-
-        GameManager.gameManager.level = level;
-        levels[level - 1].gameObject.SetActive(true);
+        levels[GameManager.gameManager.level - 1].gameObject.SetActive(true);
         ShowLoadingHUD();
-
-        //gameHUD.gameObject.SetActive(true);
-        //GameManager.gameManager.StartLevel();
-
     }
 
     IEnumerator DelayedStartLevel(int level)
@@ -978,38 +1014,38 @@ public class GameHUDManager : MonoBehaviour
         {
             if (Player.completedLevelsHardMode[1] > 0)
             {
-                frogSpawnButton.gameObject.SetActive(true);
+                //frogSpawnButton.gameObject.SetActive(true);
             }
             else
             {
-                frogSpawnButton.gameObject.SetActive(false);
+                //frogSpawnButton.gameObject.SetActive(false);
             }
             if (Player.completedLevelsHardMode[2] > 0)
             {
-                lizardSpawnButton.gameObject.SetActive(true);
+                //lizardSpawnButton.gameObject.SetActive(true);
             }
             else
             {
-                lizardSpawnButton.gameObject.SetActive(false);
+                //lizardSpawnButton.gameObject.SetActive(false);
             }
         }
         else
         {
             if (Player.completedLevels[1] > 0)
             {
-                frogSpawnButton.gameObject.SetActive(true);
+                //frogSpawnButton.gameObject.SetActive(true);
             }
             else
             {
-                frogSpawnButton.gameObject.SetActive(false);
+                //frogSpawnButton.gameObject.SetActive(false);
             }
             if (Player.completedLevels[2] > 0)
             {
-                lizardSpawnButton.gameObject.SetActive(true);
+                //lizardSpawnButton.gameObject.SetActive(true);
             }
             else
             {
-                lizardSpawnButton.gameObject.SetActive(false);
+                //lizardSpawnButton.gameObject.SetActive(false);
             }
         }
         
@@ -1396,11 +1432,15 @@ public class GameHUDManager : MonoBehaviour
         }
     }
 
-    //IGT FUNCTIONS
+    /// <summary>
+    /// IGT FUNCTIONS
+    /// </summary>
+
 
     public void SelectTower(int id)
     {
-        GameManager.gameManager.SetTowerID(id);
+        GameManager.gameManager.SetTowerID(GameManager.selectedTowers[id]);
+        Debug.Log(GameManager.selectedTowers[id]);
     }
 
     public void SelectToggle(Toggle toggle)
@@ -1421,5 +1461,14 @@ public class GameHUDManager : MonoBehaviour
     public void DeselectTower()
     {
         selectedTowerToggle.isOn = false;
+    }
+
+    public void ShowTowerPanel()
+    {
+        towerPanel.gameObject.SetActive(true);
+    }
+    public void HideTowerPanel()
+    {
+        towerPanel.gameObject.SetActive(false);
     }
 }

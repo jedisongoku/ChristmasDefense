@@ -48,7 +48,8 @@ public class GameManager : MonoBehaviour {
     //public int randomVariableMax;
 	public int restartAd = 0;
 
-    [Header("Heroes")]
+    [Header("Towers")]
+    public List<int> towerCosts;
     public int tigerCost;
     public int frogCost;
     public int lizardCost;
@@ -92,6 +93,7 @@ public class GameManager : MonoBehaviour {
 
     [Header("IGT")]
     public bool isTowerSelected = false;
+    public static List<int> selectedTowers = new List<int>();
 
     private int towerID = 0;
     
@@ -136,6 +138,7 @@ public class GameManager : MonoBehaviour {
 
     public void StartLevel()
     {
+        
         Debug.Log(isTutorial);
         //background.gameObject.SetActive(false);
         //menuCamera.enabled = false;
@@ -454,9 +457,12 @@ public class GameManager : MonoBehaviour {
         audioTrack.Play();
     }
 
-    
 
-    //IGT FUNCTIONS
+
+    /// <summary>
+    /// IGT FUNCTIONS
+    /// </summary>
+
 
     public void SetTowerID(int id)
     {
@@ -512,5 +518,22 @@ public class GameManager : MonoBehaviour {
         GameHUDManager.gameHudManager.DeselectTower();
 
     }
+
+    public void AddTower(int towerID)
+    {
+        selectedTowers.Add(towerID);
+        selectedTowers.Sort();
+        TowerSlots.towerSlot.UpdateSlots();
+    }
+
+    public void RemoveTower(int index)
+    {
+        TowerSelect.towerList[selectedTowers[index]].DeselectTower();
+        Debug.Log(selectedTowers[0]);
+        selectedTowers.RemoveAt(index);
+        TowerSlots.towerSlot.UpdateSlots();
+    }
+
+
 
 }

@@ -51,6 +51,7 @@ public class Loading : MonoBehaviour
 
     public void StartLevel()
     {
+        TowerSlots.towerSlot.UpdateTowerToggles();
         GameHUDManager.gameHudManager.menuHUD.gameObject.SetActive(false);
         GameHUDManager.gameHudManager.gameHUD.gameObject.SetActive(true);
         if (GameManager.gameManager.level != 1)
@@ -59,7 +60,8 @@ public class Loading : MonoBehaviour
         }
         else
         {
-            GameHUDManager.gameHudManager.ShowTutorialSkipPanel();
+            GameManager.gameManager.StartLevel();
+            //GameHUDManager.gameHudManager.ShowTutorialSkipPanel();
         }
 
         Camera.main.fieldOfView = 60;
