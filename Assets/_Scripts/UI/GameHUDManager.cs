@@ -175,7 +175,7 @@ public class GameHUDManager : MonoBehaviour
         //GameManager.OnUIAction += SetText;
         //GameManager.OnUIAction += SetHeroAvailability;
         Player.unlockedTowers[2] = true;
-        Player.unlockedTowers[3] = true;
+        //Player.unlockedTowers[3] = true;
     }
 
     public void GameHudUpdate()
@@ -577,6 +577,7 @@ public class GameHUDManager : MonoBehaviour
         Camera.main.fieldOfView = 60;
         GameManager.gameManager.StartLevel();
         SoundManager.soundManager.backgroundAudioSource.volume = 1;
+        TowerSpawnManager.RestartLevel();
         //GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
         //GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("Intro" + GameManager.gameManager.level);
         //GameManager.gameManager.StartLevel();
@@ -1455,6 +1456,7 @@ public class GameHUDManager : MonoBehaviour
         else
         {
             GameManager.gameManager.isTowerSelected = false;
+            TowerSpawnManager.HideAvailableTowers();
         }
     }
 

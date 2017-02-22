@@ -6,6 +6,7 @@ public class TowerSpawnManager : MonoBehaviour {
     public delegate void TowerSpawnAction();
     public static event TowerSpawnAction TowerSpawn;
     public static event TowerSpawnAction TowerSelected;
+    public static event TowerSpawnAction Restart;
 
     public Material towerBaseMaterial;
     public Material towerOutlineMaterial;
@@ -20,6 +21,7 @@ public class TowerSpawnManager : MonoBehaviour {
     {
         TowerSelected += ShowTowers;
         TowerSpawn += HideTowers;
+        
 	}
 
     public void OnTouched()
@@ -59,6 +61,8 @@ public class TowerSpawnManager : MonoBehaviour {
                     TowerSelected -= ShowTowers;
                     HideAvailableTowers();
                     TowerSpawn -= HideTowers;
+                    Restart += OnRestart;
+
                 }
 
             }
@@ -94,6 +98,20 @@ public class TowerSpawnManager : MonoBehaviour {
         {
             TowerSpawn();
         }
+    }
+
+    public static void RestartLevel()
+    {
+        if(Restart != null)
+        {
+            Restart();
+        }
+    }
+
+    public void OnRestart()
+    {
+        TowerSelected += ShowTowers;
+        TowerSpawn += HideTowers;
     }
 
         

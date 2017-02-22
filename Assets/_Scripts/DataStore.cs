@@ -7,7 +7,7 @@ using System.IO;
 
 public class DataStore : MonoBehaviour{
 
-    public static string saveFilePath = "/td01.dat";
+    public static string saveFilePath = "/td02.dat";
 
     public static void Save()
     {
