@@ -16,7 +16,7 @@ public class SpecialHero : MonoBehaviour
 
     private List<GameObject> enemiesInRange = new List<GameObject>();
     private int currentDestination;
-    private NavMeshAgent controller;
+    private UnityEngine.AI.NavMeshAgent controller;
 
     //private Animation heroAnimation;
     private Animator heroAnimation;
@@ -28,7 +28,7 @@ public class SpecialHero : MonoBehaviour
     
     void Awake()
     {
-        controller = GetComponent<NavMeshAgent>();
+        controller = GetComponent<UnityEngine.AI.NavMeshAgent>();
         heroAnimation = GetComponent<Animator>();
         playerAudio = GetComponent<AudioSource>();
 

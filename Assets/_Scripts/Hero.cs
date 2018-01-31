@@ -173,7 +173,7 @@ public class Hero : MonoBehaviour {
                     }
                     else
                     {
-						playerAnimation.Stop ();
+                        playerAnimation.enabled = false;
                         if(heroID == 3)
                         {
                             //wizardUpgradeParticle.gameObject.SetActive(false);

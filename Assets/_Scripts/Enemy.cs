@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour {
     public ParticleSystem dodgeParticle;
 
     
-    private NavMeshAgent enemyController;
+    private UnityEngine.AI.NavMeshAgent enemyController;
     private Animator enemyAnimation;
     private MonsterHornet monsterHornet;
     private MushroomMonster mushroomMonster;
@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour {
     void OnEnable()
     {
 
-        enemyController = GetComponent<NavMeshAgent>();
+        enemyController = GetComponent<UnityEngine.AI.NavMeshAgent>();
         if (enemyId != 7)
         {
             enemyAnimation = GetComponent<Animator>();
