@@ -133,8 +133,8 @@ public class GameHUDManager : MonoBehaviour
     [Header("Game Center")]
     private string ios_normalModeLeaderboard = "farmDefense_normalMode";
     private string ios_hardModeLeaderboard = "farmDefense_hardMode";
-    private string android_normalModeLeaderboard = "CgkI9Lat8aMREAIQAA";
-    private string android_hardModeLeaderboard = "CgkI9Lat8aMREAIQAQ";
+    private string android_normalModeLeaderboard = "CgkIgvfAnYULEAIQAA";
+    private string android_hardModeLeaderboard = "CgkIgvfAnYULEAIQAQ";
     private string normalModeLeaderboard;
     private string hardModeLeaderboard;
 
@@ -161,7 +161,7 @@ public class GameHUDManager : MonoBehaviour
             normalModeLeaderboard = ios_normalModeLeaderboard;
             hardModeLeaderboard = ios_hardModeLeaderboard;
         }
-
+        
         Social.localUser.Authenticate(success => { if (success) { Debug.Log("==iOS GC authenticate OK"); } else { Debug.Log("==iOS GC authenticate Failed"); } });
         SetSpecialHeroIndicator();
 		StartCoroutine (Fps ());

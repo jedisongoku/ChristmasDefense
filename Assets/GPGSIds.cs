@@ -24,9 +24,8 @@
 
 public static class GPGSIds
 {
-        public const string xml = "version=1.0"; // <GPGSID>
-        public const string Google = "Play"; // <GPGSID>
-        public const string Save = "this"; // <GPGSID>
+        public const string leaderboard_high_score__hard_mode = "CgkIgvfAnYULEAIQAQ"; // <GPGSID>
+        public const string leaderboard_high_score__normal_mode = "CgkIgvfAnYULEAIQAA"; // <GPGSID>
 
 }
 
