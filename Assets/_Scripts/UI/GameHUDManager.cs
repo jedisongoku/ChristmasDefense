@@ -162,7 +162,7 @@ public class GameHUDManager : MonoBehaviour
             hardModeLeaderboard = ios_hardModeLeaderboard;
         }
         
-        Social.localUser.Authenticate(success => { if (success) { Debug.Log("==iOS GC authenticate OK"); } else { Debug.Log("==iOS GC authenticate Failed"); } });
+        //Social.localUser.Authenticate(success => { if (success) { Debug.Log("==iOS GC authenticate OK"); } else { Debug.Log("==iOS GC authenticate Failed"); } });
         SetSpecialHeroIndicator();
 		StartCoroutine (Fps ());
         //GameManager.OnUIAction += SetText;
