@@ -133,8 +133,8 @@ public class GameHUDManager : MonoBehaviour
     [Header("Game Center")]
     private string ios_normalModeLeaderboard = "farmDefense_normalMode";
     private string ios_hardModeLeaderboard = "farmDefense_hardMode";
-    private string android_normalModeLeaderboard = "CgkIgvfAnYULEAIQAA";
-    private string android_hardModeLeaderboard = "CgkIgvfAnYULEAIQAQ";
+    private string android_normalModeLeaderboard = "CgkI9_zHlIENEAIQAA";
+    private string android_hardModeLeaderboard = "CgkI9_zHlIENEAIQAQ";
     private string normalModeLeaderboard;
     private string hardModeLeaderboard;
 

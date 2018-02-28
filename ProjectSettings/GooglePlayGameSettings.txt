@@ -1,10 +1,10 @@
-lastUpgrade=00942
-proj.pluginVersion=0.9.42
-proj.AppId=379361180546
+lastUpgrade=00950
+proj.pluginVersion=0.9.50
+proj.AppId=446988156535
 and.BundleId=com.belizard.farmdefense
 proj.classDir=Assets
 proj.ConstantsClassName=GPGSIds
-and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--+app_id+--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e379361180546%3c%2fstring%3e%0d%0a++%3c%21--+package_name+--%3e%0d%0a++%3cstring+name%3d%22package_name%22+translatable%3d%22false%22%3ecom.belizard.farmdefense%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+High+Score+-+Normal+Mode+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_high_score__normal_mode%22+translatable%3d%22false%22%3eCgkIgvfAnYULEAIQAA%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+High+Score+-+Hard+Mode+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_high_score__hard_mode%22+translatable%3d%22false%22%3eCgkIgvfAnYULEAIQAQ%3c%2fstring%3e%0d%0a%3c%2fresources%3e%0d%0a
-and.ClientId=379361180546-go52logc2e2nljdbg40mlddk5fs7c9oq.apps.googleusercontent.com
+and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--+app_id+--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e446988156535%3c%2fstring%3e%0d%0a++%3c%21--+package_name+--%3e%0d%0a++%3cstring+name%3d%22package_name%22+translatable%3d%22false%22%3ecom.belizard.farmdefense%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+High+Score+-+Normal+Mode+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_high_score__normal_mode%22+translatable%3d%22false%22%3eCgkI9_zHlIENEAIQAA%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+High+Score+-+Hard+Mode+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_high_score__hard_mode%22+translatable%3d%22false%22%3eCgkI9_zHlIENEAIQAQ%3c%2fstring%3e%0d%0a%3c%2fresources%3e%0d
+and.ClientId=446988156535-s74qbb9dn27pl29mjegdnmfafv7sa7f8.apps.googleusercontent.com
 proj.requireGPlus=false
 android.SetupDone=true
