@@ -756,11 +756,11 @@ public class GameHUDManager : MonoBehaviour
 
 		if(Player.rated)
 		{
-			rateBox.gameObject.SetActive (false);
+			//rateBox.gameObject.SetActive (false);
 		}
 		else
 		{
-			rateBox.gameObject.SetActive (true);
+			//rateBox.gameObject.SetActive (true);
 		}
         levelPanel.gameObject.SetActive(false);
         miniGamePanel.gameObject.SetActive(false);
@@ -937,7 +937,7 @@ public class GameHUDManager : MonoBehaviour
         switch (id)
         {
             case 0:
-                miniGameTabButton.interactable = false;
+                //miniGameTabButton.interactable = false;
                 heroesTabButton.interactable = true;
                 adsTabButton.interactable = true;
                 miniGameItemPanel.gameObject.SetActive(true);
