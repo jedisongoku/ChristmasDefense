@@ -372,10 +372,12 @@ public class GameManager : MonoBehaviour {
         if (Player.life == levelInitialLife)
         {
             levelCompletedStars = 3;
+            AppsFlyerMMP.LevelCompleted_3Star();
         }
         else if ((float)Player.life / (float)levelInitialLife > .45f)
         {
             levelCompletedStars = 2;
+            AppsFlyerMMP.LevelCompleted_2Star();
         }
         else if ((float)Player.life / (float)levelInitialLife == 0)
         {
@@ -384,6 +386,7 @@ public class GameManager : MonoBehaviour {
         else
         {
             levelCompletedStars = 1;
+            AppsFlyerMMP.LevelCompleted_1Star();
         }
 
         if (levelCompletedStars > Player.completedLevels[level])
@@ -394,6 +397,7 @@ public class GameManager : MonoBehaviour {
         if(levelCompletedStars != 0)
         {
             Player.boostPoints += Player.resource;
+            AppsFlyerMMP.LevelCompleted();
         }
         
         GameHUDManager.gameHudManager.LevelComplete();
