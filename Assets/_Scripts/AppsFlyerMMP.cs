@@ -14,7 +14,7 @@ public class AppsFlyerMMP : MonoBehaviour {
         
         //Mandatory - set your apple app ID
         //NOTE: You should enter the number only and not the "ID" prefix
-        AppsFlyer.setAppID ("YOUR_APP_ID_HERE");
+        AppsFlyer.setAppID ("1368720173");
         AppsFlyer.trackAppLaunch ();
 #elif UNITY_ANDROID
         //Mandatory - set your Android package name
@@ -36,6 +36,19 @@ public class AppsFlyerMMP : MonoBehaviour {
         Dictionary<string, string> levelCompleted = new Dictionary<string, string>();
         levelCompleted.Add("level_completed", "1");
         AppsFlyer.trackRichEvent("level_completed", levelCompleted);
+
+        if(Player.completedLevels[GameManager.gameManager.level] == -1 && GameManager.gameManager.level == 3)
+        {
+            Level3Completed();
+        }
+        else if (Player.completedLevels[GameManager.gameManager.level] == -1 && GameManager.gameManager.level == 5)
+        {
+            Level5Completed();
+        }
+        else if (Player.completedLevelsHardMode[GameManager.gameManager.level] == -1 && GameManager.gameManager.level == 1)
+        {
+            Level1CompletedHardMode();
+        }
 
     }
 
@@ -64,4 +77,30 @@ public class AppsFlyerMMP : MonoBehaviour {
 
     }
 
+    public static void Level3Completed()
+    {
+
+        Dictionary<string, string> levelCompleted = new Dictionary<string, string>();
+        levelCompleted.Add("level_3_completed", "1");
+        AppsFlyer.trackRichEvent("level_3_completed", levelCompleted);
+
+    }
+
+    public static void Level5Completed()
+    {
+
+        Dictionary<string, string> levelCompleted = new Dictionary<string, string>();
+        levelCompleted.Add("level_5_completed", "1");
+        AppsFlyer.trackRichEvent("level_5_completed", levelCompleted);
+
+    }
+
+    public static void Level1CompletedHardMode()
+    {
+
+        Dictionary<string, string> levelCompleted = new Dictionary<string, string>();
+        levelCompleted.Add("level_1_completed_hardmode", "1");
+        AppsFlyer.trackRichEvent("level_1_completed_hardmode", levelCompleted);
+
+    }
 }

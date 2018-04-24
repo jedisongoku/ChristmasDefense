@@ -142,6 +142,11 @@ public class GameHUDManager : MonoBehaviour
 
     void Start()
     {
+        if (Screen.width == 2436 && Screen.height == 1125)
+        { 
+            GetComponent<CanvasScaler>().referenceResolution = new Vector2(1500, 800);
+        }
+
         gameHudManager = this;
         menuHUD.gameObject.SetActive(true);    
 

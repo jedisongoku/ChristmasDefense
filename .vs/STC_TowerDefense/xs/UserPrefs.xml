@@ -1,0 +1,18 @@
+﻿<Properties StartupConfiguration="{3490B321-5743-1F80-5F38-2C9629499BB6}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_Scripts/UI/GameHUDManager.cs">
+    <Files>
+      <File FileName="Assets/_Scripts/DataStore.cs" Line="10" Column="47" />
+      <File FileName="Assets/_Scripts/GoogleManager.cs" Line="40" Column="11" />
+      <File FileName="Assets/_Scripts/AppsFlyerMMP.cs" Line="81" Column="42" />
+      <File FileName="Assets/_Scripts/GameManager.cs" Line="375" Column="39" />
+      <File FileName="Assets/_Scripts/UI/GameHUDManager.cs" Line="502" Column="19" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.STC__TowerDefense PreferredExecutionTarget="Unity.Editor" />
+</Properties>
