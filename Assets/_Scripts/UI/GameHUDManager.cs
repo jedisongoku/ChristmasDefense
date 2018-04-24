@@ -694,6 +694,8 @@ public class GameHUDManager : MonoBehaviour
                 }
                 if (Player.completedLevels[GameManager.gameManager.level] < GameManager.gameManager.levelCompletedStars)
                 {
+                   
+
                     Player.completedLevels[GameManager.gameManager.level] = GameManager.gameManager.levelCompletedStars;
                 }
                 DataStore.Save();
@@ -937,7 +939,7 @@ public class GameHUDManager : MonoBehaviour
         switch (id)
         {
             case 0:
-                //miniGameTabButton.interactable = false;
+                miniGameTabButton.interactable = false;
                 heroesTabButton.interactable = true;
                 adsTabButton.interactable = true;
                 miniGameItemPanel.gameObject.SetActive(true);
