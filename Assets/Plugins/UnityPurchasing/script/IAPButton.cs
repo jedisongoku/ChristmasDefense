@@ -6,220 +6,203 @@ using System.Collections.Generic;
 
 namespace UnityEngine.Purchasing
 {
-	[RequireComponent (typeof (Button))]
-	[AddComponentMenu("Unity IAP/IAP Button")]
-	[HelpURL("https://docs.unity3d.com/Manual/UnityIAP.html")]
-	public class IAPButton : MonoBehaviour
-	{
-		[System.Serializable]
-		public class OnPurchaseCompletedEvent : UnityEvent<Product> {};
+    [RequireComponent(typeof(Button))]
+    [AddComponentMenu("Unity IAP/IAP Button")]
+    [HelpURL("https://docs.unity3d.com/Manual/UnityIAP.html")]
+    public class IAPButton : MonoBehaviour
+    {
+        public enum ButtonType
+        {
+            Purchase,
+            Restore
+        }
 
-		[System.Serializable]
-		public class OnPurchaseFailedEvent : UnityEvent<Product, PurchaseFailureReason> {};
+        [System.Serializable]
+        public class OnPurchaseCompletedEvent : UnityEvent<Product>
+        {
+        };
 
-		[HideInInspector]
-		public string productId;
+        [System.Serializable]
+        public class OnPurchaseFailedEvent : UnityEvent<Product, PurchaseFailureReason>
+        {
+        };
 
-		[Tooltip("Consume the product immediately after a successful purchase")]
-		public bool consumePurchase = true;
+        [HideInInspector]
+        public string productId;
 
-		[Tooltip("Event fired after a successful purchase of this product")]
-		public OnPurchaseCompletedEvent onPurchaseComplete;
+        [Tooltip("The type of this button, can be either a purchase or a restore button")]
+        public ButtonType buttonType = ButtonType.Purchase;
 
-		[Tooltip("Event fired after a failed purchase of this product")]
-		public OnPurchaseFailedEvent onPurchaseFailed;
+        [Tooltip("Consume the product immediately after a successful purchase")]
+        public bool consumePurchase = true;
 
-		[Tooltip("[Optional] Displays the localized title from the app store")]
-		public Text titleText;
+        [Tooltip("Event fired after a successful purchase of this product")]
+        public OnPurchaseCompletedEvent onPurchaseComplete;
 
-		[Tooltip("[Optional] Displays the localized description from the app store")]
-		public Text descriptionText;
+        [Tooltip("Event fired after a failed purchase of this product")]
+        public OnPurchaseFailedEvent onPurchaseFailed;
 
-		[Tooltip("[Optional] Displays the localized price from the app store")]
-		public Text priceText;
+        [Tooltip("[Optional] Displays the localized title from the app store")]
+        public Text titleText;
 
-		void Start ()
-		{
-			Button button = GetComponent<Button>();
-			if (button) {
-				button.onClick.AddListener(PurchaseProduct);
-			}
+        [Tooltip("[Optional] Displays the localized description from the app store")]
+        public Text descriptionText;
 
-			if (string.IsNullOrEmpty(productId)) {
-				Debug.LogError("IAPButton productId is empty");
-			}
+        [Tooltip("[Optional] Displays the localized price from the app store")]
+        public Text priceText;
 
-			if (!IAPButtonStoreManager.Instance.HasProductInCatalog(productId)) {
-				Debug.LogWarning("The product catalog has no product with the ID \"" + productId + "\"");
-			}
-		}
+        void Start()
+        {
+            Button button = GetComponent<Button>();
 
-		void OnEnable()
-		{
-			IAPButtonStoreManager.Instance.AddButton(this);
+            if (buttonType == ButtonType.Purchase)
+            {
+                if (button)
+                {
+                    button.onClick.AddListener(PurchaseProduct);
+                }
 
-			var product = IAPButtonStoreManager.Instance.GetProduct(productId);
-			if (product != null) {
-				if (titleText != null) {
-					titleText.text = product.metadata.localizedTitle;
-				}
+                if (string.IsNullOrEmpty(productId))
+                {
+                    Debug.LogError("IAPButton productId is empty");
+                }
 
-				if (descriptionText != null) {
-					descriptionText.text = product.metadata.localizedDescription;
-				}
+                if (!CodelessIAPStoreListener.Instance.HasProductInCatalog(productId))
+                {
+                    Debug.LogWarning("The product catalog has no product with the ID \"" + productId + "\"");
+                }
+            }
+            else if (buttonType == ButtonType.Restore)
+            {
+                if (button)
+                {
+                    button.onClick.AddListener(Restore);
+                }
+            }
+        }
 
-				if (priceText != null) {
-					priceText.text = product.metadata.localizedPriceString;
-				}
-			}
-		}
+        void OnEnable()
+        {
+            if (buttonType == ButtonType.Purchase)
+            {
+                CodelessIAPStoreListener.Instance.AddButton(this);
+                if (CodelessIAPStoreListener.initializationComplete) {
+                    UpdateText();
+                }
+            }
+        }
 
-		void OnDisable()
-		{
-			IAPButtonStoreManager.Instance.RemoveButton(this);
-		}
+        void OnDisable()
+        {
+            if (buttonType == ButtonType.Purchase)
+            {
+                CodelessIAPStoreListener.Instance.RemoveButton(this);
+            }
+        }
 
-		void PurchaseProduct()
-		{
-			Debug.Log("IAPButton.PurchaseProduct() with product ID: " + productId);
+        void PurchaseProduct()
+        {
+            if (buttonType == ButtonType.Purchase)
+            {
+                Debug.Log("IAPButton.PurchaseProduct() with product ID: " + productId);
 
-			IAPButtonStoreManager.Instance.InitiatePurchase(productId);
-		}
+                CodelessIAPStoreListener.Instance.InitiatePurchase(productId);
+            }
+        }
 
-		/**
-		 *  Invoked to process a purchase of the product associated with this button
-		 */
-		public PurchaseProcessingResult ProcessPurchase (PurchaseEventArgs e)
-		{
-			Debug.Log(string.Format("IAPButton.ProcessPurchase(PurchaseEventArgs {0} - {1})", e, e.purchasedProduct.definition.id));
+        void Restore()
+        {
+            if (buttonType == ButtonType.Restore)
+            {
+                if (Application.platform == RuntimePlatform.WSAPlayerX86 ||
+                    Application.platform == RuntimePlatform.WSAPlayerX64 ||
+                    Application.platform == RuntimePlatform.WSAPlayerARM)
+                {
+                    CodelessIAPStoreListener.Instance.ExtensionProvider.GetExtension<IMicrosoftExtensions>()
+                        .RestoreTransactions();
+                }
+                else if (Application.platform == RuntimePlatform.IPhonePlayer ||
+                         Application.platform == RuntimePlatform.OSXPlayer ||
+                         Application.platform == RuntimePlatform.tvOS)
+                {
+                    CodelessIAPStoreListener.Instance.ExtensionProvider.GetExtension<IAppleExtensions>()
+                        .RestoreTransactions(OnTransactionsRestored);
+                }
+                else if (Application.platform == RuntimePlatform.Android &&
+                         StandardPurchasingModule.Instance().appStore == AppStore.SamsungApps)
+                {
+                    CodelessIAPStoreListener.Instance.ExtensionProvider.GetExtension<ISamsungAppsExtensions>()
+                        .RestoreTransactions(OnTransactionsRestored);
+                }
+                else if (Application.platform == RuntimePlatform.Android &&
+                         StandardPurchasingModule.Instance().appStore == AppStore.CloudMoolah)
+                {
+                    CodelessIAPStoreListener.Instance.ExtensionProvider.GetExtension<IMoolahExtension>()
+                        .RestoreTransactionID((restoreTransactionIDState) =>
+                        {
+                            OnTransactionsRestored(
+                                restoreTransactionIDState != RestoreTransactionIDState.RestoreFailed &&
+                                restoreTransactionIDState != RestoreTransactionIDState.NotKnown);
+                        });
+                }
+                else
+                {
+                    Debug.LogWarning(Application.platform.ToString() +
+                                     " is not a supported platform for the Codeless IAP restore button");
+                }
+            }
+        }
 
-			onPurchaseComplete.Invoke(e.purchasedProduct);
+        void OnTransactionsRestored(bool success)
+        {
+            Debug.Log("Transactions restored: " + success);
+        }
 
-			return (consumePurchase) ? PurchaseProcessingResult.Complete : PurchaseProcessingResult.Pending;
-		}
+        /**
+         *  Invoked to process a purchase of the product associated with this button
+         */
+        public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
+        {
+            Debug.Log(string.Format("IAPButton.ProcessPurchase(PurchaseEventArgs {0} - {1})", e,
+                e.purchasedProduct.definition.id));
 
-		/**
-		 *  Invoked on a failed purchase of the product associated with this button
-		 */
-		public void OnPurchaseFailed (Product product, PurchaseFailureReason reason)
-		{
-			Debug.Log(string.Format("IAPButton.OnPurchaseFailed(Product {0}, PurchaseFailureReason {1})", product, reason));
+            onPurchaseComplete.Invoke(e.purchasedProduct);
 
-			onPurchaseFailed.Invoke(product, reason);
-		}
+            return (consumePurchase) ? PurchaseProcessingResult.Complete : PurchaseProcessingResult.Pending;
+        }
 
-		public class IAPButtonStoreManager : IStoreListener
-		{
-			private static IAPButtonStoreManager instance = new IAPButtonStoreManager();
-			private ProductCatalog catalog;
-			private List<IAPButton> activeButtons = new List<IAPButton>();
-			
-			protected IStoreController controller;
-			protected IExtensionProvider extensions;
+        /**
+         *  Invoked on a failed purchase of the product associated with this button
+         */
+        public void OnPurchaseFailed(Product product, PurchaseFailureReason reason)
+        {
+            Debug.Log(string.Format("IAPButton.OnPurchaseFailed(Product {0}, PurchaseFailureReason {1})", product,
+                reason));
 
-			private IAPButtonStoreManager()
-			{
-				catalog = ProductCatalog.LoadDefaultCatalog();
+            onPurchaseFailed.Invoke(product, reason);
+        }
 
-				StandardPurchasingModule module = StandardPurchasingModule.Instance();
-				module.useFakeStoreUIMode = FakeStoreUIMode.StandardUser;
+        internal void UpdateText()
+        {
+            var product = CodelessIAPStoreListener.Instance.GetProduct(productId);
+            if (product != null)
+            {
+                if (titleText != null)
+                {
+                    titleText.text = product.metadata.localizedTitle;
+                }
 
-				ConfigurationBuilder builder = ConfigurationBuilder.Instance(module);
-				foreach (var product in catalog.allProducts) {
-					if (product.allStoreIDs.Count > 0) {
-						var ids = new IDs();
-						foreach (var storeID in product.allStoreIDs) {
-							ids.Add(storeID.id, storeID.store);
-						}
-						builder.AddProduct(product.id, product.type, ids);
-					} else {
-						builder.AddProduct(product.id, product.type);
-					}
-				}
-				UnityPurchasing.Initialize (this, builder);
-			}
+                if (descriptionText != null)
+                {
+                    descriptionText.text = product.metadata.localizedDescription;
+                }
 
-			public static IAPButtonStoreManager Instance {
-				get {
-					return instance;
-				}
-			}
-
-			public IStoreController StoreController {
-				get {
-					return controller;
-				}
-			}
-
-			public IExtensionProvider ExtensionProvider {
-				get {
-					return extensions;
-				}
-			}
-
-			public bool HasProductInCatalog(string productID)
-			{
-				foreach (var product in catalog.allProducts) {
-					if (product.id == productID) {
-						return true;
-					}
-				}
-				return false;
-			}
-
-			public Product GetProduct(string productID)
-			{
-				if (controller != null) {
-					return controller.products.WithID(productID);
-				}
-				return null;
-			}
-
-			public void AddButton(IAPButton button)
-			{
-				activeButtons.Add(button);
-			}
-
-			public void RemoveButton(IAPButton button)
-			{
-				activeButtons.Remove(button);
-			}
-
-			public void InitiatePurchase(string productID)
-			{
-				controller.InitiatePurchase(productID);
-			}
-
-			public void OnInitialized (IStoreController controller, IExtensionProvider extensions)
-			{
-				this.controller = controller;
-				this.extensions = extensions;
-			}
-
-			public void OnInitializeFailed (InitializationFailureReason error)
-			{
-				Debug.LogError("Purchasing failed to initialize.");
-			}
-
-			public PurchaseProcessingResult ProcessPurchase (PurchaseEventArgs e)
-			{
-				foreach (var button in activeButtons) {
-					if (button.productId == e.purchasedProduct.definition.id) {
-						return button.ProcessPurchase(e);
-					}
-				}
-				return PurchaseProcessingResult.Complete; // TODO: Maybe this shouldn't return complete
-			}
-
-			public void OnPurchaseFailed (Product product, PurchaseFailureReason reason)
-			{ 
-				foreach (var button in activeButtons) {
-					if (button.productId == product.definition.id) {
-						button.OnPurchaseFailed(product, reason);
-					}
-				} 
-			}
-		}
-	}
+                if (priceText != null)
+                {
+                    priceText.text = product.metadata.localizedPriceString;
+                }
+            }
+        }
+    }
 }
 #endif

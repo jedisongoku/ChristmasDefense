@@ -22,11 +22,11 @@ public class Purchaser : MonoBehaviour, IStoreListener
     public static string kProductIDNonConsumable = "nonconsumable";
     public static string kProductIDSubscription = "subscription";
 
-	public static string purchaseSnowflake_5 = "com.christmasdefense.snowflake5";
-	public static string purchaseSnowflake_25 = "com.christmasdefense.snowflake25";
-	public static string purchaseWarrior_3 = "com.christmasdefense.specialhero3";
-	public static string purchaseWarrior_20 = "com.christmasdefense.specialhero20";
-	public static string purchaseAdFree = "com.christmasdefense.adfree";
+	public static string purchaseSnowflake_5 = "com.binaryfishgames.christmasdefense.snowflake5";
+	public static string purchaseSnowflake_25 = "com.binaryfishgames.christmasdefense.snowflake25";
+	public static string purchaseWarrior_3 = "com.binaryfishgames.christmasdefense.specialhero3";
+	public static string purchaseWarrior_20 = "com.binaryfishgames.christmasdefense.specialhero20";
+	public static string purchaseAdFree = "com.binaryfishgames.christmasdefense.adfree";
 
     // Apple App Store-specific product identifier for the subscription product.
     private static string kProductNameAppleSubscription = "com.unity3d.subscription.new";
@@ -215,27 +215,37 @@ public class Purchaser : MonoBehaviour, IStoreListener
         {
             Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
             Player.snowFlakes += 5;
+
+            AppsFlyerMMP.InAppPurchase5Snowflakes();
         }
         else if (String.Equals(args.purchasedProduct.definition.id, purchaseSnowflake_25, StringComparison.Ordinal))
         {
             Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
             Player.snowFlakes += 25;
+
+            AppsFlyerMMP.InAppPurchase25Snowflakes();
         }
         else if (String.Equals(args.purchasedProduct.definition.id, purchaseWarrior_3, StringComparison.Ordinal))
         {
             Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
             Player.specialHero += 3;
+
+            AppsFlyerMMP.InAppPurchase3Warriors();
         }
         else if (String.Equals(args.purchasedProduct.definition.id, purchaseWarrior_20, StringComparison.Ordinal))
         {
             Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
             Player.specialHero += 20;
+
+            AppsFlyerMMP.InAppPurchase20Warriors();
         }
         // Or ... a subscription product has been purchased by this user.
         else if (String.Equals(args.purchasedProduct.definition.id, purchaseAdFree, StringComparison.Ordinal))
         {
             Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
 			Player.adFree = true;
+
+            AppsFlyerMMP.InAppPurchaseRemoveAds();
         }
         // Or ... an unknown product has been purchased by this user. Fill in additional products here....
         else

@@ -51,6 +51,7 @@ public class MiniGameBlock : MonoBehaviour {
             GameHUDManager.gameHudManager.MenuHudUpdate();
             GetComponent<Animator>().SetTrigger("Open");
             GetComponent<Button>().interactable = false;
+            AppsFlyerMMP.MiniGamePlayed();
             Invoke("DelayOpenBlock", Random.Range(3, 5));
         }  
     }

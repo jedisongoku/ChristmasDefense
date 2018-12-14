@@ -27,11 +27,11 @@ public class CutSceneController : MonoBehaviour
         GameHUDManager.gameHudManager.GoToLevelMenu();
 		if (!Player.newYearGift)
 		{
-			GameHUDManager.gameHudManager.ShowInfoPanel(7);
-			Player.newYearGift = true;
-			Player.snowFlakes += 5;
-			DataStore.Save ();
-			GameHUDManager.gameHudManager.MenuHudUpdate();
+			//GameHUDManager.gameHudManager.ShowInfoPanel(7);
+			//Player.newYearGift = true;
+			//Player.snowFlakes += 5;
+			//DataStore.Save ();
+			//GameHUDManager.gameHudManager.MenuHudUpdate();
 		}
     }
 

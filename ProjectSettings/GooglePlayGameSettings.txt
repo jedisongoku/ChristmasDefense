@@ -1,10 +1,10 @@
-lastUpgrade=00935
-proj.pluginVersion=0.9.35
-proj.AppId=593748515700
+lastUpgrade=00955
+proj.pluginVersion=0.9.55
+proj.AppId=65365006167
 and.BundleId=com.christmasdefense
 proj.classDir=Assets
 proj.ConstantsClassName=GPGSIds
-and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3cstring+name%3d%22app_id%22%3e593748515700%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22package_name%22%3ecom.christmasdefense%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22achievement_level_1_complete%22%3eCgkI9Lat8aMREAIQAw%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22achievement_level_2_complete%22%3eCgkI9Lat8aMREAIQBA%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22achievement_level_3_complete%22%3eCgkI9Lat8aMREAIQBQ%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22achievement_level_4_complete%22%3eCgkI9Lat8aMREAIQBg%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22achievement_level_5_complete%22%3eCgkI9Lat8aMREAIQBw%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22leaderboard_normal_mode%22%3eCgkI9Lat8aMREAIQAA%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22leaderboard_hard_mode%22%3eCgkI9Lat8aMREAIQAQ%3c%2fstring%3e%0d%0a%3c%2fresources%3e
-and.ClientId=593748515700-qb6nui7vc00svh26vddi39kmfrcfp11a.apps.googleusercontent.com
+and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--+app_id+--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e65365006167%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+High+Score+-+Normal+Mode+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_high_score__normal_mode%22+translatable%3d%22false%22%3eCgkI1667wPMBEAIQAA%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+High+Score+-+Hard+Mode+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_high_score__hard_mode%22+translatable%3d%22false%22%3eCgkI1667wPMBEAIQAQ%3c%2fstring%3e%0d%0a%3c%2fresources%3e%0d%0a
+and.ClientId=
 proj.requireGPlus=false
 android.SetupDone=true

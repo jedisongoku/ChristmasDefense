@@ -47,7 +47,6 @@ public class GameHUDManager : MonoBehaviour
     public Transform hardModeLevels;
     public Transform normalLevelIndicator;
     public Transform hardLevelIndicator;
-	public Transform christmasGiftText;
     public Transform rateBox;
 
     [Header("GameHUD")]
@@ -133,8 +132,8 @@ public class GameHUDManager : MonoBehaviour
     [Header("Game Center")]
     private string ios_normalModeLeaderboard = "christmasdefense_normalmode";
     private string ios_hardModeLeaderboard = "christmasdefense_hardmode";
-    private string android_normalModeLeaderboard = "CgkI9Lat8aMREAIQAA";
-    private string android_hardModeLeaderboard = "CgkI9Lat8aMREAIQAQ";
+    private string android_normalModeLeaderboard = "CgkI1667wPMBEAIQAA";
+    private string android_hardModeLeaderboard = "CgkI1667wPMBEAIQAQ";
     private string normalModeLeaderboard;
     private string hardModeLeaderboard;
 
@@ -430,6 +429,7 @@ public class GameHUDManager : MonoBehaviour
 
     public void ShowAd(string zone)
     {
+        AppsFlyerMMP.RewardedAdWatched();
         UnityAds.ads.ShowAd(zone);
     }
 
@@ -513,7 +513,7 @@ public class GameHUDManager : MonoBehaviour
     public void RestartLevel()
     {
 		GameManager.gameManager.restartAd++;
-		if (GameManager.gameManager.restartAd == 3)
+		if (GameManager.gameManager.restartAd == 2)
 		{
 			UnityAds.ads.ShowAd ("video");
 			GameManager.gameManager.restartAd = 0;
@@ -535,6 +535,7 @@ public class GameHUDManager : MonoBehaviour
         Camera.main.fieldOfView = 60;
         GameManager.gameManager.StartLevel();
         SoundManager.soundManager.backgroundAudioSource.volume = 1;
+
         //GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
         //GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("Intro" + GameManager.gameManager.level);
         //GameManager.gameManager.StartLevel();
@@ -658,6 +659,8 @@ public class GameHUDManager : MonoBehaviour
         {
             Player.score += (Player.resource * 55 * 10) + (10000 * GameManager.gameManager.levelCompletedStars * GameManager.gameManager.levelCompletedStars);
 
+            AppsFlyerMMP.LevelCompletedHard(GameManager.gameManager.level);
+
             if (GameManager.gameManager.levelCompletedStars != 0)
             {
                 if (Player.levelScoresHardMode[GameManager.gameManager.level] < Player.score)
@@ -685,6 +688,9 @@ public class GameHUDManager : MonoBehaviour
         else // NORMAL MODE
         {
             Player.score += (Player.resource * 55) + (10000 * GameManager.gameManager.levelCompletedStars);
+
+
+            AppsFlyerMMP.LevelCompletedNormal(GameManager.gameManager.level);
 
             if (GameManager.gameManager.levelCompletedStars != 0)
             {
@@ -759,7 +765,7 @@ public class GameHUDManager : MonoBehaviour
         }
         else
         {
-            rateBox.gameObject.SetActive(true);
+            //rateBox.gameObject.SetActive(true);
         }
         levelPanel.gameObject.SetActive(false);
         miniGamePanel.gameObject.SetActive(false);
@@ -798,6 +804,7 @@ public class GameHUDManager : MonoBehaviour
     {
         if (Player.boostPoints >= 500)
         {
+            AppsFlyerMMP.PurchaseSnowflakeCurrency();
             Player.boostPoints -= 500;
             Player.snowFlakes++;
             DataStore.Save();
@@ -1088,7 +1095,6 @@ public class GameHUDManager : MonoBehaviour
 				spartanUnlocked.gameObject.SetActive (false);
 				infoPanelText.gameObject.SetActive (false);
 				wizardUnlocked.gameObject.SetActive (false);
-				christmasGiftText.gameObject.SetActive (true);
 				infoPanel.gameObject.SetActive (true);
 				infoPanel.gameObject.GetComponent<Animator> ().SetTrigger ("Play");
 				break;
@@ -1099,7 +1105,6 @@ public class GameHUDManager : MonoBehaviour
                     {
                         wizardUnlocked.gameObject.SetActive(false);
                         infoPanelText.gameObject.SetActive(false);
-						christmasGiftText.gameObject.SetActive (false);
                         spartanUnlocked.gameObject.SetActive(true);
                         infoPanel.gameObject.SetActive(true);
                         infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
@@ -1109,7 +1114,6 @@ public class GameHUDManager : MonoBehaviour
                         spartanUnlocked.gameObject.SetActive(false);
                         infoPanelText.gameObject.SetActive(false);
                         wizardUnlocked.gameObject.SetActive(true);
-						christmasGiftText.gameObject.SetActive (false);
                         infoPanel.gameObject.SetActive(true);
                         infoPanel.gameObject.GetComponent<Animator>().SetTrigger("Play");
                     }
@@ -1356,7 +1360,7 @@ public class GameHUDManager : MonoBehaviour
 
     public void RateBox()
     {
-        ratePanel.gameObject.SetActive(true);
+        //ratePanel.gameObject.SetActive(true);
     }
 
     public void RateGame(bool reset)

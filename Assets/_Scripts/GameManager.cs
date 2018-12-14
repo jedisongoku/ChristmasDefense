@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour {
     public float healthMultiplier = 1;
     //public int randomVariableMax;
 	public int restartAd = 0;
+    public int adCounter = 0;
 
     [Header("Heroes")]
     public int tigerCost;
@@ -115,7 +116,6 @@ public class GameManager : MonoBehaviour {
         Player.specialHero = levelInitialSpecialHero;
         DataStore.Save();
         StopAllCoroutines();
-
     }
 
     public void OnGoHome()
@@ -435,6 +435,7 @@ public class GameManager : MonoBehaviour {
 
     public void SpawnSpecialHero()
     {
+        AppsFlyerMMP.WarriorUsed();
         Player.specialHero--;
         GameHUDManager.gameHudManager.SetSpecialHeroIndicator();
         Instantiate(heroes[3], specialHeroSpawnLocation.position, specialHeroSpawnLocation.rotation);
