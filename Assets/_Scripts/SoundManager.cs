@@ -67,6 +67,12 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    public void FadeMusicIn()
+    {
+        StartCoroutine(FadeIn());
+
+    }
+
     IEnumerator FadeIn()
     {
         track.volume += Time.deltaTime * fadeSpeed;

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SocialPlatforms;
 using System.Collections;
 using System.Collections.Generic;
+using GooglePlayGames;
 
 public class GameHUDManager : MonoBehaviour
 {
@@ -161,8 +162,23 @@ public class GameHUDManager : MonoBehaviour
             hardModeLeaderboard = ios_hardModeLeaderboard;
         }
 
-        Social.localUser.Authenticate(success => { if (success) { Debug.Log("==iOS GC authenticate OK"); } else { Debug.Log("==iOS GC authenticate Failed"); } });
-        SetSpecialHeroIndicator();
+        PlayGamesPlatform.DebugLogEnabled = true;
+
+        PlayGamesPlatform.Activate();
+
+        Social.localUser.Authenticate((bool success) =>
+        {
+            if (success)
+            {
+                print("Login success");
+            }
+
+            else
+            {
+                Debug.Log("login fail");
+            }
+        }); SetSpecialHeroIndicator();
+
 		StartCoroutine (Fps ());
         //GameManager.OnUIAction += SetText;
         //GameManager.OnUIAction += SetHeroAvailability;
@@ -629,6 +645,8 @@ public class GameHUDManager : MonoBehaviour
 
     public void LevelComplete()
     {
+        print("Level Complete");
+
         HideAllPanels();
 		buttonsPanel.gameObject.SetActive (false);
         specialHeroSpawnButton.gameObject.SetActive(false);
@@ -726,6 +744,8 @@ public class GameHUDManager : MonoBehaviour
 
     void ReportScore()
     {
+        print("Reporting Score, Authenticated: " + Social.localUser.authenticated);
+
         if (Social.localUser.authenticated)
         {
             int totalScore = 0;
@@ -1285,6 +1305,14 @@ public class GameHUDManager : MonoBehaviour
     {
         informationPanel.gameObject.SetActive(false);
         levelPanel.gameObject.SetActive(true);
+    }
+
+    public void MusicOn()
+    {
+        menuMusicButton.image.sprite = musicOnImage;
+        gameMenuMusicButton.image.sprite = musicOnImage;
+        SoundManager.soundManager.backgroundAudioSource.volume = 1;
+        SoundManager.soundManager.isMute = false;
     }
 
     public void MusicOnOff()

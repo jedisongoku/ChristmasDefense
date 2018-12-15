@@ -173,7 +173,14 @@ public class GameManager : MonoBehaviour {
         MouseController.isMouseOnUI = false;
         GameHUDManager.gameHudManager.HideAllPanels();
 
-		Debug.Log ("Game manager destinations: " + enemyDestination [0].Count);
+        if (!SoundManager.soundManager.isMute)
+        {
+            SoundManager.soundManager.backgroundAudioSource.volume *= 2;
+        }
+
+        GameHUDManager.gameHudManager.MusicOn();
+
+        Debug.Log ("Game manager destinations: " + enemyDestination [0].Count);
     }
 
     IEnumerator RunGame()
