@@ -39,6 +39,15 @@ public class AppsFlyerMMP : MonoBehaviour {
         print("AppsFlyer Normal Mode Level " + level.ToString() + "Event");
     }
 
+    public static void LevelRestarted()
+    {
+        Dictionary<string, string> levelRestarted = new Dictionary<string, string>();
+        levelRestarted.Add("level_restarted", "1");
+        AppsFlyer.trackRichEvent("level_restarted", levelRestarted);
+
+        print("AppsFlyer Level Restarted Event");
+    }
+
     public static void LevelCompletedHard(int level)
     {
         Dictionary<string, string> levelCompleted = new Dictionary<string, string>();

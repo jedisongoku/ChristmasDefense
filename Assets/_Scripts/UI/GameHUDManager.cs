@@ -528,6 +528,8 @@ public class GameHUDManager : MonoBehaviour
 
     public void RestartLevel()
     {
+        AppsFlyerMMP.LevelRestarted();
+
 		GameManager.gameManager.restartAd++;
 		if (GameManager.gameManager.restartAd == 2)
 		{
