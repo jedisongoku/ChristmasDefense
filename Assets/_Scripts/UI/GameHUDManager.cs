@@ -552,7 +552,7 @@ public class GameHUDManager : MonoBehaviour
         Camera.main.transform.position = GameManager.gameManager.cameraLocation.position;
         Camera.main.fieldOfView = 60;
         GameManager.gameManager.StartLevel();
-        SoundManager.soundManager.backgroundAudioSource.volume = 1;
+        //SoundManager.soundManager.backgroundAudioSource.volume = 1;
 
         //GameManager.gameManager.introCamera.transform.gameObject.SetActive(true);
         //GameManager.gameManager.introCamera.GetComponent<Animator>().SetTrigger("Intro" + GameManager.gameManager.level);
@@ -649,6 +649,17 @@ public class GameHUDManager : MonoBehaviour
     {
         print("Level Complete");
 
+        if (GameManager.gameManager.level == 1 && PlayerPrefs.GetString("RateLevel1", "false") == "false")
+        {
+            RatingManager.Instance.ShowRatingPanel();
+            PlayerPrefs.SetString("RateLevel1", "true");
+        }
+        else if (GameManager.gameManager.level == 6 && PlayerPrefs.GetString("RateLevel6", "false") == "false")
+        {
+            RatingManager.Instance.ShowRatingPanel();
+            PlayerPrefs.SetString("RateLevel6", "true");
+        }
+
         HideAllPanels();
 		buttonsPanel.gameObject.SetActive (false);
         specialHeroSpawnButton.gameObject.SetActive(false);
@@ -737,7 +748,7 @@ public class GameHUDManager : MonoBehaviour
             }
         }
         
-
+        
         ReportScore();
         
 

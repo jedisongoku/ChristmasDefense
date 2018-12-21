@@ -30,6 +30,30 @@ public class AppsFlyerMMP : MonoBehaviour {
 #endif
     }
 
+    private void OnEnable()
+    {
+        RatingManager.Instance.OnRating += Rating;
+
+    }
+
+    public static void Rating(int starAmount)
+    {
+        Dictionary<string, string> rating = new Dictionary<string, string>();
+        rating.Add("rating_" + starAmount + "_stars", "1");
+        AppsFlyer.trackRichEvent("rating_" + starAmount + "_stars", rating);
+
+        print("AppsFlyer " + starAmount + " Star Rating Event");
+    }
+
+    public static void VisitStoreToRate()
+    {
+        Dictionary<string, string> storeVisit = new Dictionary<string, string>();
+        storeVisit.Add("visit_store_to_rate", "1");
+        AppsFlyer.trackRichEvent("visit_store_to_rate", storeVisit);
+
+        print("AppsFlyer Store Visit Event");
+    }
+
     public static void LevelCompletedNormal(int level)
     {
         Dictionary<string, string> levelCompleted = new Dictionary<string, string>();

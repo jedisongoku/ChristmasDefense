@@ -41,14 +41,28 @@ public class UnityAds : MonoBehaviour {
 
 		Debug.Log ("Ad Free Status " + Player.adFree);
 		Debug.Log ("Rewardzone Status " + rewardZone);
+        if (GameManager.gameManager.level == 1 && PlayerPrefs.GetString("RateLevel1", "false") == "false")
+        {
+            RatingManager.Instance.ShowRatingPanel();
+            PlayerPrefs.SetString("RateLevel1", "true");
+        }
+        else if (GameManager.gameManager.level == 6 && PlayerPrefs.GetString("RateLevel6", "false") == "false")
+        {
+            RatingManager.Instance.ShowRatingPanel();
+            PlayerPrefs.SetString("RateLevel6", "true");
+        }
+        else
+        {
+            if (!Player.adFree || (Player.adFree && rewardZone.Equals("rewardedVideo")))
+            {
+                if (Advertisement.IsReady(zone))
+                {
+                    Advertisement.Show(zone, options);
+                }
+            }
+        }
 
-		if (!Player.adFree || (Player.adFree && rewardZone.Equals("rewardedVideo")))
-		{
-			if (Advertisement.IsReady(zone))
-			{
-				Advertisement.Show(zone, options);
-			}
-		}
+        
         
 
         

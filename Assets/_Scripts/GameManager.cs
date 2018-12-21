@@ -176,9 +176,10 @@ public class GameManager : MonoBehaviour {
         if (!SoundManager.soundManager.isMute)
         {
             SoundManager.soundManager.backgroundAudioSource.volume *= 2;
+            GameHUDManager.gameHudManager.MusicOn();
         }
 
-        GameHUDManager.gameHudManager.MusicOn();
+        
 
         Debug.Log ("Game manager destinations: " + enemyDestination [0].Count);
     }
