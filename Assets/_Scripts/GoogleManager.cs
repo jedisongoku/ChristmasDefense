@@ -11,8 +11,8 @@ public class GoogleManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        PlayGamesPlatform.DebugLogEnabled = true;
-        PlayGamesPlatform.Activate();
+        //PlayGamesPlatform.DebugLogEnabled = true;
+        //PlayGamesPlatform.Activate();
         LogIn();
     }
 
@@ -37,6 +37,6 @@ public class GoogleManager : MonoBehaviour
     public void LogOut()
     {
         Debug.Log("LogOut");
-        ((PlayGamesPlatform)Social.Active).SignOut();
+        //((PlayGamesPlatform)Social.Active).SignOut();
     }
 }
